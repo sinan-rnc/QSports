@@ -6,7 +6,7 @@ import ReactPlayer from "react-player"
 
 import { MdOutlinePlace } from "react-icons/md"
 import { LuClock9 } from "react-icons/lu"
-import { RiArrowLeftWideLine, RiArrowRightWideLine, RiFacebookFill, RiInstagramFill } from "react-icons/ri"
+import { RiArrowLeftWideLine, RiArrowRightWideLine } from "react-icons/ri"
 import "./ClubDetailPage.scss"
 
 import herobanner1 from "../../../Assets/Bars&Clubs/8.jpg"
@@ -15,8 +15,7 @@ import herobanner3 from "../../../Assets/Bars&Clubs/10.jpg"
 import herobanner4 from "../../../Assets/Bars&Clubs/12.jpg"
 import herobanner5 from "../../../Assets/Bars&Clubs/4.jpg"
 import herobanner6 from "../../../Assets/Bars&Clubs/7.jpg"
-import { FaFacebook, FaFacebookF, FaInstagram } from "react-icons/fa";
-import { FiFacebook } from "react-icons/fi";
+import { FaFacebookF, FaInstagram } from "react-icons/fa";
 
 export default function ClubDetailPage() {
     const images = [herobanner1, herobanner2, herobanner3, herobanner4, herobanner5, herobanner6];
