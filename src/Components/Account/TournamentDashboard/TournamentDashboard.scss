@@ -1,0 +1,154 @@
+.tournamentDashboard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    .tournamentDashboard-section {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        padding: 30px;
+        background: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+        // .dashborad-heading {
+        //     // padding: 30px;
+        // }
+
+        .recent-orders {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        
+            &__title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            }
+        
+            &__table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        
+            th {
+                font-size: 16px;
+                color: #555;
+                text-transform: uppercase;
+                border-bottom: 1px solid #e0e0e0;
+                padding: 12px 8px;
+            }
+        
+            td {
+                font-size: 14px;
+                padding: 12px 8px;
+                color: #333;
+            }
+        
+            .recent-orders__number {
+                color: #1a73e8; // Blue color for order number
+                cursor: pointer;
+            }
+        
+            //   tr {
+            //     &:nth-child(even) {
+            //       background-color: #f9f9f9; // Alternate row color
+            //     }
+            //   }
+            }
+        }
+    }
+
+    .add-tournament-section {
+        padding: 30px;
+        background: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+
+        .dashborad-heading {
+            cursor: pointer;
+
+            .dashborad-hr-2 {
+                margin-left: -28px;
+            }
+
+            .dashborad-hr-1.rotate {
+                transform: rotate(90deg);
+            }
+        }
+
+        .dashborad-heading:hover .dashborad-main-heading {
+            color: #fe6b00;
+        }
+
+        .tournament-from {
+            // padding: 30px;
+            // background: white;
+            // box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+            .form-table {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                width: 100%;
+        
+                .form-group {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    text-align: start;
+        
+                    .form-control {
+                        padding: 8px 30px 8px 10px;
+                        outline: none;
+                        appearance: none;
+                        border: none;
+                        display: flex;
+                        text-align: left;
+                        justify-content: flex-start;
+                        // width: 300px;
+                        background: #eaeaea;
+                        border: 2px solid #eaeaea;
+                    }
+        
+                    .form-control:hover {
+                        background: #fff;
+                        border: 2px solid #eaeaea;
+                    }
+        
+                    .form-control::placeholder {
+                        display: flex;
+                        text-align: left;
+                        align-items: left;
+                        font-style: italic;
+                    }
+                }
+        
+                .save-btn {
+                    margin-top: 10px;
+                    display: block;
+                    // justify-content: flex-end;
+                    width: 100px;
+                    padding: 10px 5px 10px;
+                    background: #fe6b00;
+                    color: white;
+                    border: none;
+                    font-weight: 700;
+                    font-size: 15px;
+                    cursor: pointer;
+                    border-radius: 5px;
+                    // margin-left: auto;
+                    margin-right: auto;
+                }
+        
+                .save-btn:hover {
+                    background: #ddcc92;
+                    color: black;
+                }
+            }
+        }
+    }
+}

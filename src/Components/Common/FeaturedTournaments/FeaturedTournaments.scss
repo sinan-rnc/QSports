@@ -1,0 +1,105 @@
+.tournamentevents1-section {
+    margin-top: 50px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background: #333;
+    color: #ffffff;
+    display: block;
+    justify-content: center;
+
+
+    .section-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .section-bottom {
+        margin-top: 30px;
+
+        .event {
+            display: flex;
+            // gap: 100px;
+            padding-left: 100px;
+            padding-right: 100px;
+
+            .event-left {
+                width: 50%;
+                height: 400px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                img {
+                    width: 400px;
+                    height: 100%;
+                }
+            }
+
+            .event-right {
+                position: relative;
+                width: 50%;
+                display: block;
+                // align-items: center;
+                align-content: center;
+                padding-left: 100px;
+                // background: #ffffff;
+                // justify-content: flex-start;
+                // text-align: left;
+
+                h1 {
+                    font-size: 40px;
+                    font-weight: 800;
+                }
+
+                h2 {
+                    font-size: 25px;
+                    margin-top: 10px;
+                }
+
+                .details {
+                    margin-top: 30px;
+                    display: flex;
+                    gap: 100px;
+
+                    .date, .place {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 5px;
+
+                        h3 {
+                            font-size: 14px;
+                            color: #fe6b00;
+                        }
+                    }
+                }
+            }
+
+            .event-right::before {
+                content: "";
+                position: absolute;
+                top: 50px; /* Controls vertical positioning */
+                left: 50px;
+                width: 50px; /* Horizontal part of the L */
+                height: 10px; /* Thickness of the line */
+                background-color: #fe6b00; /* Line color */
+            }
+            
+            .event-right::after {
+                content: "";
+                position: absolute;
+                top: 50px; /* Align with the ::before line */
+                left: 50px;
+                width: 10px; /* Vertical part of the L */
+                height: 50px; /* Length of the vertical line */
+                background-color: #fe6b00; /* Line color */
+            }
+        }
+
+        .event.second {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: row-reverse;
+        }
+    }
+}

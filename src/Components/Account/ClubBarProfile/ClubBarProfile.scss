@@ -1,0 +1,149 @@
+.clubBar-profile-container {
+    padding-top: 100px;
+    padding-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    .clubBar-profile-section {
+        background: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        // width: 600px;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        text-align: center;
+        justify-content: flex-start;
+        padding: 30px;
+        gap: 30px;
+
+        .form-table {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+
+            .same-line {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+
+                .form-label {
+                    width: 50%;
+                }
+
+                .form-control {
+                    width: 50%;
+                }
+            }
+
+            // .add-service {
+            //     .form-label {
+            //         width: 60%;
+            //     }
+
+            //     .form-control {
+            //         width: 0%;
+            //     }
+            // }
+
+            .close-icon {
+                font-size: 30px;
+                // color: red;
+                cursor: pointer;
+              }
+
+            .same-line-openclose {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+
+                .form-label {
+                    width: 50% !important;
+                }
+
+                .form-control {
+                    width: 50% !important;
+                }
+            }
+    
+            .form-group {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                text-align: start;
+
+                h1 {
+                    font-size: 25px;
+                }
+    
+                .form-control {
+                    width: 100%;
+                    padding: 8px 30px 8px 10px;
+                    outline: none;
+                    // appearance: none;
+                    border: none;
+                    display: flex;
+                    text-align: left;
+                    justify-content: flex-start;
+                    // width: 300px;
+                    background: #eaeaea;
+                    border: 2px solid #eaeaea;
+                }
+    
+                .form-control:hover {
+                    background: #fff;
+                    border: 2px solid #eaeaea;
+                }
+    
+                .form-control::placeholder {
+                    display: flex;
+                    text-align: left;
+                    align-items: left;
+                    font-style: italic;
+                }
+            }
+    
+            .save-btn {
+                margin-top: 10px;
+                display: block;
+                // justify-content: flex-end;
+                width: 100px;
+                padding: 10px 5px 10px;
+                background: #fe6b00;
+                color: white;
+                border: none;
+                font-weight: 700;
+                font-size: 15px;
+                cursor: pointer;
+                border-radius: 5px;
+                // margin-left: auto;
+                margin-right: auto;
+            }
+    
+            .save-btn:hover {
+                background: #ddcc92;
+                color: black;
+            }
+        }
+    }
+
+    .login-link {
+        margin-top: 50px;
+
+        a {
+            text-decoration: underline;
+        }
+
+        a:hover {
+           color: #fe6b00;
+        }
+    }
+}

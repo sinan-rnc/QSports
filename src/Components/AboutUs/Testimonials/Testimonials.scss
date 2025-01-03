@@ -1,0 +1,200 @@
+/* Testimonial container */
+.testimonial-container {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    // max-width: 1000px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* height: 100vh; */
+    padding-left: 100px;
+    padding-right: 100px;
+
+    .slider-container { 
+        margin-top: 100px;
+        margin-bottom: 50px;
+        position: relative;
+        user-select: none;
+        padding-inline: 1rem;
+
+        .quote {
+            position: absolute;
+            z-index: -1;
+        }
+
+        .top-quote {
+            position: absolute;
+            top: -3rem;
+            left: -1rem;
+        }
+
+        .bottom-quote {
+            position: absolute;
+            bottom: 0rem;
+            right: -1rem;
+            transform: rotate(180deg);
+        }
+
+        .splide__track {
+            border-radius: 1rem;
+            padding-bottom: 50px;
+        }
+          
+        .splide__slide {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            background-color: #fff;
+            padding: 3rem 1.875rem;
+            border-radius: 1rem;
+            gap: 1rem;
+        }
+
+        .review-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            margin-inline: auto;
+        }
+        .content{
+            padding: 0px 20px 0px 20px;
+
+            .text {
+                color: #484646;
+                margin-bottom: 1rem;
+                font-size: 1.1rem;
+            }
+
+            .rating {
+                display: inline-block;
+                line-height: 1;
+
+                .star {
+                    color: #fe6b00;
+                    font-size: 1.1rem;
+                }
+            }
+
+            .company {
+                margin-top: 10px;
+                font-size: 20px;
+                font-weight: 600;
+                color: #fe6b00;
+            }
+
+        .user {
+            font-weight: 600;
+        }
+        }
+        .splide__pagination__page.is-active {
+            background-color: #fe6b00;
+        }
+        
+        .splide__arrow {
+            position: absolute;
+            background-color: transparent;
+            border: none;
+            font-size: 2rem;
+            color: #505050;
+            font-weight: 300;
+        }
+        
+        .splide__arrow--prev {
+            top: 50%;
+            left: -3.5rem;
+        }
+        
+        .splide__arrow--next {
+            top: 50%;
+            right: -3.5rem;
+        }
+        
+        .splide__pagination__page {
+            height: 10px;
+            width: 10px;
+            opacity: 1;
+        }
+    }
+}
+  
+
+  
+
+  
+  /* Slider container */
+
+  
+
+  
+  /* Media Query */
+  @media (max-width: 900px) {
+    .splide__slide {
+      display: block;
+      text-align: center;
+    }
+  
+    .splide__arrow {
+      font-size: 1.5rem;
+    }
+
+    .slider-container {
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+
+    .slider-container .top-quote, .slider-container .bottom-quote {
+      width: 100px;
+    }
+
+
+    .slider-container .content .text {
+      font-size: 1rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .slider-container .content .user {
+      font-weight: 600;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  
+    /* .splide__arrow--prev {
+      left: 0.5rem;
+    }
+  
+    .splide__arrow--next {
+      right: 0.5rem;
+    } */
+  }
+
+
+
+  @media (max-width: 678px) {
+    .testimonial-container {
+      margin-top: 0px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .slider-container .content{
+      padding: 0px;
+    }
+
+    .slider-container .top-quote {
+      width: 60px;
+      left: 1rem;
+      top: -1.5rem;
+    }
+
+    .slider-container .bottom-quote {
+      right: 1rem;
+      width: 60px;
+      bottom: -1.5rem;
+    }
+  }

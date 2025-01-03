@@ -1,0 +1,92 @@
+.aboutus-hero {
+    position: relative;
+    width: 100vw; /* Full width of the viewport */
+    height: 100vh; /* Full height of the viewport */
+    z-index: 1;
+    top: 0;
+    display: flex;
+    align-items: center; /* Align content to the top */
+    justify-content: center;
+    overflow: hidden; /* Ensure no content spills outside */
+    // padding-bottom: 100px;
+
+    .overlay {
+        position: absolute;
+        width: 100%;
+        height: auto;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 1; /* Overlay stays above the image */
+    }
+
+    .hero-banner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw; /* Full width of the viewport */
+        height: auto; /* Maintain aspect ratio */
+        object-fit: cover; /* Ensures the image covers the container */
+        z-index: -1; /* Push the image behind the overlay */
+    }
+
+    .hero-content {
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        flex-direction: row;
+        gap: 50px;
+        margin-bottom: 50px;
+
+        .hero-details {
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            background-color: white;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            color: black;
+            z-index: 1;
+            padding: 50px;
+            gap: 30px;
+    
+            img {
+                width: 100px;
+            }
+        }
+
+        .hero-stats {
+            width: 60%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 30px;
+            color: black;
+            z-index: 2;
+
+            .stats {
+                display: flex;
+                flex-direction: column;
+                // align-items: left;
+                // text-align: left;
+                // justify-content: left;
+            }
+
+            h2 {
+                color: #fe6b00;
+                font-size: 30px;
+            }
+        }
+    }
+}
+
+@media(max-width : 1750px) {
+    .aboutus-hero {
+        height: 800px;
+    }
+}
+
+@media(max-width : 1550px) {
+    .aboutus-hero {
+        height: 90vh;
+    }
+}
