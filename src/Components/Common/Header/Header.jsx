@@ -17,6 +17,8 @@ import { BiLogIn, BiLogOut, BiSolidDrink } from "react-icons/bi";
 import { dubaiCities } from "../../../DataSet/dubaiCities";
 import { IoClose } from "react-icons/io5";
 import { AnimatePresence, motion } from "framer-motion";
+import { RiInstagramFill } from "react-icons/ri"
+import { FaFacebook, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
 
 export default function Header({searchOption, handleSearchOption, handleMyTournamentClick}) {
 
@@ -169,8 +171,18 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                 <div className="navbar_top">
                     <div className="left_ul">
                         <ul>
-                            <li>Call Us : 971 012345678</li>
-                            <li className="contact-us">Contact Us</li>
+                            <li className="call-us">Call Us : 971 012345678</li>
+                            {/* <li className="contact-us">Contact Us</li> */}
+                            <div className="social">
+                                <p className="social_head">Follow us On :</p>
+                                <div className="social_links">
+                                    <FaFacebook />
+                                    <RiInstagramFill />
+                                    <FaYoutube />
+                                    <FaTwitter />
+                                    <FaLinkedin />
+                                </div>
+                            </div>
                         </ul>
                     </div>
                     <div className="text_slogan">
@@ -179,7 +191,8 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                     <div className="right_ul">
                         <ul>
                             <li><a href="/club-register"><p className="club-register">Register a new <span>Club</span></p></a></li>
-                            <li>Language: <span>EN</span></li>
+                            <li className="contact-us">Contact Us</li>
+                            {/* <li>Language: <span>EN</span></li> */}
                         </ul>
                         {/* <img src={english} alt=""/> */}
                     </div>

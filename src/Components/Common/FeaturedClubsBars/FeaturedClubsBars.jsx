@@ -1,9 +1,10 @@
 import "./FeaturedClubsBars.scss"
 
 import { barsAndClubs } from "../../../DataSet/barsAndClubs"
+import { useNavigate } from "react-router-dom"
 
 export default function FeaturedClubsBars() {
-
+    const navigate = useNavigate()
     return (
         <section id="featuredClubsBars" className="featuredClubsBars">
             <div className="featuredClubsBars-section container-section">
@@ -14,7 +15,7 @@ export default function FeaturedClubsBars() {
                 </div>
                 <div className="featuredClubsBars-content">
                     <div className="left">
-                        <div className="featuredClubsBars-image">
+                        <div className="featuredClubsBars-image" onClick={() => {navigate("/clubs/clubId")}}>
                             <img src={barsAndClubs[0].image} alt=""/>
                         </div>
                         <div className="featuredClubsBars-details">
@@ -28,7 +29,7 @@ export default function FeaturedClubsBars() {
                         </div>
                     </div>
                     <div className="right">
-                        <div className="featuredClubsBars-content1">
+                        <div className="featuredClubsBars-content1" onClick={() => {navigate("/clubs/clubId")}}>
                             <div className="featuredClubsBars-image">
                                 <img src={barsAndClubs[1].image} alt=""/>
                             </div>
@@ -37,7 +38,7 @@ export default function FeaturedClubsBars() {
                                 <p>Blue Lagoon Bar in Jumeirah is a vibrant beachside bar featuring tropical-themed decor, refreshing cocktails, and fresh seafood platters.</p>
                             </div>
                         </div>
-                        <div className="featuredClubsBars-content1">
+                        <div className="featuredClubsBars-content1" onClick={() => {navigate("/clubs/clubId")}}>
                             <div className="featuredClubsBars-image">
                                 <img src={barsAndClubs[2].image} alt=""/>
                             </div>
@@ -46,7 +47,7 @@ export default function FeaturedClubsBars() {
                                 <p>Neon Nights Club in Downtown Dubai offers an electrifying nightlife experience with neon-lit interiors, a pulsating dance floor, and live DJ performances.</p>
                             </div>
                         </div>
-                        <div className="featuredClubsBars-content1">
+                        <div className="featuredClubsBars-content1" onClick={() => {navigate("/clubs/clubId")}}>
                             <div className="featuredClubsBars-image">
                                 <img src={barsAndClubs[3].image} alt=""/>
                             </div>

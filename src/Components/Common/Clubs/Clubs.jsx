@@ -11,8 +11,10 @@ import { useEffect, useState } from "react";
 import { dubaiCities } from "../../../DataSet/dubaiCities";
 import {motion} from "framer-motion"
 import { useAuth } from "../../../Context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Clubs({searchOption}) {
+    const navigate = useNavigate()
     const {searchCity, handleSearchCity} = useAuth()
 
     const [sortBy, setSortBy] = useState("")
@@ -283,7 +285,7 @@ export default function Clubs({searchOption}) {
                         <div className="product-grid">
                         {getProcessedBarsAndClubs().map((ele) => {
                             return (
-                                <div className="product-card" key={ele.id}>
+                                <div className="product-card" key={ele.id} onClick={() => {navigate("/clubs/clubId")}}>
                                     {/* <div className="product-badges">
                                         <span className="badge sale">Sale</span>
                                         <span className="badge new">New</span>

@@ -7,8 +7,10 @@ import 'swiper/css/pagination';
 import { barsAndClubs } from "../../../DataSet/barsAndClubs"
 
 import "./RecentClubs.scss"
+import { useNavigate } from 'react-router-dom';
 
 export default function RecentBars() {
+    const navigate = useNavigate()
     return (
         <section className="recentClubs" id="recentClubs">
             <div className="recentClubs-section container-section">
@@ -55,7 +57,7 @@ export default function RecentBars() {
                 >
                     {barsAndClubs.filter(ele => ele.category === "Club").map((ele, index) => (
                         <SwiperSlide key={index}>
-                            <div className="recentClubs-card">
+                            <div className="recentClubs-card" onClick={() => {navigate("/clubs/clubId")}}>
                                 <div className="recentClubs-image">
                                     {/* <MdOutlineZoomOutMap /> */}
                                     <img src={ele.image} alt="" />

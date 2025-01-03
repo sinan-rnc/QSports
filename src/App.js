@@ -49,14 +49,18 @@ export default function App() {
                 <Route path="/tournaments" element={<TournamentPage/>} />
                 <Route path="/account" element={
                     <PrivateRoutes>
-                        <AccountPage myTournamentButton={myTournamentButton}/>
+                        <AccountPage />
+                    </PrivateRoutes>
+                } />
+                <Route path="/dashboard" element={
+                    <PrivateRoutes>
+                        <DashboardHome />
                     </PrivateRoutes>
                 } />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />  
                 <Route path="/club-register" element={<ClubBarProfile/>} />
                 <Route path="/clubs/clubId" element={<ClubDetailPage/>} />
-                <Route path="/dashboard" element={<DashboardHome myTournamentButton={myTournamentButton}/>} />
             </Routes>
             <Footer/>
         </Fragment>

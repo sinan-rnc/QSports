@@ -144,7 +144,7 @@ export default function ClubDetailPage() {
                             <button className="book-button">Call Now</button>
                         </motion.div>
                         <motion.h4 variants={childVariants} className="clubSlogan2">The true Paradise Experience</motion.h4>
-                        <motion.div variants={childVariants} className="date-time">
+                        <motion.div variants={childVariants} className="place-time">
                             <div className="place">
                                 <MdOutlinePlace />
                                 <div>
@@ -193,6 +193,39 @@ export default function ClubDetailPage() {
                 </div>
             </section>
             <section>
+                <div className="why-club">
+                    <div className="video-player">
+                        <ReactPlayer url="https://youtu.be/Up9JSdyP2mM?si=cTVgCmzvgD76-WD3" className="video" playing={false} muted={true} controls/>
+                    </div>
+                    <motion.div 
+                        variants={textVariants}
+                        initial="initial"
+                        whileInView="animate"
+                        viewport={{ once: false, amount: 0.25 }}
+                        className="why-club-text">
+                        <div className="why-club-top">
+                            <motion.h1 variants={childVariants} className="why-club-title">Why Choose Neon Nights Club?</motion.h1>
+                            <motion.p variants={childVariants} className="why-club-desc">Neon Nights Club stands out as the ultimate destination for nightlife enthusiasts, offering an unmatched blend of vibrant ambiance, exceptional service, and world-class entertainment. Our club boasts a state-of-the-art sound system, dazzling light displays, and a luxurious interior designed to provide an unforgettable experience. Whether you're here to dance the night away or relax in our exclusive lounge areas, Neon Nights Club caters to every mood and preference. We take pride in hosting themed nights, celebrity performances, and exciting future programs that ensure there's always something fresh and exhilarating for our guests. With a convenient location, top-tier security, and a dedicated team committed to exceeding expectations, Neon Nights Club guarantees an unparalleled nightlife experience.  
+                            </motion.p>
+                        </div>
+                        <div className="why-club-bottom">
+                            <motion.h1 variants={childVariants} className="social-link-head">Social Links</motion.h1>
+                            <motion.p variants={childVariants}>Get featured in out instagram by tagging us @neonnightclub.</motion.p>
+                            <motion.div variants={childVariants} className="social-links">
+                                <div className="social instagram">
+                                    <FaInstagram />
+                                    <p>Instagram</p>
+                                </div>
+                                <div className="social facebook">
+                                    <FaFacebookF style={{marginTop:"10px"}}/>
+                                    <p>Facebook</p>
+                                </div>
+                            </motion.div>
+                        </div>
+                    </motion.div>
+                </div>
+            </section>
+            <section>
                 <div className="about-us container-section">
                     <motion.div 
                         variants={textVariants}
@@ -226,39 +259,6 @@ export default function ClubDetailPage() {
                         onMoveNextRequest={goToNext}
                     />
                 )}
-            </section>
-            <section>
-                <div className="why-club">
-                    <div className="video-player">
-                        <ReactPlayer url="https://youtu.be/Up9JSdyP2mM?si=cTVgCmzvgD76-WD3" className="video" playing={true} muted={true} controls/>
-                    </div>
-                    <motion.div 
-                        variants={textVariants}
-                        initial="initial"
-                        whileInView="animate"
-                        viewport={{ once: false, amount: 0.25 }}
-                        className="why-club-text">
-                        <div className="why-club-top">
-                            <motion.h1 variants={childVariants} className="why-club-title">Why Choose Neon Nights Club?</motion.h1>
-                            <motion.p variants={childVariants} className="why-club-desc">Neon Nights Club stands out as the ultimate destination for nightlife enthusiasts, offering an unmatched blend of vibrant ambiance, exceptional service, and world-class entertainment. Our club boasts a state-of-the-art sound system, dazzling light displays, and a luxurious interior designed to provide an unforgettable experience. Whether you're here to dance the night away or relax in our exclusive lounge areas, Neon Nights Club caters to every mood and preference. We take pride in hosting themed nights, celebrity performances, and exciting future programs that ensure there's always something fresh and exhilarating for our guests. With a convenient location, top-tier security, and a dedicated team committed to exceeding expectations, Neon Nights Club guarantees an unparalleled nightlife experience.  
-                            </motion.p>
-                        </div>
-                        <div className="why-club-bottom">
-                            <motion.h1 variants={childVariants} className="social-link-head">Social Links</motion.h1>
-                            <motion.p variants={childVariants}>Get featured in out instagram by tagging us @neonnightclub.</motion.p>
-                            <motion.div variants={childVariants} className="social-links">
-                                <div className="social instagram">
-                                    <FaInstagram />
-                                    <p>Instagram</p>
-                                </div>
-                                <div className="social facebook">
-                                    <FaFacebookF style={{marginTop:"10px"}}/>
-                                    <p>Facebook</p>
-                                </div>
-                            </motion.div>
-                        </div>
-                    </motion.div>
-                </div>
             </section>
             <section>
                 <motion.div 

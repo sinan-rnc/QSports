@@ -53,6 +53,50 @@
                 align-items: center;
                 cursor: pointer;
 
+                .call-us {
+                    color: #333;
+                    transition: .5s;
+                }
+
+                .call-us:hover {
+                    color: #fff;
+                    transition: .5s;
+                }
+                
+
+                .social {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+
+                    .social_head {
+                        color: #333;
+                        transition: .5s;
+                    }
+
+                    .social_head:hover {
+                        color: #fff;
+                        transition: .5s;
+                    }
+
+
+                    .social_links {
+                        display: flex;
+                        gap: 5px;
+
+                        svg {
+                            font-size: 20px;
+                            color: #333;
+                            transition: .5s;
+                        }
+
+                        svg:hover {
+                            color: #fff;
+                            transition: .5s;
+                        }
+                    }
+                }
+
                 .contact-us {
                     color: #ebebeb;
                     font-weight: 500;

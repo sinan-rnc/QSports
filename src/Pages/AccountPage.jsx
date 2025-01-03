@@ -15,7 +15,7 @@ export default function AccountPage({myTournamentButton}) {
                 </Routes> */}
                 {/* <Login/>
                 <Register/> */}
-                <DashboardHome myTournamentButton={myTournamentButton}/>
+                <DashboardHome/>
             </Helmet>
         </Fragment>
     )
