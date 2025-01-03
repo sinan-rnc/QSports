@@ -84,13 +84,12 @@ export default function Footer() {
                         {/* <h3 className="dashborad-second-heading">Club</h3> */}
                     </div>
                     <ul>
-                        <li>Store Location</li>
-                        <li>Order History</li>
-                        <li>Wish List</li>
-                        <li>Newsletter</li>
-                        <li>Special Offers</li>
-                        <li>Gift Certificates</li>
-                        <li>Affiliate</li>
+                        <li>Dashboard</li>
+                        <li>Profile</li>
+                        <li>My Tournaments</li>
+                        <li>Login</li>
+                        <li>Regsiter</li>
+                        <li>Club Register</li>
                     </ul>
                 </div>
                 <div className="footer_col">

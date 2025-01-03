@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react"
 import { motion } from "framer-motion"
-import Lightbox from 'react-image-lightbox';
-import 'react-image-lightbox/style.css';
+// import Lightbox from 'react-image-lightbox';
+// import 'react-image-lightbox/style.css';
 import ReactPlayer from "react-player"
 
 import { MdOutlinePlace } from "react-icons/md"
@@ -192,10 +192,10 @@ export default function ClubDetailPage() {
                     </motion.div>
                 </div>
             </section>
-            <section>
+                        <section>
                 <div className="why-club">
                     <div className="video-player">
-                        <ReactPlayer url="https://youtu.be/Up9JSdyP2mM?si=cTVgCmzvgD76-WD3" className="video" playing={false} muted={true} controls/>
+                        <ReactPlayer url="https://youtu.be/Up9JSdyP2mM?si=cTVgCmzvgD76-WD3" className="video" playing={true} muted={true} controls/>
                     </div>
                     <motion.div 
                         variants={textVariants}
@@ -249,7 +249,7 @@ export default function ClubDetailPage() {
                         </motion.div>
                     </motion.div>
                 </div>
-                {isOpen && (
+                {/* {isOpen && (
                     <Lightbox
                         mainSrc={images[currentIndex1]}
                         nextSrc={images[(currentIndex1 + 1) % images.length]}
@@ -258,7 +258,7 @@ export default function ClubDetailPage() {
                         onMovePrevRequest={goToPrev}
                         onMoveNextRequest={goToNext}
                     />
-                )}
+                )} */}
             </section>
             <section>
                 <motion.div 
