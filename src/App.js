@@ -15,7 +15,7 @@ import DashboardHome from "./Components/Account/DashboardHome/DashboardHome";
 import { useAuth } from "./Context/AuthContext";
 import ClubBarProfile from "./Components/Account/ClubBarProfile/ClubBarProfile";
 import PrivateRoutes from "./General/PrivateRoutes";
-import ClubDetailPage from "./Components/Common/DetailPages/ClubDetailPage";
+import ClubBarDetailPage from "./Components/Common/DetailPages/ClubBarDetailPage/ClubBarDetailPage";
 
 
 export default function App() {
@@ -36,7 +36,7 @@ export default function App() {
             handleLogin(user)
             // console.log("Qsports Logged In", user)
         }
-    }, [handleLogin])
+    }, [])
 
     return (
         <Fragment>
@@ -60,7 +60,7 @@ export default function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />  
                 <Route path="/club-register" element={<ClubBarProfile/>} />
-                <Route path="/clubs/clubId" element={<ClubDetailPage/>} />
+                <Route path="/clubs/:clubName" element={<ClubBarDetailPage/>} />
             </Routes>
             <Footer/>
         </Fragment>

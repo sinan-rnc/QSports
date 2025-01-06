@@ -1,28 +1,41 @@
-import { Fragment, useState } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { motion } from "framer-motion"
-// import Lightbox from 'react-image-lightbox';
-// import 'react-image-lightbox/style.css';
+import Lightbox from 'react-image-lightbox';
+import 'react-image-lightbox/style.css';
 import ReactPlayer from "react-player"
 
 import { MdOutlinePlace } from "react-icons/md"
 import { LuClock9 } from "react-icons/lu"
 import { RiArrowLeftWideLine, RiArrowRightWideLine } from "react-icons/ri"
-import "./ClubDetailPage.scss"
+import "./ClubBarDetailPage.scss"
 
-import herobanner1 from "../../../Assets/Bars&Clubs/8.jpg"
-import herobanner2 from "../../../Assets/Bars&Clubs/9.jpg"
-import herobanner3 from "../../../Assets/Bars&Clubs/10.jpg"
-import herobanner4 from "../../../Assets/Bars&Clubs/12.jpg"
-import herobanner5 from "../../../Assets/Bars&Clubs/4.jpg"
-import herobanner6 from "../../../Assets/Bars&Clubs/7.jpg"
+import herobanner1 from "../../../../Assets/Bars&Clubs/8.jpg"
+import herobanner2 from "../../../../Assets/Bars&Clubs/9.jpg"
+import herobanner3 from "../../../../Assets/Bars&Clubs/10.jpg"
+import herobanner4 from "../../../../Assets/Bars&Clubs/12.jpg"
+import herobanner5 from "../../../../Assets/Bars&Clubs/4.jpg"
+import herobanner6 from "../../../../Assets/Bars&Clubs/7.jpg"
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
+import { useParams } from "react-router-dom"
+import { barsAndClubs } from "../../../../DataSet/barsAndClubs"
 
 export default function ClubDetailPage() {
+    const {clubName} = useParams()
+    const clubNameNew = clubName.replace(/-/g, ' ') // Replace hyphens with spaces
+                                .split(' ') // Split the string by spaces
+                                .map(word => word.charAt(0).toUpperCase() + word.slice(1))  // Capitalize first letter of each word
+                                .join(' ')
+    const clubData = barsAndClubs.find(ele => ele.name === clubNameNew)
+    console.log(clubData)
     const images = [herobanner1, herobanner2, herobanner3, herobanner4, herobanner5, herobanner6];
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState(0);
     const [currentIndex1, setCurrentIndex1] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
+
+    useEffect(() => {
+        window.scrollTo(0, 0); // Scroll to the top-left corner of the page
+    }, []);
 
     const openLightbox = (index) => {
         console.log('Opening image:', index);
@@ -138,9 +151,9 @@ export default function ClubDetailPage() {
                         viewport={{ once: false, amount: 0.5 }}
                         key={currentIndex}
                         className="club-details container-section">
-                        <motion.h1 variants={childVariants} className="clubName">Neon Nights Club</motion.h1>
+                        <motion.h1 variants={childVariants} className="clubName">{clubData?.name}</motion.h1>
                         <motion.div variants={childVariants} className="book-button-div">
-                            <h3 className="clubSlogan">Book Your Games at Neon Nights Club</h3>
+                            <h3 className="clubSlogan">Book Your Games at {clubData?.name}</h3>
                             <button className="book-button">Call Now</button>
                         </motion.div>
                         <motion.h4 variants={childVariants} className="clubSlogan2">The true Paradise Experience</motion.h4>
@@ -148,7 +161,7 @@ export default function ClubDetailPage() {
                             <div className="place">
                                 <MdOutlinePlace />
                                 <div>
-                                    <h1>Dubai Marina</h1>
+                                    <h1>{clubData.city}</h1>
                                     <h2>Dubai, UAE</h2>
                                 </div>
                             </div>
@@ -176,7 +189,7 @@ export default function ClubDetailPage() {
                         whileInView="animate2"
                         viewport={{ once: false, amount: 0.5 }}
                         className="callout-text">
-                        <motion.h2 variants={childVariants}>VOTED #3 <span>BEST CLUB</span> IN THE WORLD</motion.h2>
+                        <motion.h2 variants={childVariants}>VOTED #{clubData?.id} <span>BEST CLUB</span> IN THE WORLD</motion.h2>
                         <motion.p variants={childVariants}>
                         Thousands of party goers embark on the beautiful Mykonos island every year, ready to enjoy an all-day experience at one of the most famous beach clubs in the world.
                         </motion.p>
@@ -204,13 +217,13 @@ export default function ClubDetailPage() {
                         viewport={{ once: false, amount: 0.25 }}
                         className="why-club-text">
                         <div className="why-club-top">
-                            <motion.h1 variants={childVariants} className="why-club-title">Why Choose Neon Nights Club?</motion.h1>
-                            <motion.p variants={childVariants} className="why-club-desc">Neon Nights Club stands out as the ultimate destination for nightlife enthusiasts, offering an unmatched blend of vibrant ambiance, exceptional service, and world-class entertainment. Our club boasts a state-of-the-art sound system, dazzling light displays, and a luxurious interior designed to provide an unforgettable experience. Whether you're here to dance the night away or relax in our exclusive lounge areas, Neon Nights Club caters to every mood and preference. We take pride in hosting themed nights, celebrity performances, and exciting future programs that ensure there's always something fresh and exhilarating for our guests. With a convenient location, top-tier security, and a dedicated team committed to exceeding expectations, Neon Nights Club guarantees an unparalleled nightlife experience.  
+                            <motion.h1 variants={childVariants} className="why-club-title">Why Choose {clubData?.name}?</motion.h1>
+                            <motion.p variants={childVariants} className="why-club-desc">{clubData?.name} stands out as the ultimate destination for nightlife enthusiasts, offering an unmatched blend of vibrant ambiance, exceptional service, and world-class entertainment. Our club boasts a state-of-the-art sound system, dazzling light displays, and a luxurious interior designed to provide an unforgettable experience. Whether you're here to dance the night away or relax in our exclusive lounge areas, {clubData?.name} caters to every mood and preference. We take pride in hosting themed nights, celebrity performances, and exciting future programs that ensure there's always something fresh and exhilarating for our guests. With a convenient location, top-tier security, and a dedicated team committed to exceeding expectations, {clubData?.name} guarantees an unparalleled nightlife experience.  
                             </motion.p>
                         </div>
                         <div className="why-club-bottom">
                             <motion.h1 variants={childVariants} className="social-link-head">Social Links</motion.h1>
-                            <motion.p variants={childVariants}>Get featured in out instagram by tagging us @neonnightclub.</motion.p>
+                            <motion.p variants={childVariants}>Get featured in out instagram by tagging us @{clubData?.name.replace(/\s+/g, "").toLowerCase()}.</motion.p>
                             <motion.div variants={childVariants} className="social-links">
                                 <div className="social instagram">
                                     <FaInstagram />
@@ -234,7 +247,7 @@ export default function ClubDetailPage() {
                         viewport={{ once: false, amount: 0.25 }}
                         className="history">
                         <motion.h2 variants={childVariants} className="history-title">History of the Club</motion.h2>
-                        <motion.p variants={childVariants}>Neon Nights Club first opened its doors in 2010, quickly becoming a landmark in the city's nightlife scene. In its early days, the club offered an intimate yet electrifying atmosphere, attracting a diverse crowd of partygoers and music lovers. The club’s opening was marked by an exclusive launch party featuring renowned DJs, setting the tone for the many unforgettable nights to come. Over the years, it hosted a wide array of exciting events, from live music performances to themed parties and international DJ sets. As the club evolved, it expanded its programs to include high-profile celebrity appearances, dance competitions, and private events, all while staying true to its mission of providing a unique and dynamic nightlife experience for its patrons. Today, Neon Nights Club continues to be a trendsetter, constantly evolving to meet the desires of its ever-growing fan base.</motion.p>
+                        <motion.p variants={childVariants}>{clubData?.name} first opened its doors in 2010, quickly becoming a landmark in the city's nightlife scene. In its early days, the club offered an intimate yet electrifying atmosphere, attracting a diverse crowd of partygoers and music lovers. The club’s opening was marked by an exclusive launch party featuring renowned DJs, setting the tone for the many unforgettable nights to come. Over the years, it hosted a wide array of exciting events, from live music performances to themed parties and international DJ sets. As the club evolved, it expanded its programs to include high-profile celebrity appearances, dance competitions, and private events, all while staying true to its mission of providing a unique and dynamic nightlife experience for its patrons. Today, {clubData?.name} continues to be a trendsetter, constantly evolving to meet the desires of its ever-growing fan base.</motion.p>
                         <motion.div 
                             variants={textVariants}
                             initial="initial"
@@ -249,7 +262,7 @@ export default function ClubDetailPage() {
                         </motion.div>
                     </motion.div>
                 </div>
-                {/* {isOpen && (
+                {isOpen && (
                     <Lightbox
                         mainSrc={images[currentIndex1]}
                         nextSrc={images[(currentIndex1 + 1) % images.length]}
@@ -258,7 +271,7 @@ export default function ClubDetailPage() {
                         onMovePrevRequest={goToPrev}
                         onMoveNextRequest={goToNext}
                     />
-                )} */}
+                )}
             </section>
             <section>
                 <motion.div 

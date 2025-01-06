@@ -57,7 +57,7 @@ export default function RecentBars() {
                 >
                     {barsAndClubs.filter(ele => ele.category === "Club").map((ele, index) => (
                         <SwiperSlide key={index}>
-                            <div className="recentClubs-card" onClick={() => {navigate("/clubs/clubId")}}>
+                            <div className="recentClubs-card" onClick={() => {navigate(`/clubs/${ele.name.replace(/\s+/g, '-').toLowerCase()}`)}}>
                                 <div className="recentClubs-image">
                                     {/* <MdOutlineZoomOutMap /> */}
                                     <img src={ele.image} alt="" />
@@ -66,12 +66,12 @@ export default function RecentBars() {
                                 <div className="left">
                                     <h3>{ele.name}</h3>
                                     <p>{ele.city}</p>
-                                    <div classNameName="rating">
-                                        <span classNameName="star">&#9733;</span>
-                                        <span classNameName="star">&#9733;</span>
-                                        <span classNameName="star">&#9733;</span>
-                                        <span classNameName="star">&#9733;</span>
-                                        <span classNameName="star">&#9733;</span>
+                                    <div className="rating">
+                                        <span className="star">&#9733;</span>
+                                        <span className="star">&#9733;</span>
+                                        <span className="star">&#9733;</span>
+                                        <span className="star">&#9733;</span>
+                                        <span className="star">&#9733;</span>
                                     </div>
                                 </div>
                                 <div className="right">

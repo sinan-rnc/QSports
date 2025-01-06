@@ -47,9 +47,10 @@ export default function Bars({searchOption}) {
     // };
 
     // Filtered and sorted array based on selected filters and sort option
-    const getProcessedBarsAndClubs = () => {
+    const getProcessedBars = () => {
         // Apply category filter
         let filteredArray = barsAndClubs.filter((ele) => {
+            if(ele.category !== "Bar") return false
             if (searchCity && !ele.city.includes(searchCity)) {
                 return false; // If category filter does not match, exclude this item
             }
@@ -80,6 +81,7 @@ export default function Bars({searchOption}) {
     };
 
     const totalFilteredItems = barsAndClubs.filter((ele) => {
+        if(ele.category !== "Bar") return false
         if (searchCity && !ele.city.includes(searchCity)) {
             return false; // If category filter does not match, exclude this item
         }
@@ -276,15 +278,15 @@ export default function Bars({searchOption}) {
                     </div>
 
                     {/* <!-- Product Grid --> */}
-                    {getProcessedBarsAndClubs().length === 0 ? (
+                    {getProcessedBars().length === 0 ? (
                         <div className="product-grid-zero">
                             <p>No Record Found,  <button className="no-record" onClick={handleReset}>Show All</button></p>
                         </div>
                     ) : (
                         <div className="product-grid">
-                        {getProcessedBarsAndClubs().map((ele) => {
+                        {getProcessedBars().map((ele) => {
                             return (
-                                <div className="product-card" key={ele.id} onClick={() => {navigate("/clubs/clubId")}}>
+                                <div className="product-card" key={ele.id} onClick={() => {navigate(`/clubs/${ele.name.replace(/\s+/g, '-').toLowerCase()}`)}}>
                                     {/* <div className="product-badges">
                                         <span className="badge sale">Sale</span>
                                         <span className="badge new">New</span>

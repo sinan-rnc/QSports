@@ -66,14 +66,14 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
             userDashboardRef.current &&
             !userDashboardRef.current.contains(event.target)
         ) {
-            setOpenUserDashboard(false);
+            handleOpenUserDashboard();
         }
     
         if (
             searchDashboardRef.current &&
             !searchDashboardRef.current.contains(event.target)
         ) {
-            setOpenSearchDashboard(false);
+            handleOpenSerachDashboard();
         }
     };
 
@@ -171,7 +171,7 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                 <div className="navbar_top">
                     <div className="left_ul">
                         <ul>
-                            <li className="call-us">Call Us : 971 012345678</li>
+                            <li className="call-us">Call Us : <span>971 012345678</span></li>
                             {/* <li className="contact-us">Contact Us</li> */}
                             <div className="social">
                                 <p className="social_head">Follow us On :</p>
@@ -224,8 +224,10 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                     </div>
                     <ul className="acc_details">
                         <li onClick={() => {
-                            navigate("/account")
-                            if(!user) {
+                            console.log("Navigating to account page");
+                            if(user) {
+                                navigate("/account")
+                            } else {
                                 setAlertMessage("Login to access to your account")
                                 setAlertMessageColor("red")
                             }

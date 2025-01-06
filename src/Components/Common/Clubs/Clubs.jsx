@@ -47,9 +47,10 @@ export default function Clubs({searchOption}) {
     // };
 
     // Filtered and sorted array based on selected filters and sort option
-    const getProcessedBarsAndClubs = () => {
+    const getProcessedClubs = () => {
         // Apply category filter
         let filteredArray = barsAndClubs.filter((ele) => {
+            if(ele.category !== "Club") return false
             if (searchCity && !ele.city.includes(searchCity)) {
                 return false; // If category filter does not match, exclude this item
             }
@@ -79,9 +80,10 @@ export default function Clubs({searchOption}) {
         return filteredArray.slice(startIndex, endIndex);
     };
 
-    getProcessedBarsAndClubs()
+    getProcessedClubs()
 
     const totalFilteredItems = barsAndClubs.filter((ele) => {
+        if(ele.category !== "Club") return false
         if (searchCity && !ele.city.includes(searchCity)) {
             return false; // If category filter does not match, exclude this item
         }
@@ -277,15 +279,15 @@ export default function Clubs({searchOption}) {
                     </div>
 
                     {/* <!-- Product Grid --> */}
-                    {getProcessedBarsAndClubs().length === 0 ? (
+                    {getProcessedClubs().length === 0 ? (
                         <div className="product-grid-zero">
                             <p>No Record Found,  <button className="no-record" onClick={handleReset}>Show All</button></p>
                         </div>
                     ) : (
                         <div className="product-grid">
-                        {getProcessedBarsAndClubs().map((ele) => {
+                        {getProcessedClubs().map((ele) => {
                             return (
-                                <div className="product-card" key={ele.id} onClick={() => {navigate("/clubs/clubId")}}>
+                                <div className="product-card" key={ele.id} onClick={() => {navigate(`/clubs/${ele.name.replace(/\s+/g, '-').toLowerCase()}`)}}>
                                     {/* <div className="product-badges">
                                         <span className="badge sale">Sale</span>
                                         <span className="badge new">New</span>
@@ -299,12 +301,12 @@ export default function Clubs({searchOption}) {
                                         <div className="left">
                                             <h3>{ele.name}</h3>
                                             <p>{ele.city}</p>
-                                            <div classNameName="rating">
-                                                <span classNameName="star">&#9733;</span>
-                                                <span classNameName="star">&#9733;</span>
-                                                <span classNameName="star">&#9733;</span>
-                                                <span classNameName="star">&#9733;</span>
-                                                <span classNameName="star">&#9733;</span>
+                                            <div className="rating">
+                                                <span className="star">&#9733;</span>
+                                                <span className="star">&#9733;</span>
+                                                <span className="star">&#9733;</span>
+                                                <span className="star">&#9733;</span>
+                                                <span className="star">&#9733;</span>
                                             </div>
                                         </div>
                                         <div className="right">
