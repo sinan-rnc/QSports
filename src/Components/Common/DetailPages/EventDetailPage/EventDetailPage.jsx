@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Fragment } from "react";
@@ -98,6 +98,10 @@ export default function EventDetailPage() {
         setDirection(index > currentIndex ? 1 : -1);
         setCurrentIndex(index);
     };
+
+    useEffect(() => {
+            window.scrollTo(0, 0); // Scroll to the top-left corner of the page
+        }, []);
 
     return (
         <Fragment>

@@ -9,8 +9,10 @@ import stick from "../../../Assets/Common/Billiard-Stick.png"
 import "./TournamentEvents.scss"
 import { MdOutlineZoomOutMap } from 'react-icons/md';
 import { tournaments } from '../../../DataSet/tournaments';
+import { useNavigate } from 'react-router-dom';
 
 export default function TournamentEvents() {
+    const navigate = useNavigate()
     return (
         <section className="tournamentevents">
         <div className="tournamentevents-section container-section">
@@ -57,7 +59,7 @@ export default function TournamentEvents() {
             >
                 {tournaments.map((ele, index) => (
                     <SwiperSlide key={index}>
-                        <div className="tournamentevents-card">
+                        <div className="tournamentevents-card" onClick={() => {navigate(`/events/${ele.name.replace(/\s+/g, '-').toLowerCase()}`)}}>
                             <div className="tournamentevents-image">
                                 {/* <MdOutlineZoomOutMap /> */}
                                 <img src={ele.image} alt="" />
