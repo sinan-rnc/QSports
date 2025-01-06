@@ -16,6 +16,7 @@ import { useAuth } from "./Context/AuthContext";
 import ClubBarProfile from "./Components/Account/ClubBarProfile/ClubBarProfile";
 import PrivateRoutes from "./General/PrivateRoutes";
 import ClubBarDetailPage from "./Components/Common/DetailPages/ClubBarDetailPage/ClubBarDetailPage";
+import EventDetailPage from "./Components/Common/DetailPages/EventDetailPage/EventDetailPage";
 
 
 export default function App() {
@@ -61,6 +62,7 @@ export default function App() {
                 <Route path="/register" element={<Register />} />  
                 <Route path="/club-register" element={<ClubBarProfile/>} />
                 <Route path="/clubs/:clubName" element={<ClubBarDetailPage/>} />
+                <Route path="events/:eventName" element={<EventDetailPage/>} />
             </Routes>
             <Footer/>
         </Fragment>

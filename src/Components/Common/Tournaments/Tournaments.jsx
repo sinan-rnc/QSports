@@ -11,10 +11,12 @@ import { useEffect, useState } from "react";
 import { dubaiCities } from "../../../DataSet/dubaiCities";
 import { motion } from "framer-motion";
 import { useAuth } from "../../../Context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Tournaments({searchOption}) {
 
     const {searchCity, handleSearchCity} = useAuth()
+    const navigate = useNavigate();
 
     const [sortBy, setSortBy] = useState("")
     const [showNo, setShowNo] = useState(6)
@@ -352,7 +354,7 @@ export default function Tournaments({searchOption}) {
                         <div className="tournament-grid">
                         {getProcessedBarsAndClubs().map((ele) => {
                             return (
-                                <div className="tournament-card" key={ele.id}>
+                                <div className="tournament-card" key={ele.id} onClick={() => {navigate(`/events/${ele.name.replace(/\s+/g, '-').toLowerCase()}`)}}>
                                     {/* <div className="product-badges">
                                         <span className="badge sale">Sale</span>
                                         <span className="badge new">New</span>

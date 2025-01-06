@@ -19,7 +19,7 @@ import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import { useParams } from "react-router-dom"
 import { barsAndClubs } from "../../../../DataSet/barsAndClubs"
 
-export default function ClubDetailPage() {
+export default function ClubBarDetailPage() {
     const {clubName} = useParams()
     const clubNameNew = clubName.replace(/-/g, ' ') // Replace hyphens with spaces
                                 .split(' ') // Split the string by spaces
@@ -205,10 +205,10 @@ export default function ClubDetailPage() {
                     </motion.div>
                 </div>
             </section>
-                        <section>
+            <section>
                 <div className="why-club">
                     <div className="video-player">
-                        <ReactPlayer url="https://youtu.be/Up9JSdyP2mM?si=cTVgCmzvgD76-WD3" className="video" playing={true} muted={true} controls/>
+                        <ReactPlayer url="https://youtu.be/Up9JSdyP2mM?si=cTVgCmzvgD76-WD3" className="video" playing={false} muted={true} controls/>
                     </div>
                     <motion.div 
                         variants={textVariants}

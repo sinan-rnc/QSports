@@ -8,7 +8,7 @@ import image6 from "../Assets/Tournaments/11.jpg"
 export const tournaments = [
     {
       id: 1,
-      name: "Rack 'Em Up Challenge",
+      name: "Rack Em Up Challenge",
       clubName: "The Velvet Lounge",
       type: "Single Elimination",
       category: "Club",
@@ -32,7 +32,7 @@ export const tournaments = [
     },
     {
       id: 3,
-      name: "Eight-Ball Showdown",
+      name: "Eight Ball Showdown",
       clubName: "Moonlight Tavern",
       type: "Swiss System",
       category: "Club",
