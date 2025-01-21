@@ -19,7 +19,7 @@ export default function TournamentEvents() {
             <div className="tournamentevents-header">
                 <div className='header-top'>
                     <div className="heading">
-                        <h1 className='main-heading'>Recent Tournaments</h1>
+                        <h1 className='main-heading'>Tournament Events</h1>
                         <hr className="hr-1"/><hr className="hr-2"/>
                         <h3 className="second-heading">New</h3>
                     </div>
@@ -83,6 +83,6 @@ export default function TournamentEvents() {
                 ))}
             </Swiper>
         </div>
-    </section>
+        </section>
     )
 }

@@ -122,10 +122,12 @@
                 box-shadow: none;
                 border: none;
                 cursor: pointer;
+                transition: .3s;
             }
 
             .book-button:hover {
                 background-color: rgba(254, 107, 0, .3);
+                transition: .3s;
             }
         }
 
@@ -348,7 +350,7 @@
     }
     
     button {
-        padding: 10px 50px;
+        padding: 10px 30px;
         font-size: 20px;
         text-transform: uppercase;
         border: 2px solid #fe6b00;
@@ -356,7 +358,7 @@
         color: #fe6b00;
         font-weight: 600;
         border-radius: 5px;
-        width: 100%;
+        width: 250px;
     }
 
     button:hover {

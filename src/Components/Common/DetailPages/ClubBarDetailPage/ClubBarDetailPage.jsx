@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import ReactPlayer from "react-player"
 
 import { MdOutlinePlace } from "react-icons/md"
-import { LuClock9 } from "react-icons/lu"
+import { LuClock9, LuMoveRight } from "react-icons/lu"
 import { RiArrowLeftWideLine, RiArrowRightWideLine } from "react-icons/ri"
 import "./ClubBarDetailPage.scss"
 
@@ -16,10 +16,13 @@ import herobanner4 from "../../../../Assets/Bars&Clubs/12.jpg"
 import herobanner5 from "../../../../Assets/Bars&Clubs/4.jpg"
 import herobanner6 from "../../../../Assets/Bars&Clubs/7.jpg"
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { barsAndClubs } from "../../../../DataSet/barsAndClubs"
+import { tournaments } from "../../../../DataSet/tournaments"
+import { IoIosArrowRoundForward } from "react-icons/io"
 
 export default function ClubBarDetailPage() {
+    const navigate = useNavigate()
     const {clubName} = useParams()
     const clubNameNew = clubName.replace(/-/g, ' ') // Replace hyphens with spaces
                                 .split(' ') // Split the string by spaces
@@ -32,6 +35,12 @@ export default function ClubBarDetailPage() {
     const [direction, setDirection] = useState(0);
     const [currentIndex1, setCurrentIndex1] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
+
+    // console.log(tournament)
+
+    // console.log("Year:", year);
+    // console.log("Month:", monthName);
+    // console.log("Day:", day);
 
     useEffect(() => {
         window.scrollTo(0, 0); // Scroll to the top-left corner of the page
@@ -236,6 +245,49 @@ export default function ClubBarDetailPage() {
                             </motion.div>
                         </div>
                     </motion.div>
+                </div>
+            </section>
+            <section>
+                <div className="upcoming-events container-section">
+                    <div className="heading">
+                        <h1 className='main-heading'>Upcoming Events</h1>
+                        <hr className="hr-1"/><hr className="hr-2"/>
+                        <h3 className="second-heading">all</h3>
+                    </div>
+                    <hr className="hr"/>
+                    {tournaments?.slice(0, 3)?.map((ele) => {
+                        const date = ele.date;
+                        const [year, month, day] = date.split("-");
+                        const monthNames = [
+                        "January", "February", "March", "April", "May", "June",
+                        "July", "August", "September", "October", "November", "December"
+                        ];
+                    
+                        const monthName = monthNames[parseInt(month, 10) - 1];
+                        return (
+                            <>
+                                <div className="events">
+                                    <div className="img-div">
+                                        <img src={ele.image} alt=""/>
+                                    </div>
+                                    <div className="event-info">
+                                        <div className="left">
+                                            {day}
+                                            <span>{monthName.slice(0,3)} {year}</span>
+                                        </div>
+                                        <div className="right">
+                                            <h1>{ele.name}</h1>
+                                            <div className="time">
+                                            <div className="arrow" onClick={() => {navigate(`/events/${ele.name.replace(/\s+/g, '-').toLowerCase()}`)}}><IoIosArrowRoundForward /></div>
+                                                <span>{ele.time} - 05:00 PM</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr/>
+                            </>
+                        )
+                    })}
                 </div>
             </section>
             <section>

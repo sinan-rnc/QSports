@@ -204,6 +204,13 @@ footer {
                         cursor: pointer;
                         z-index: 1;
                         color: #fe6b00;
+                        transition: .3s;
+                    }
+
+                    svg:hover {
+                        color: #fff;
+                        transform: scale(1.1);
+                        transition: .3s;
                     }
                 }
             } 

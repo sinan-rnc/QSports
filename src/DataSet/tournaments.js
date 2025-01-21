@@ -246,8 +246,8 @@ export const tournaments = [
       image: image2,
       city: "Palm Jumeirah",
     },
-        {
-        id: 4,
+    {
+        id: 21,
         name: "Break Shot Blitz",
         clubName: "Neon Nights Club",
         type: "Round Robin",
@@ -259,7 +259,7 @@ export const tournaments = [
         image: image4,
     },
     {
-        id: 5,
+        id: 22,
         name: "The Golden Break",
         clubName: "Pulse Ultra Lounge",
         type: "Knockout",
@@ -271,7 +271,7 @@ export const tournaments = [
         image: image5,
     },
     {
-        id: 6,
+        id: 23,
         name: "Bank Shot Brawl",
         clubName: "Aurora Rooftop",
         type: "Double Elimination",
@@ -283,7 +283,7 @@ export const tournaments = [
         image: image6,
     },
     {
-        id: 7,
+        id: 24,
         name: "Pocket Masters",
         clubName: "The Scarlet Room",
         type: "Single Elimination",
@@ -295,7 +295,7 @@ export const tournaments = [
         image: image1,
     },
     {
-        id: 8,
+        id: 25,
         name: "Chalk It Up Clash",
         clubName: "Echo Bar & Grill",
         type: "Ladder Tournament",
@@ -307,7 +307,7 @@ export const tournaments = [
         image: image2,
     },
     {
-        id: 9,
+        id: 26,
         name: "Starlight Showdown",
         clubName: "Starlight Clubhouse",
         type: "Swiss System",
@@ -319,7 +319,7 @@ export const tournaments = [
         image: image3,
     },
     {
-        id: 10,
+        id: 27,
         name: "Infinity Cue Cup",
         clubName: "Infinity Lounge",
         type: "Round Robin",
@@ -331,7 +331,7 @@ export const tournaments = [
         image: image4,
     },
     {
-        id: 11,
+        id: 28,
         name: "Skyline Pool League",
         clubName: "Skyline Club",
         type: "Single Elimination",
@@ -343,7 +343,7 @@ export const tournaments = [
         image: image5,
     },
     {
-        id: 12,
+        id: 29,
         name: "Crimson Cue Clash",
         clubName: "Crimson Vibes",
         type: "Knockout",
@@ -355,7 +355,7 @@ export const tournaments = [
         image: image6,
     },
     {
-        id: 13,
+        id: 30,
         name: "Twilight Cue Clash",
         clubName: "Twilight Terrace",
         type: "Double Elimination",
@@ -367,7 +367,7 @@ export const tournaments = [
         image: image1,
     },
     {
-        id: 14,
+        id:31,
         name: "The Groove Masters",
         clubName: "The Groove Den",
         type: "Swiss System",
@@ -379,7 +379,7 @@ export const tournaments = [
         image: image2,
     },
     {
-        id: 15,
+        id: 32,
         name: "Sapphire Showdown",
         clubName: "Sapphire Nights",
         type: "Ladder Tournament",
@@ -391,7 +391,7 @@ export const tournaments = [
         image: image3,
     },
     {
-        id: 16,
+        id: 33,
         name: "Break & Run Challenge",
         clubName: "The Liquid Room",
         type: "Knockout",
@@ -403,7 +403,7 @@ export const tournaments = [
         image: image4,
     },
     {
-        id: 17,
+        id: 34,
         name: "Cue Battle Royale",
         clubName: "Enigma Bar",
         type: "Swiss System",
@@ -415,7 +415,7 @@ export const tournaments = [
         image: image5,
     },
     {
-        id: 18,
+        id: 35,
         name: "Mystic Cue Duel",
         clubName: "Mystic Nights",
         type: "Round Robin",
@@ -427,7 +427,7 @@ export const tournaments = [
         image: image6,
     },
     {
-        id: 19,
+        id: 36,
         name: "Golden Hour Clash",
         clubName: "Golden Hour Bar",
         type: "Double Elimination",
@@ -439,7 +439,7 @@ export const tournaments = [
         image: image1,
     },
     {
-        id: 20,
+        id: 37,
         name: "Cue Masters Carnival",
         clubName: "Fusion Lounge",
         type: "Ladder Tournament",

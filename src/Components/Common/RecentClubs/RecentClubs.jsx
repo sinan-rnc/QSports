@@ -35,8 +35,8 @@ export default function RecentBars() {
                 <Swiper
                     modules={[ Navigation, Pagination]}
                     navigation={{
-                        nextEl: '.prev-arrow-club',
-                        prevEl: '.next-arrow-club',
+                        nextEl: '.next-arrow-club',
+                        prevEl: '.prev-arrow-club',
                     }}
                     pagination={false}
                     spaceBetween={20}

@@ -122,10 +122,12 @@
                 box-shadow: none;
                 border: none;
                 cursor: pointer;
+                transition: .3s;
             }
 
             .book-button:hover {
                 background-color: rgba(254, 107, 0, .3);
+                transition: .3s;
             }
         }
 
@@ -448,6 +450,136 @@
             }
         }
     }
+}
+
+.upcoming-events {
+    padding-top: 100px;
+
+    .heading {
+        .main-heading {
+            color: gray;
+        }
+
+        .second-heading {
+            color: gray;
+        }
+    }
+
+    .hr {
+        background: #989898;
+        border: 1.5px solid #989898;
+        margin-top: 20px;
+    }
+
+    .events {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        align-content: center;
+        // justify-content: center;
+        gap: 100px;
+        margin-bottom: 5px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        // border-bottom: 2px solid #989898;
+
+        .img-div {
+            width: 400px;
+            height: 100%;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .event-info {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 100px;
+
+            .left {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                font-size: 50px;
+                font-weight: 800;
+
+                span {
+                    font-size: 18px;
+                    color: #fe6b00;
+                    font-weight: 600;
+                }
+            }
+
+            .right {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
+                h1 {
+                    font-size: 30px;
+                    letter-spacing: 2px;
+                    text-transform: uppercase;
+                }
+
+                .time {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 20px;
+
+                    .arrow {
+                        position: relative;
+                        overflow: hidden;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center; /* Added for centering content */
+                        font-size: 30px;
+                        border: 2px solid #000;
+                        border-radius: 50%;
+                        cursor: pointer;
+                        z-index: 2;
+                        transition: 1.5s;
+                    }
+                    
+                    .arrow:hover {
+                        background-color: #fe6b00;
+                        color: #fe6b00;
+                        transition: 1.5s;
+                        border: 2px solid #fe6b00;
+                    }
+                    
+                    .arrow::before {
+                        content: "";
+                        position: absolute;
+                        left: 0; /* Start from the left */
+                        top: 0;
+                        height: 100%; /* Full height of the element */
+                        width: 0%; /* Start with 0 width */
+                        background-color: #fefefe;
+                        transform: translate(0, 0);
+                        z-index: -1;
+                        transition: width 1.5s ease; /* Animate the width */
+                    }
+                    
+                    .arrow:hover::before {
+                        width: 100%; /* Fill to the full width */
+                    }
+                    
+                }
+
+            }
+        }
+    }
+
+    hr {
+        background: #989898;
+        border: 1px solid #989898;
+        // margin-top: 20px;
+    }    
 }
 
 .book-now-box {

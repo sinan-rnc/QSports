@@ -11,6 +11,7 @@ import TournamentEvents from "../Components/Common/TournamentEvents/TournamentEv
 import FeaturedTournaments from "../Components/Common/FeaturedTournaments/FeaturedTournaments";
 import Highlights from "../Components/Common/Highlights/Highlights";
 import FeaturedClubsBars from "../Components/Common/FeaturedClubsBars/FeaturedClubsBars";
+import Quotes from "../Components/Common/DailyQuotes/DailyQuotes";
 
 export default function HomePage() {
     return (
@@ -18,6 +19,7 @@ export default function HomePage() {
             <Helmet title="Home">
                 <HomeHero/>
                 <Stats/>
+                <Quotes/>
                 <About/>
                 <FeaturedClubsBars/>
                 <RecentClubs/>

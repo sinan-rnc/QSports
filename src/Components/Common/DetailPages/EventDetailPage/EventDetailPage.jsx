@@ -101,7 +101,7 @@ export default function EventDetailPage() {
 
     useEffect(() => {
             window.scrollTo(0, 0); // Scroll to the top-left corner of the page
-        }, []);
+    }, []);
 
     return (
         <Fragment>

@@ -78,6 +78,10 @@ export default function Tournaments({searchOption}) {
             return false; // If category filter does not match, exclude this item
         }
 
+        if (searchCity && !ele.city.includes(searchCity)) {
+            return false; // If category filter does not match, exclude this item
+        }
+
         if (tournamentFilter && !ele.type.includes(tournamentFilter)) {
             return false;
         }
@@ -427,7 +431,7 @@ export default function Tournaments({searchOption}) {
                         </div>
                         <div className="footer-details">
                             Showing {(currentPage - 1) * showNo + 1}-
-                            {Math.min(currentPage * showNo, totalFilteredItems)} of {totalFilteredItems} Clubs and Bars
+                            {Math.min(currentPage * showNo, totalFilteredItems)} of {totalFilteredItems} Tournaments
                         </div>
                     </div>
                 </div>

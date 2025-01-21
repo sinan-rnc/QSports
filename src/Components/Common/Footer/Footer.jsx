@@ -52,7 +52,7 @@ export default function Footer() {
                             </div>
                             <div className="details">
                                 <h2>Our Location</h2>
-                                <p>715 Fake Street, New York 10021 USA</p>
+                                <p>Silicon Oasis, Dubai, UAE</p>
                             </div>
                             <div className="details">
                                 <h2>Working Hours</h2>
@@ -68,13 +68,13 @@ export default function Footer() {
                         {/* <h3 className="dashborad-second-heading">Club</h3> */}
                     </div>
                     <ul>
+                        <li>Home</li>
                         <li>About Us</li>
-                        <li>Delivery Information</li>
-                        <li>Privacy Policy</li>
-                        <li>Brands</li>
+                        <li>Play Clubs</li>
+                        <li>Play Bars</li>
+                        <li>Tournaments</li>
                         <li>Contact Us</li>
-                        <li>Returns</li>
-                        <li>Site Map</li>
+                        {/* <li></li> */}
                     </ul>
                 </div>
                 <div className="footer_col">
