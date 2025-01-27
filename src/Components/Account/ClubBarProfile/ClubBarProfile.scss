@@ -25,6 +25,12 @@
             gap: 20px;
             width: 100%;
 
+            .form-label-head {
+                text-align: left;
+                font-weight: 600;
+                font-size: 20px;
+            }
+
             .same-line {
                 width: 100%;
                 display: flex;
@@ -131,6 +137,24 @@
             .save-btn:hover {
                 background: #ddcc92;
                 color: black;
+            }
+        }
+
+        .upload-gallery{
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            li {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+
+                .close-icon {
+                    font-size: 20px;
+                    cursor: pointer;
+                }
             }
         }
     }

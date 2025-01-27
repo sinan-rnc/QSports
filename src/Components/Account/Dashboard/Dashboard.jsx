@@ -4,7 +4,7 @@ import "./Dashboard.scss"
 import photo from "../../../Assets/Common/user.png"
 
 export default function Dashboard({ setSelectedDashboard }) {
-    const user = useAuth()
+    const { user } = useAuth()
 
     const tournamentStatus = [
         { id: 1, date: "25 JAN 2024", name: "Rack 'Em Up Challenge", ranking: "First", total: "" },
@@ -15,6 +15,7 @@ export default function Dashboard({ setSelectedDashboard }) {
         { id: 6, date: "01 DEC 2024", name: "Rack and Roll Championship", ranking: "Not Qualified", total: "" },
         { id: 6, date: "20 DEC 2024", name: "Midnight Cue Clash", ranking: "Quater-Finalist", total: "" },
     ];
+    console.log(user)
 
     return (
         <div className="dashboard-container">
@@ -33,9 +34,9 @@ export default function Dashboard({ setSelectedDashboard }) {
                         <img src={photo} alt="user"/>
                     </div>
                     <div className="user-profile-details">
-                        <h1>Qsports</h1>
+                        <h1>{user.firstName} {user.lastName}</h1>
                         <div className="details">
-                            <p style={{marginTop:"20px"}}>qsports@gmail.com</p>
+                            <p style={{marginTop:"20px"}}>{user.email}</p>
                             <p style={{marginTop:"10px"}}>Phone Number : 971 987654321</p>
                             <p style={{marginTop:"10px"}}>Location : Dubai, UAE</p>
                         </div>

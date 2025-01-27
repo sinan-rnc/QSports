@@ -19,6 +19,7 @@ import { IoClose } from "react-icons/io5";
 import { AnimatePresence, motion } from "framer-motion";
 import { RiInstagramFill } from "react-icons/ri"
 import { FaFacebook, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
+import axios from "axios";
 
 export default function Header({searchOption, handleSearchOption, handleMyTournamentClick}) {
 
@@ -47,8 +48,8 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
 
     // console.log(user)
 
-    const defaultUsername = "qsports@gmail.com"
-    const defaultPassword = "Qsports@123"
+    // const defaultUsername = "qsports@gmail.com"
+    // const defaultPassword = "Qsports@123"
     const location = useLocation()
     const [selectedLocation, setSelectedLocation] = useState("")
     const [form, setForm] = useState({
@@ -116,33 +117,35 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
     // }
     // console.log(openUserDashboard)
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault()
 
         const formData = {
-            username : form.username,
+            email : form.username,
             password : form.password
         }
         // console.log(formData)
 
         if(Object.keys(errors).length === 0) {
-            if(formData.username === defaultUsername && formData.password === defaultPassword) {
-                // alert("Successfully Logged In")
-                setAlertMessage("Successfully Logged In")
-                setAlertMessageColor("green")
-                const user = formData
-                // console.log(user)
-                handleOpenUserDashboard()
-                localStorage.setItem("token", "QSports")
+            try {
+                const response = await axios.post("http://103.134.237.3:3001/v1/auth/login", formData)
+                const token = response.data.tokens.access
+                const user = response.data.user
+                localStorage.setItem("token", token)
                 handleLogin(user)
                 setFormErrors("")
                 setServerErrors("")
-                setForm({
-                    username : "",
-                    password : ""
-                })
+                // setForm({
+                //     username : "",
+                //     password : ""
+                // })
                 navigate("/account")
-            } else {
+                handleOpenUserDashboard()
+                setAlertMessage("Successfully Logged In")
+                setAlertMessageColor("green")
+                console.log(response)
+            } catch(err) {
+                console.log(err)
                 alert("Invalid Username/Password")
                 setServerErrors("Invalid Username/Password")
                 setFormErrors("")
@@ -238,7 +241,7 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                         <li className="login_div" onClick={() => {handleOpenUserDashboard()}}>
                             {user ? <BiLogOut size={"30px"}/> : <BiLogIn size={"30px"}/>}
                             <div className="login">
-                                {user ? <span>QSports</span> : <span>Hello, Log In</span>}
+                                {user ? <span>{user.firstName} {user.lastName}</span> : <span>Hello, Log In</span>}
                                 My Profile
                             </div>
                         </li>

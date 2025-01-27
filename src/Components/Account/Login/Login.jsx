@@ -2,14 +2,15 @@ import { Navigate, useNavigate } from "react-router-dom"
 import "./Login.scss"
 import { useState } from "react"
 import { useAuth } from "../../../Context/AuthContext"
+import axios from "axios"
 
 export default function Login() {
     const {handleLogin} = useAuth()
     const navigate = useNavigate()
-    const defaultUsername = "qsports@gmail.com"
-    const defaultPassword = "Qsports@123"
+    // const defaultUsername = "qsports@gmail.com"
+    // const defaultPassword = "Qsports@123"
     const [form, setForm] = useState({
-        username : "",
+        email : "",
         password : ""
     })
     const [formErrors, setFormErrors] = useState("")
@@ -18,8 +19,8 @@ export default function Login() {
     const errors = {}
 
     const validateErrors = () => {
-        if(form.username.trim().length === 0){
-            errors.username = "Username is Required"
+        if(form.email.trim().length === 0){
+            errors.email = "Username is Required"
         }
         if(form.password.trim().length === 0){
             errors.password = "Password is Required"
@@ -32,33 +33,51 @@ export default function Login() {
     //     setForm({...form, [name]: value })
     // }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         const formData = {
-            username : form.username,
+            email : form.email,
             password : form.password
         }
         console.log(formData)
 
         if(Object.keys(errors).length === 0) {
-            if(formData.username === defaultUsername && formData.password === defaultPassword) {
-                alert("Successfully Logged In")
-                const user = formData
-                localStorage.setItem("token", "QSports")
+            try {
+                const response = await axios.post("http://103.134.237.3:3001/v1/auth/login", formData)
+                const token = response.data.tokens.access
+                const user = response.data.user
+                localStorage.setItem("token", token)
                 handleLogin(user)
                 setFormErrors("")
                 setServerErrors("")
-                setForm({
-                    username : "",
-                    password : ""
-                })
+                // setForm({
+                //     username : "",
+                //     password : ""
+                // })
                 navigate("/account")
-            } else {
+                console.log(response)
+            } catch(err) {
+                console.log(err)
                 alert("Invalid Username/Password")
-                setServerErrors("Invalid Username/Password")
-                setFormErrors("")
             }
+            // if(formData.username === defaultUsername && formData.password === defaultPassword) {
+            //     alert("Successfully Logged In")
+            //     const user = formData
+            //     localStorage.setItem("token", "QSports")
+            //     handleLogin(user)
+            //     setFormErrors("")
+            //     setServerErrors("")
+            //     setForm({
+            //         username : "",
+            //         password : ""
+            //     })
+            //     navigate("/account")
+            // } else {
+            //     alert("Invalid Username/Password")
+            //     setServerErrors("Invalid Username/Password")
+            //     setFormErrors("")
+            // }
         } else {
             setFormErrors(errors)
             setServerErrors("")
@@ -77,8 +96,8 @@ export default function Login() {
                     <form className="form-table" onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label className="form-label" htmlFor="username">Username/Email</label>
-                            <input type="text" className="form-control" id="username" value={form.username} onChange={(e) => {setForm({ ...form, username: e.target.value })}} placeholder="Enter your Username"/>
-                            {formErrors.username && <span className="from-errors">{formErrors.username}</span>}
+                            <input type="text" className="form-control" id="username" value={form.email} onChange={(e) => {setForm({ ...form, email: e.target.value })}} placeholder="Enter your Username"/>
+                            {formErrors.email && <span className="from-errors">{formErrors.email}</span>}
                         </div>
                         <div className="form-group">
                             <label className="form-label" htmlFor="password">Password</label>
