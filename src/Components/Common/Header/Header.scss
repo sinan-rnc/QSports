@@ -243,6 +243,7 @@
                     }
 
                     form {
+                        position: relative;
                         display: flex;
                         flex-direction: column;
                         margin-top: 30px;
@@ -250,6 +251,7 @@
                         text-align: start;
 
                         input {
+                            position: relative;
                             padding: 8px 10px 8px;
                             width: 250px;
                             outline: none;
@@ -259,6 +261,12 @@
                             display: flex;
                             text-align: left;
                             justify-content: flex-start;
+                        }
+
+                        svg {
+                            position: absolute;
+                            right: 10px;
+                            bottom: 65px;
                         }
 
                         input:hover {

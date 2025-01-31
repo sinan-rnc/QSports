@@ -5,13 +5,20 @@ import "remixicon/fonts/remixicon.css";
 import App from './App';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from './Context/AuthContext';
+import { Provider } from "react-redux"
+import configureStore from './Store/configureStore';
+
+const store = configureStore()
+console.log(store.getState())
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <AuthProvider>
       <Router>
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </Router>
     </AuthProvider>
   </React.StrictMode>

@@ -9,18 +9,25 @@ import ClubsPage from "./Pages/ClubsPage";
 import TournamentPage from "./Pages/TournamentPage";
 import AccountPage from "./Pages/AccountPage";
 import Login from "./Components/Account/Login/Login";
-import Register from "./Components/Account/Register/Register";
-import Dashboard from "./Components/Account/Dashboard/Dashboard";
+import UserRegister from "./Components/Account/UserRegister/UserRegister";
+import Dashboard from "./Components/Account/UserDashboard/UserDashboard";
 import DashboardHome from "./Components/Account/DashboardHome/DashboardHome";
 import { useAuth } from "./Context/AuthContext";
 import ClubBarProfile from "./Components/Account/ClubBarProfile/ClubBarProfile";
 import PrivateRoutes from "./General/PrivateRoutes";
 import ClubBarDetailPage from "./Components/Common/DetailPages/ClubBarDetailPage/ClubBarDetailPage";
 import EventDetailPage from "./Components/Common/DetailPages/EventDetailPage/EventDetailPage";
+import { useDispatch } from "react-redux";
+import { startGetAllClubsAndBars } from "./Actions/clubsAndBarsActions";
+import { startGetAllEvents } from "./Actions/eventsActions";
+import axios from "axios";
+import ClubRegister from "./Components/Account/ClubRegister/ClubRegister";
+import { startGetAllProfile } from "./Actions/profileActions";
 
 
 export default function App() {
     const {user, handleLogin} = useAuth()
+    const dispatch = useDispatch()
     const [myTournamentButton, setMyTournamentButton] = useState("")
 
     const handleMyTournamentClick = () => {
@@ -29,15 +36,32 @@ export default function App() {
     }
 
     useEffect(() => {
-        if(localStorage.getItem("token") === "QSports") {
-            const user = {
-                username: "qsports@gmail.com",
-                password: "Qsports@123"
-            }
-            handleLogin(user)
-            // console.log("Qsports Logged In", user)
-        }
-    }, [])
+        // if(localStorage.getItem("token")) {
+        //     (async () => {
+        //         try {
+        //             const response = await axios.get("http://103.134.237.3:3001/v1/club/read-club", {
+        //                 headers : {
+        //                     "Authorization" : `Bearer ${localStorage.getItem("token")}`
+        //                 }
+        //             })
+        //             console.log(response.data)
+        //         } catch(err) {
+        //             console.log(err)
+        //             alert(err.message)
+        //         }
+        //     }) ()
+        // }
+
+        // if(localStorage.getItem("token")) {
+        //     console.log("profile")
+            
+        // }
+        dispatch(startGetAllProfile())
+        dispatch(startGetAllClubsAndBars())
+        dispatch(startGetAllEvents())
+    }, [dispatch])
+
+
 
     return (
         <Fragment>
@@ -51,7 +75,7 @@ export default function App() {
                 <Route path="/account" element={
                     <PrivateRoutes>
                         <AccountPage />
-                    </PrivateRoutes>
+                     </PrivateRoutes>
                 } />
                 <Route path="/dashboard" element={
                     <PrivateRoutes>
@@ -59,8 +83,8 @@ export default function App() {
                     </PrivateRoutes>
                 } />
                 <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />  
-                <Route path="/club-register" element={<ClubBarProfile/>} />
+                <Route path="/user-register" element={<UserRegister />} />  
+                <Route path="/club-register" element={<ClubRegister/>} />
                 <Route path="/clubs/:clubName" element={<ClubBarDetailPage/>} />
                 <Route path="events/:eventName" element={<EventDetailPage/>} />
             </Routes>

@@ -13,13 +13,14 @@ import logo from "../../../Assets/Logo/logo.gif"
 import english from "../../../Assets/Common/english.png"
 import photo from "../../../Assets/Common/user.png"
 import { ImSearch } from "react-icons/im";
-import { BiLogIn, BiLogOut, BiSolidDrink } from "react-icons/bi";
+import { BiLogIn, BiLogOut, BiSolidDrink, BiSolidHide } from "react-icons/bi";
 import { dubaiCities } from "../../../DataSet/dubaiCities";
 import { IoClose } from "react-icons/io5";
 import { AnimatePresence, motion } from "framer-motion";
 import { RiInstagramFill } from "react-icons/ri"
 import { FaFacebook, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
 import axios from "axios";
+import { MdRemoveRedEye } from "react-icons/md";
 
 export default function Header({searchOption, handleSearchOption, handleMyTournamentClick}) {
 
@@ -56,6 +57,7 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
         username : "",
         password : ""
     })
+    const [showPassword, setShowPassword] = useState(false)
     const [formErrors, setFormErrors] = useState("")
     const [serverErrors, setServerErrors] = useState("")
 
@@ -131,6 +133,7 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                 const response = await axios.post("http://103.134.237.3:3001/v1/auth/login", formData)
                 const token = response.data.tokens.access
                 const user = response.data.user
+                console.log(response.data.user)
                 localStorage.setItem("token", token)
                 handleLogin(user)
                 setFormErrors("")
@@ -281,6 +284,7 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                                 <div className="button-div">
                                     <button className="logout-btn" onClick={() => {
                                         handleLogout()
+                                        navigate("/")
                                         handleOpenUserDashboard()
                                         localStorage.removeItem("token")
                                         setAlertMessage("Logout Successfully")
@@ -295,7 +299,8 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                                     {serverErrors && <span className="from-errors">{serverErrors}</span>}
                                     <input type="email" placeholder="Email" value={form.username} onChange={(e) => {setForm({ ...form, username: e.target.value })}}/>
                                     {formErrors.username && <span className="from-errors">{formErrors.username}</span>}
-                                    <input type="text" placeholder="Password" value={form.password} onChange={(e) => {setForm({ ...form, password: e.target.value })}}/>
+                                    <input type={showPassword ? "text" : "password"} placeholder="Password" value={form.password} onChange={(e) => {setForm({ ...form, password: e.target.value })}}/>
+                                    { showPassword ? <BiSolidHide onClick={() => {setShowPassword(!showPassword)}}/> : <MdRemoveRedEye onClick={() => {setShowPassword(!showPassword)}}/> }
                                     {formErrors.password && <span className="from-errors">{formErrors.password}</span>}
                                     <button className="login-btn">Log In</button>
                                 </form>

@@ -1,0 +1,318 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    .dashboard-profile {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        padding: 30px;
+        background: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+        .heading-div {
+            display: flex;
+            justify-content: space-between;
+
+            .edit-profile {
+                display: block;
+                // justify-content: flex-end;
+                width: 150px;
+                padding: 10px 5px 10px;
+                background: #fe6b00;
+                color: white;
+                border: none;
+                font-weight: 700;
+                font-size: 15px;
+                cursor: pointer;
+                border-radius: 5px;
+                margin-left: auto;
+                // margin-right: auto;
+            }
+
+            .edit-profile:hover {
+                background: #ddcc92;
+                color: black;
+            }
+        }
+
+        .user-profile {
+            display: flex;
+            flex-direction: column;
+            // align-items: center;
+            gap: 30px;
+            // justify-content: space-between;
+            // padding-left: 100px;
+            // padding-right: 100px;
+
+            .clubImage-div {
+                width: 100%;
+                height: 100%;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            
+
+            .club-name-div {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                .left h1 {
+                    color: #fe6b00;
+                }
+                
+                .right {
+                    text-align: right;
+                }
+            }
+
+            .about-club {
+                .history-head {
+                    font-size: 20px;
+                    font-weight: 500;
+                }
+            }
+
+            .club-gallery {
+                .gallery-grid {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 20px;
+                    margin-top: 20px;
+
+                    .gallery {
+                        width: 100%;
+                        height: 100%;
+
+                        img {
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+                }
+            }
+
+            .contact-person-details {
+                .details-div {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+                    margin-top: 20px;
+                }
+            }
+
+            .social-media-details {
+                .social-links {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: center;
+                    margin-top: 20px;
+                    gap: 10px;
+    
+                    .social {
+                        position: relative;
+                        width: 100%;
+                        height: 80px;
+                        background: #989898;
+                        overflow: hidden;
+                        display: flex;
+                        align-items: flex-start;
+                        justify-content: flex-start;
+                        transition: .5s;
+    
+                        svg {
+                            font-size: 150px;
+                            color: #cccccc;
+                            transition: .5s;
+                        }
+    
+                        p {
+                            position: absolute;
+                            bottom: 0;
+                            right: 10px;
+                            color: white;
+                            text-transform: uppercase;
+                            font-size: 18px;
+                            font-weight: 600;
+                        }
+                    }
+    
+                    .instagram:hover {
+                        background: #cd486b;
+                        transition: .5s;
+    
+                        svg {
+                            color: white;
+                            transition: .5s;
+                        }
+
+                        p {
+                            color: black;
+                        }
+                    }
+    
+                    .facebook:hover {
+                        background: #4267B2;
+                        transition: .5s;
+    
+                        svg {
+                            color: white;
+                            transition: .5s;
+                        }
+
+                        p {
+                            color: black;
+                        }
+                    }
+
+                    .youtube:hover {
+                        background: red;
+                        transition: .5s;
+    
+                        svg {
+                            color: white;
+                            transition: .5s;
+                        }
+
+                        p {
+                            color: black;
+                        }
+                    }
+
+                    .website:hover {
+                        background: green;
+                        transition: .5s;
+    
+                        svg {
+                            color: white;
+                            transition: .5s;
+                        }
+
+                        p {
+                            color: black;
+                        }
+                    }
+                }
+            }
+
+            .services-details {
+                .services-div {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+                    margin-top: 20px;
+                }
+            }
+        }
+    }
+
+    .dashboard-history {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        padding: 30px;
+        background: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+        .heading-1 {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: flex-start;
+            justify-items: flex-start;
+          
+            .main-heading {
+                font-size: 20px;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+          
+                span {
+                    font-size: 40px;
+                    color: #fe6b00;
+                }
+            }
+          
+            .hr-1 {
+                background: #fe6b00;
+                width: 2px;
+                height: 20px;
+                border: none;
+                color: #fe6b00;
+            }
+          
+            .hr-2 {
+                background: #fe6b00;
+                width: 20px;
+                height: 2px;
+                border: none;
+                color: #fe6b00;
+                margin-left: -20px;
+            }
+          
+            .second-heading {
+                text-transform: uppercase;
+                font-size: 16px;
+                letter-spacing: 2px;
+            }
+          }
+
+        .dashboard-history-hr {
+            margin-top: 20px;
+            border: .5px solid #e0e0e0;
+            width: 100%;
+            height: 1px;
+        }
+
+        .recent-orders {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          
+            &__title {
+              font-size: 18px;
+              font-weight: bold;
+              margin-bottom: 20px;
+            }
+          
+            &__table {
+              width: 100%;
+              border-collapse: collapse;
+              text-align: left;
+          
+              th {
+                font-size: 16px;
+                color: #555;
+                text-transform: uppercase;
+                border-bottom: 1px solid #e0e0e0;
+                padding: 12px 8px;
+              }
+          
+              td {
+                font-size: 14px;
+                padding: 12px 8px;
+                color: #333;
+              }
+          
+              .recent-orders__number {
+                color: #1a73e8; // Blue color for order number
+                cursor: pointer;
+              }
+          
+            //   tr {
+            //     &:nth-child(even) {
+            //       background-color: #f9f9f9; // Alternate row color
+            //     }
+            //   }
+            }
+          }
+          
+    }
+}

@@ -1,18 +1,22 @@
-import Dashboard from "../Dashboard/Dashboard"
-import Password from "../Password/Password"
-import UserProfile from "../UserProfile/UserProfile"
-import TournamentDashboard from "../TournamentDashboard/TournamentDashboard"
-import "./DashboardHome.scss"
-import ClubBarProfile from "../ClubBarProfile/ClubBarProfile"
 import { useEffect, useState } from "react"
 import { useAuth } from "../../../Context/AuthContext"
 import { useNavigate } from "react-router-dom"
 import { AnimatePresence, motion } from "framer-motion"
 import { IoClose } from "react-icons/io5"
 
+import UserDashboard from "../UserDashboard/UserDashboard"
+import Password from "../Password/Password"
+import UserProfile from "../UserProfile/UserProfile"
+import TournamentDashboard from "../TournamentDashboard/TournamentDashboard"
+import ClubBarProfile from "../ClubBarProfile/ClubBarProfile"
+
+import "./DashboardHome.scss"
+import ClubBarDashboard from "../ClubBarDashboard/ClubBarDashboard"
+
 export default function DashboardHome() {
     const navigate = useNavigate()
     const { 
+        user,
         handleLogout, 
         alertMessage, 
         setAlertMessage, 
@@ -21,12 +25,15 @@ export default function DashboardHome() {
         selectedDashboard, 
         setSelectedDashboard
     } = useAuth()
+
+    console.log(user)
+
     const dashboardMenu = [
-        { key: "dashboard", label: "Dashboard", component: <Dashboard setSelectedDashboard={setSelectedDashboard}/> },
-        { key: "userProfile", label: "Edit Profile", component: <UserProfile /> },
+        { key: "dashboard", label: "Dashboard", component: user && user?.userType === "MemberUser" ? <UserDashboard setSelectedDashboard={setSelectedDashboard}/> : user && user.userType === "ClubAdmin" && <ClubBarDashboard setSelectedDashboard={setSelectedDashboard}/> },
+        { key: "userProfile", label: "Edit Profile", component: user && user?.userType === "MemberUser" ? <UserProfile /> : user && user.userType === "ClubAdmin" && <ClubBarProfile /> },
         // { key: "clubBarProfile", label: "Edit Profile", component: <ClubBarProfile /> },
         { key: "password", label: "Password", component: <Password /> },
-        { key: "myTournaments", label: "My Tournaments", component: <TournamentDashboard /> },
+        { key: "myEvents", label: "My Events", component: <TournamentDashboard /> },
     ];
 
     // console.log(myTournamentButton)
@@ -58,7 +65,7 @@ export default function DashboardHome() {
                                 <li className="dropdown-li" onClick={() => {setSelectedDashboard("clubBarProfile")}}>Club</li>
                         </ul> */}
                         <li className={`menubar-li ${selectedDashboard == "password" ? "active" : ""}`} onClick={() => {setSelectedDashboard("password")}}>Password</li>
-                        <li className={`menubar-li ${selectedDashboard == "myTournaments" ? "active" : ""}`} onClick={() => {setSelectedDashboard("myTournaments")}}>My Tournaments</li>
+                        <li className={`menubar-li ${selectedDashboard == "myEvents" ? "active" : ""}`} onClick={() => {setSelectedDashboard("myEvents")}}>My Events</li>
                     </ul>
                     <hr className="dashboard-hr"/>
                     <button className="logout-btn" onClick={() => {
