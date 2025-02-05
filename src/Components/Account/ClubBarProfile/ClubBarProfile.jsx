@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import PhoneInput from "react-phone-input-2"
 import 'react-phone-input-2/lib/style.css'
@@ -18,19 +18,23 @@ import { IoClose } from "react-icons/io5";
 // import { LuDessert } from "react-icons/lu";
 import { dubaiCities } from "../../../DataSet/dubaiCities";
 import { useAuth } from "../../../Context/AuthContext";
+import { startCreateClub, startUpdateClub } from "../../../Actions/clubsAndBarsActions";
 
 export default function ClubBarProfile() {
     const { user } = useAuth()
+    const dispatch = useDispatch()
+    const { setAlertMessage, setAlertMessageColor } = useAuth()
+
     const clubAndBar = useSelector((state) => {
-        return state.clubsAndBars.data.find(ele => ele.createdBy === "6206d7c787dcc314e8bbe496")
+        return state.clubsAndBars.data.find(ele =>!ele?.isDeleted && ele?.createdBy === user?._id)
     });
 
-    console.log(clubAndBar.services)
+    console.log(clubAndBar)
 
     const [ form, setForm ] = useState(clubAndBar ? {
         name: clubAndBar.name,
         contactPerson: clubAndBar.contactPerson,
-        category: clubAndBar.category,
+        clubType: clubAndBar.clubType,
         city: clubAndBar.city,
         slogan: clubAndBar.slogan,
         image: clubAndBar.image,
@@ -54,7 +58,7 @@ export default function ClubBarProfile() {
     } : { 
         name: "",
         contactPerson: "",
-        category: "",
+        clubType: "",
         city: "",
         slogan: "",
         image: "",
@@ -79,6 +83,8 @@ export default function ClubBarProfile() {
         ],
         services: []
     })
+    
+    console.log(form)
 
     const [formErrors, setFormErrors] = useState("")
     const [serverErrors, setServerErrors] = useState("")
@@ -95,13 +101,13 @@ export default function ClubBarProfile() {
         if(form?.city?.trim()?.length === 0){
             errors.city = "City is Required"
         }
-        if(form?.category?.trim()?.length === 0){
-            errors.category = "Category is Required"
+        if(form?.clubType?.trim()?.length === 0){
+            errors.clubType = "clubType is Required"
         }
         if(form?.slogan?.trim()?.length === 0){
-            errors.slogan = `${form.category ? form.category : "Club/Bar"} Slogan is Required`
+            errors.slogan = `${form.clubType ? form.clubType : "Club/Bar"} Slogan is Required`
         }
-        if(form?.image?.trim()?.length === 0){
+        if(!form?.image){
             errors.image = "Image is Required"
         }
         if(form?.emailAddress?.trim()?.length === 0){
@@ -183,11 +189,11 @@ export default function ClubBarProfile() {
         "Desserts",
     ])
 
-    const clubServices = clubAndBar.services
+    const clubServices = clubAndBar?.services
     .filter(service => availableServices.some(ele => service.name.includes(ele)))
     .map(service => service.name);
 
-    const clubFoodServices = clubAndBar.services
+    const clubFoodServices = clubAndBar?.services
     .filter(service => availableFoodServices.some(ele => service.name.includes(ele)))
     .map(service => service.name);
 
@@ -208,12 +214,12 @@ export default function ClubBarProfile() {
     }, [form.services]); // Run whenever `form.services` changes
     
 
-    console.log("availableServices", availableServices)
+    // console.log("availableServices", availableServices)
 
-    console.log("clubServices", clubServices, "clubFoodServices",clubFoodServices)
+    // console.log("clubServices", clubServices, "clubFoodServices",clubFoodServices)
 
-    const [selectedServices, setSelectedServices] = useState(clubAndBar.services ? clubServices : form.services);
-    const [selectedFoodServices, setSelectedFoodServices] = useState(clubAndBar.services ? clubFoodServices : form.services);
+    const [selectedServices, setSelectedServices] = useState(clubAndBar?.services ? clubServices : form.services);
+    const [selectedFoodServices, setSelectedFoodServices] = useState(clubAndBar?.services ? clubFoodServices : form.services);
 
     const iconsMap = {
         "No. of pool & snooker tables": "<GiPoolTableCorner />",
@@ -233,7 +239,7 @@ export default function ClubBarProfile() {
     const handleChange = (e) => {
         const {name} = e.target;
         setForm({...form, [name]: e.target.value });
-        // console.log(form)
+        console.log(form)
     };
 
     const handlePhoneChange = (value) => {
@@ -250,45 +256,51 @@ export default function ClubBarProfile() {
         });
     };
 
+    const handleImageChange = (e) => {
+        // const file = e.target.files[0];
+        // setForm({ ...form, image: URL.createObjectURL(file) });
+        setForm({...form, image: e.target.files[0] });
+        console.log(form.image)
+    }
+
+    const handleRemoveImage = () => {
+        setForm({ ...form, image: ""});
+    }
+
     // const handleImageChange = (e) => {
     //     const file = e.target.files[0];
-    //     setForm({ ...form, image: URL.createObjectURL(file) });
-    // }
-
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const uploadPath = `../../../Assets/Uploads/${file.name}`; // Path to "reserved folder"
-            const reader = new FileReader();
-            reader.onload = () => {
-                // Save the uploaded image path to your form state
-                setForm((prev) => ({ ...prev, image: uploadPath }));
-            };
-            reader.readAsDataURL(file); // This converts the file to a Base64 URL, for preview purposes if needed
-        }
-    };
+    //     if (file) {
+    //         const uploadPath = `../../../Assets/Uploads/${file.name}`; // Path to "reserved folder"
+    //         const reader = new FileReader();
+    //         reader.onload = () => {
+    //             // Save the uploaded image path to your form state
+    //             setForm((prev) => ({ ...prev, image: uploadPath }));
+    //         };
+    //         reader.readAsDataURL(file); // This converts the file to a Base64 URL, for preview purposes if needed
+    //     }
+    // };
     
     
     const handleGalleryChange = (e) => {
-        const files = Array.from(e.target.files); // Get the selected files
+        const files = Array.from(e.target.files);
         console.log(files)
-        const updatedGallery = files.map((file) => ({
-            title: file.name, // Use the file name as the title
-            path: URL.createObjectURL(file), // Create a temporary URL for preview
+    
+        setForm((prevForm) => ({
+            ...prevForm,
+            pictureGallery: [
+                ...prevForm.pictureGallery, 
+                ...files.filter(file => !prevForm.pictureGallery.some(img => img.name === file.name))
+            ],
         }));
     
-        // Update the form state by adding the new files to the pictureGallery array
-        setForm((prevForm) => ({
-            ...prevForm,
-            pictureGallery: [...prevForm.pictureGallery, ...updatedGallery], // Append to existing gallery
-        }));
+        e.target.value = ""; // Reset input
     };
+    
 
-    const handleRemoveImage = (indexToRemove) => {
-        setForm((prevForm) => ({
-            ...prevForm,
-            pictureGallery: prevForm.pictureGallery.filter((_, index) => index !== indexToRemove),
-        }));
+    const handleRemoveGalleryImage = () => {
+        setForm({...form, pictureGallery: []});
+
+        // console.log(form.pictureGallery)
     };
 
     const handleSelectServiceChange = (e) => {
@@ -562,7 +574,7 @@ export default function ClubBarProfile() {
         setForm({ 
             name: "",
             contactPerson: "",
-            category: "",
+            clubType: "",
             city: "",
             slogan: "",
             image: "",
@@ -592,53 +604,93 @@ export default function ClubBarProfile() {
     const handleFormSubmit = async (e) => {
         e.preventDefault()
         console.log(form)
-        const formData = form
-        if(Object.keys(errors).length === 0) {
-            try {
-                const response = await axios.post("http://103.134.237.3:3001/v1/club/create-club", formData, {
-                    headers: {
-                        "Authorization": `Bearer ${localStorage.getItem("token")}`
-                    }
-                })
-                console.log(response)
-                setForm({
-                    name: "",
-                    category: "",
-                    city: "",
-                    contactPerson: "",
-                    slogan: "",
-                    image: "",
-                    emailAddress: "",
-                    phoneNo: "",
-                    webSite: "",
-                    experience: "",
-                    address: "",
-                    geoLocation: "",
-                    city: "",
-                    introductionObjtv: "",
-                    openTime: "",
-                    closeTime: "",
-                    happyHrRates: "",
-                    normalHrRates: "",
-                    description: "",
-                    history: "",
-                    youtubevideo: "",
-                    experience: 0,
-                    pictureGallery: [],
-                    socialMedialinks: [
-                        { name: "Facebook", icon: "<FaFacebook />", link: "" },
-                        { name: "Instagram", icon: "<RiInstagramFill />", link: "" },
-                    ],
-                    services: []
-                })
-            } catch (error) {
-                console.log(error)
-                alert(error.message)
+
+        const formData = new FormData();
+        
+        for (let key in form) {
+            if (!["image", "pictureGallery", "socialMedialinks", "services"].includes(key)) {
+                formData.append(key, form[key]);
             }
+        }
+
+        formData.append("image", form.image); 
+
+        form.pictureGallery.forEach((file, index) => {
+            formData.append(`pictureGallery`, file);
+        });
+
+        form.socialMedialinks.forEach((item, index) => {
+            formData.append(`socialMedialinks[${index}][name]`, item.name);
+            formData.append(`socialMedialinks[${index}][icon]`, item.icon);
+            formData.append(`socialMedialinks[${index}][link]`, item.link);
+        });
+
+        form.services.forEach((item, index) => {
+            formData.append(`services[${index}][name]`, item.name);
+            formData.append(`services[${index}][icon]`, item.icon);
+            formData.append(`services[${index}][description]`, item.description);
+        });
+
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+
+        console.log(formData)
+        if(Object.keys(errors).length === 0) {
+            if(clubAndBar) {
+                const updatedFormData = { ...formData, _id: clubAndBar._id, clubType: clubAndBar.clubType }
+                dispatch(startUpdateClub(updatedFormData, setAlertMessage, setAlertMessageColor))
+            } else {
+                dispatch(startCreateClub(formData, setAlertMessage, setAlertMessageColor))
+            }
+            // try {
+            //     const response = await axios.post("http://103.134.237.3:3001/v1/club/create-club", formData, {
+            //         headers: {
+            //             "Authorization": `Bearer ${localStorage.getItem("token")}`
+            //         }
+            //     })
+            //     console.log(response)
+            //     setForm({
+            //         name: "",
+            //         clubType: "",
+            //         city: "",
+            //         contactPerson: "",
+            //         slogan: "",
+            //         image: "",
+            //         emailAddress: "",
+            //         phoneNo: "",
+            //         webSite: "",
+            //         experience: "",
+            //         address: "",
+            //         geoLocation: "",
+            //         city: "",
+            //         introductionObjtv: "",
+            //         openTime: "",
+            //         closeTime: "",
+            //         happyHrRates: "",
+            //         normalHrRates: "",
+            //         description: "",
+            //         history: "",
+            //         youtubevideo: "",
+            //         experience: 0,
+            //         pictureGallery: [],
+            //         socialMedialinks: [
+            //             { name: "Facebook", icon: "<FaFacebook />", link: "" },
+            //             { name: "Instagram", icon: "<RiInstagramFill />", link: "" },
+            //         ],
+            //         services: []
+            //     })
+            //     setFormErrors("")
+            // } catch (error) {
+            //     console.log(error)
+            //     alert(error.message)
+            // }
+            setFormErrors("")
+            console.log(formErrors)
         } else {
             setFormErrors(errors)
-        }
-        
+            console.log(formErrors)
+        } 
     }
     
     return (
@@ -652,8 +704,8 @@ export default function ClubBarProfile() {
                 <form className="form-table" onSubmit={handleFormSubmit}>
                     <div className="same-line">
                         <div className="form-group">
-                            <label className="form-label" htmlFor="name">{form.category ? form.category : "Club/Bar"} Name</label>
-                            <input type="text" className="form-control" id="name" name="name" value={form.name} onChange={handleChange} placeholder={`Enter the ${form.category ? form.category : "Club/Bar"} Name`}/>
+                            <label className="form-label" htmlFor="name">{form.clubType ? form.clubType : "Club/Bar"} Name</label>
+                            <input type="text" className="form-control" id="name" name="name" value={form.name} onChange={handleChange} placeholder={`Enter the ${form.clubType ? form.clubType : "Club/Bar"} Name`}/>
                         </div>
                         <div className="form-group">
                             <label className="form-label" htmlFor="contactPerson">Contact Person Name</label>
@@ -668,7 +720,7 @@ export default function ClubBarProfile() {
                     )}
                     <div className="same-line">
                         <div className="form-group">
-                            <label className="form-label" htmlFor="city">{form.category ? form.category : "Club/Bar"} City</label>
+                            <label className="form-label" htmlFor="city">{form.clubType ? form.clubType : "Club/Bar"} City</label>
                             <select 
                                 className="form-control"
                                 id="city"
@@ -686,34 +738,40 @@ export default function ClubBarProfile() {
                             </select>
                         </div>
                         <div className="form-group">
-                            <label className="form-label" htmlFor="category">Category</label>
+                            <label className="form-label" htmlFor="clubType">Club Type</label>
                             <select 
                                 className="form-control"
-                                id="category"
-                                name="category"
-                                value={form.category}
+                                id="clubType"
+                                name="clubType"
+                                value={form.clubType}
                                 onChange={handleChange}
                                 placeholder="Select a Service">
-                                    <option value="">Select the Category</option>
+                                    <option value="">Select the clubType</option>
                                     <option value="Club">Club</option>
                                     <option value="Bar">Bar</option>
                             </select>
                         </div>
                     </div>
-                    {(formErrors.city || formErrors.category) && (
+                    {(formErrors.city || formErrors.clubType) && (
                         <div className="same-line">
                             {formErrors.city && <div className="alert alert-danger">{formErrors.city}</div>}
-                            {formErrors.category && <div className="alert alert-danger">{formErrors.category}</div>}
+                            {formErrors.clubType && <div className="alert alert-danger">{formErrors.clubType}</div>}
                         </div>
                     )}
                     <div className="same-line">
                         <div className="form-group">
-                            <label className="form-label" htmlFor="slogan">{form.category ? form.category : "Club/Bar"} Slogan</label>
-                            <input type="text" className="form-control" id="slogan" name="slogan" value={form.slogan} onChange={handleChange} placeholder={`Enter the ${form.category ? form.category : "Club/Bar"} Slogan`}/>
+                            <label className="form-label" htmlFor="slogan">{form.clubType ? form.clubType : "Club/Bar"} Slogan</label>
+                            <input type="text" className="form-control" id="slogan" name="slogan" value={form.slogan} onChange={handleChange} placeholder={`Enter the ${form.clubType ? form.clubType : "Club/Bar"} Slogan`}/>
                         </div>
-                        <div className="form-group">
-                            <label className="form-label" htmlFor="image">{form.category ? form.category : "Club/Bar"} Image</label>
-                            <input type="file" className="form-control" id="image" name="image" onChange={handleImageChange} placeholder={`Enter the ${form.category ? form.category : "Club/Bar"} Image`}/>
+                        <div className="form-group gallery">
+                            <label className="form-label" htmlFor="image">{form.clubType ? form.clubType : "Club/Bar"} Image</label>
+                            <input type="file" className="form-control" id="image" name="image" onChange={handleImageChange} placeholder={`Enter the ${form.clubType ? form.clubType : "Club/Bar"} Image`}/>
+                            {form?.image?.name && (
+                            <div className="upload-image">
+                                <p>{form.image.name}</p>
+                                <IoClose className="close-icon" onClick={handleRemoveImage} />
+                            </div>
+                        )}
                         </div>
                     </div>
                     {(formErrors.slogan || formErrors.image) && (
@@ -785,7 +843,7 @@ export default function ClubBarProfile() {
                         </div>
                     )}
                     <div className="form-group">
-                        <label className="form-label" htmlFor="introductionObjtv">{form.category ? form.category : "Club/Bar"} Introduction</label>
+                        <label className="form-label" htmlFor="introductionObjtv">{form.clubType ? form.clubType : "Club/Bar"} Introduction</label>
                         <textarea type="text" className="form-control" id="introductionObjtv" name="introductionObjtv" value={form.introductionObjtv} onChange={handleChange} placeholder="Description about the Club"/>
                     </div>
                     {formErrors.introductionObjtv &&
@@ -794,10 +852,10 @@ export default function ClubBarProfile() {
                         </div>
                     }
                     <div className="form-group">
-                        <label className="form-label-head" htmlFor="city">Services</label>
+                        <label className="form-label-head" htmlFor="services">Services</label>
                         {selectedServices.map((service) => renderInputField(service))}
                         <div className="same-line">
-                            <label className="form-label" htmlFor="city">Add a new Service</label>
+                            <label className="form-label" htmlFor="services">Add a new Service</label>
                             <select 
                                 className="form-control"
                                 id={selectedServices}
@@ -814,10 +872,10 @@ export default function ClubBarProfile() {
                         </div>
                     </div>
                     <div className="form-group">
-                        <label className="form-label-head" htmlFor="city">Food and Drinks Service</label>
+                        <label className="form-label-head" htmlFor="services">Food and Drinks Service</label>
                         {selectedFoodServices.map((service) => renderFoodInputField(service))}
                         <div className="same-line">
-                            <label className="form-label" htmlFor="city">Add a Food Service</label>
+                            <label className="form-label" htmlFor="services">Add a Food Service</label>
                             <select 
                                 className="form-control"
                                 id={selectedFoodServices}
@@ -835,20 +893,20 @@ export default function ClubBarProfile() {
                             </select>
                         </div>
                     </div>
-                    {formErrors.service && (
+                    {formErrors.services && (
                         <div className="same-line">
-                            {formErrors.service && <div className="alert alert-danger">{formErrors.service}</div>}
+                            {formErrors.services && <div className="alert alert-danger">{formErrors.services}</div>}
                         </div>
                     )}
                     <div className="form-group">
-                        <label className="form-label-head" htmlFor="city">Working Hours</label>
+                        <label className="form-label-head" htmlFor="openAndCloseTime">Working Hours</label>
                         <div className="same-line-openclose">
                             <div className="same-line">
                                 <label className="form-label" htmlFor="openTime">Open</label>
                                 <input type="time" className="form-control" id="openTime" name="openTime" value={form.openTime} onChange={handleChange} placeholder="Open"/>
                             </div>
                             <div className="same-line">
-                                <label className="form-label" htmlFor="city">Close</label>
+                                <label className="form-label" htmlFor="closeTime">Close</label>
                                 <input type="time" className="form-control" id="closeTime" name="closeTime" value={form.closeTime} onChange={handleChange} placeholder="Close"/>
                             </div>
                         </div>
@@ -925,7 +983,7 @@ export default function ClubBarProfile() {
                         </div>
                     )}
                     <div className="form-group">
-                        <label className="form-label" htmlFor="clubBarNumber">{form.category ? form.category : "Club/Bar"} Gallary(Upload atleast 3 images)</label>
+                        <label className="form-label" htmlFor="clubBarGallery">{form.clubType ? form.clubType : "Club/Bar"} Gallary(Upload atleast 3 images)</label>
                         <input 
                             type="file"
                             id="clubBarGallery" 
@@ -940,16 +998,13 @@ export default function ClubBarProfile() {
                             {formErrors.pictureGallery && <div className="alert">{formErrors.pictureGallery}</div>}
                         </div>
                     )}
+
                     {form.pictureGallery && (
-                        <ul className="upload-gallery">
-                            {form?.pictureGallery?.map((image, index) => (
-                                <li key={index}>
-                                    {image.title}
-                                    <IoClose className="close-icon" onClick={() => handleRemoveImage(index)} />
-                                </li>
-                            ))}
-                        </ul>
+                        <div className="upload-gallery">
+                            {form?.pictureGallery.length > 0 && <p onClick={() => handleRemoveGalleryImage()}>Remove All<IoClose className="close-icon"/></p>}
+                        </div>
                     )}
+                    
                     <div className="btn-div">
                         <button className="save-btn" type="submit">{clubAndBar ? "Save" : "Register"}</button>
                         <div onClick={handleClearForm} className="save-btn clear">Clear</div>

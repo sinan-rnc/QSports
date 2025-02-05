@@ -11,7 +11,7 @@ export default function UserRegister() {
     const {handleLogin, setAlertMessage, setAlertMessageColor} = useAuth()
 
     const [formErrors, setFormErrors] = useState("")
-    const [serverErrors, setServerErrors] = useState("")
+    // const [serverErrors, setServerErrors] = useState("")
     const [showPassword1, setShowPassword1] = useState(false)
     const [showPassword2, setShowPassword2] = useState(false)
     const [form, setForm] = useState({
@@ -70,31 +70,32 @@ export default function UserRegister() {
         if(Object.keys(errors).length === 0) {
             try {
                 const response = await axios.post("http://103.134.237.3:3001/v1/users/create-user", formData)
-                const token = response.data.tokens.access
-                const user = response.data.user
-                localStorage.setItem("token", token)
-                handleLogin(user)
+                // const token = response.data.tokens.access
+                const user = response.data.data
+                // localStorage.setItem("token", token)
+                // handleLogin(user)
                 setFormErrors("")
-                setServerErrors("")
+                // setServerErrors("")
                 // setForm({
                 //     username : "",
                 //     password : ""
                 // })
-                navigate("/account")
+                alert("User Successfully Registered")
                 setAlertMessage("User Successfully Registered")
                 setAlertMessageColor("green")
+                navigate("/")
                 console.log(response)
             } catch(err) {
                 console.log(err)
                 alert(err.response.data.message)
-                setServerErrors(err.response.data.message)
+                // setServerErrors(err.response.data.message)
                 setFormErrors("")
                 setAlertMessage(err.response.data.message)
                 setAlertMessageColor("red")
             }
         } else {
             setFormErrors(errors)
-            setServerErrors("")
+            // setServerErrors("")
         }
     }
 
@@ -159,7 +160,7 @@ export default function UserRegister() {
                                 {formErrors.confirmPassword && <div className="alert alert-danger">{formErrors.confirmPassword}</div>}
                             </div>
                         )}
-                        {serverErrors && <p className="alert alert-danger">{serverErrors}</p>}
+                        {/* {serverErrors && <p className="alert alert-danger">{serverErrors}</p>} */}
                         <button className="register-btn">Register</button>
                     </form>
                 </div>

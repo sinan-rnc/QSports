@@ -3,8 +3,8 @@ import { useAuth } from "../Context/AuthContext";
 
 export default function PrivateRoutes({ children }) {
     const { user } = useAuth()
-    if(!(localStorage.getItem("token"))) {
-    // if(!user && localStorage.getItem("token")) {
+    // if(!(localStorage.getItem("token"))) {
+    if(!user && localStorage.getItem("token")) {
         return <p>Loading...</p>
     }
 

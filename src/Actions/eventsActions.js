@@ -1,9 +1,10 @@
 import axios from "axios"
+import { backendApi } from "../Apis/api"
 
 export const startGetAllEvents = () => {
     return async (dispatch) => {
         try {
-            const response = await axios.post("http://103.134.237.3:3001/v1/event/read-all-events", {}, {
+            const response = await axios.post(`${backendApi}/event/read-all-events`, {}, {
                 headers : {
                     "Authorization" : `Bearer  ${localStorage.getItem("token")}`
                 }
@@ -24,16 +25,18 @@ const setAllEvents = (allEvents) => {
     }
 }
 
-export const startCreateEvent = (formData) => {
+export const startCreateEvent = (formData, setAlertMessage, setAlertMessageColor) => {
     return async (dispatch) => {
         try {
-            const response = await axios.post("http://103.134.237.3:3001/v1/event/create-event", {formData}, {
+            const response = await axios.post(`${backendApi}/event/create-event`, formData, {
                 headers : {
                     "Authorization" : `Bearer  ${localStorage.getItem("token")}`
                 }
             })
-            console.log(response.data.data.results)
-            dispatch(createEvents(response.data.data.results))
+            console.log(response.data.data)
+            dispatch(createEvents(response.data.data))
+            setAlertMessage("Event Created Succcessfully")
+            setAlertMessageColor("green")
         } catch(err) {
             console.log(err)
             alert(err.message)
@@ -51,7 +54,7 @@ const createEvents = (allEvents) => {
 export const startUpdateEvent = (formData) => {
     return async (dispatch) => {
         try {
-            const response = await axios.put("http://103.134.237.3:3001/v1/event/update-event", {formData}, {
+            const response = await axios.put(`${backendApi}/event/update-event`, formData, {
                 headers : {
                     "Authorization" : `Bearer  ${localStorage.getItem("token")}`
                 }
@@ -75,7 +78,7 @@ const updateEvent = (allEvents) => {
 export const startDeleteEvent = (formData) => {
     return async (dispatch) => {
         try {
-            const response = await axios.patch("http://103.134.237.3:3001/v1/event/delete-event", { _id : formData._id }, {
+            const response = await axios.patch(`${backendApi}/event/delete-event`, { _id : formData._id }, {
                 headers : {
                     "Authorization" : `Bearer  ${localStorage.getItem("token")}`
                 }

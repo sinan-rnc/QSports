@@ -1,4 +1,4 @@
-.dashboard-container {
+.user-dashboard-container {
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -18,7 +18,7 @@
             .edit-profile {
                 display: block;
                 // justify-content: flex-end;
-                width: 100px;
+                width: 150px;
                 padding: 10px 5px 10px;
                 background: #fe6b00;
                 color: white;
@@ -38,6 +38,7 @@
         }
 
         .user-profile {
+            position: relative;
             display: flex;
             flex-direction: row;
             // align-items: center;
@@ -59,7 +60,35 @@
 
                 .details {
                     margin-top: 30px;
+
+                    .about {
+                        padding-right: 150px;
+                    }
                 }
+            }
+            .delete-profile {
+                position: absolute;
+                display: block;
+                // justify-content: flex-end;
+                height: auto;
+                width: 150px;
+                padding: 10px 5px 10px;
+                background: #fe6b00;
+                color: white;
+                border: none;
+                font-weight: 700;
+                font-size: 15px;
+                cursor: pointer;
+                border-radius: 5px;
+                margin-left: auto;
+                bottom: 0px;
+                right: 0px;
+                // margin-right: auto;
+            }
+
+            .delete-profile:hover {
+                background: #ddcc92;
+                color: black;
             }
         }
     }

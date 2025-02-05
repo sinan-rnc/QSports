@@ -11,7 +11,7 @@ import { useAuth } from "../../../Context/AuthContext";
 
 import logo from "../../../Assets/Logo/logo.gif"
 import english from "../../../Assets/Common/english.png"
-import photo from "../../../Assets/Common/user.png"
+import addProfile from "../../../Assets/Common/add-profile.jpg"
 import { ImSearch } from "react-icons/im";
 import { BiLogIn, BiLogOut, BiSolidDrink, BiSolidHide } from "react-icons/bi";
 import { dubaiCities } from "../../../DataSet/dubaiCities";
@@ -21,6 +21,7 @@ import { RiInstagramFill } from "react-icons/ri"
 import { FaFacebook, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
 import axios from "axios";
 import { MdRemoveRedEye } from "react-icons/md";
+import { useSelector } from "react-redux";
 
 export default function Header({searchOption, handleSearchOption, handleMyTournamentClick}) {
 
@@ -46,6 +47,14 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
             selectedDashboard, 
             setSelectedDashboard,
         } = useAuth()
+
+        const clubAndBar = useSelector((state) => {
+            return state.clubsAndBars.data.find(ele => ele?.createdBy === user?._id)
+        });
+
+        const userProfile = useSelector((state) => {
+            return state.profile.data.find(ele => ele?.createdBy === user?._id)
+        });
 
     // console.log(user)
 
@@ -135,6 +144,7 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                 const user = response.data.user
                 console.log(response.data.user)
                 localStorage.setItem("token", token)
+                localStorage.setItem("user", JSON.stringify(user))
                 handleLogin(user)
                 setFormErrors("")
                 setServerErrors("")
@@ -244,17 +254,17 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                         <li className="login_div" onClick={() => {handleOpenUserDashboard()}}>
                             {user ? <BiLogOut size={"30px"}/> : <BiLogIn size={"30px"}/>}
                             <div className="login">
-                                {user ? <span>{user.firstName} {user.lastName}</span> : <span>Hello, Log In</span>}
+                                {user && localStorage.getItem("token") ? <span>{user.firstName} {user.lastName}</span> : <span>Hello, Log In</span>}
                                 My Profile
                             </div>
                         </li>
                         {openUserDashboard && (
-                            user ? 
+                            (user && localStorage.getItem("token")) ? 
                         (
                             <div ref={userDashboardRef} className="user-dashboard">
                                 <div className="top">
-                                    <img src={photo} alt="user"/>
-                                    <h1>Qsports<br/><span>{user.username}</span></h1>
+                                    {(!user || clubAndBar?.image || userProfile?.ProfilePic )? <img src={addProfile} alt="user"/> : user?.userType === "ClubAdmin" ? <img src={clubAndBar?.image} alt="user"/> : user?.userType === "MemberUser" && <img src={userProfile?.ProfilePic} alt="user"/>}
+                                    <h1>{user.firstName} {user.lastName}</h1>
                                 </div><hr className="hr-dashboard"/>
                                 <div className="details">
                                     <ul>
@@ -273,9 +283,9 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                                             }}
                                         >Edit Profile</li>
                                         <li 
-                                            className={selectedDashboard === "myTournaments" ? "active" : ""}
+                                            className={selectedDashboard === "myEvents" ? "active" : ""}
                                             onClick={() => {
-                                                setSelectedDashboard("myTournaments")
+                                                setSelectedDashboard("myEvents")
                                                 navigate("/account")
                                             }}
                                         >My Tournament</li>
@@ -287,6 +297,7 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                                         navigate("/")
                                         handleOpenUserDashboard()
                                         localStorage.removeItem("token")
+                                        localStorage.removeItem("user")
                                         setAlertMessage("Logout Successfully")
                                         setAlertMessageColor("green")
                                         }}>Logout</button>
@@ -304,7 +315,7 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                                     {formErrors.password && <span className="from-errors">{formErrors.password}</span>}
                                     <button className="login-btn">Log In</button>
                                 </form>
-                                <p>Don't have an account? <a href="/register">Register</a></p>
+                                <p>Don't have an account? <a href="/user-register">Register</a></p>
                                 <p className="club-register">Register a new <a href="/club-register">Club</a></p>
                             </div>
                         )
@@ -376,8 +387,8 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                     </div>
                 )}
             </div>
-            {alertMessage && !user && (
-                <AnimatePresence>
+            <AnimatePresence>
+                {alertMessage && !user && (
                     <motion.div 
                         className={`alert-message ${alertMessageColor}`}
                         initial={{ x: "100%" }} // Start off-screen
@@ -387,8 +398,8 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                     >
                         {alertMessage} <IoClose onClick={() => {setAlertMessage("")}}/>   
                     </motion.div>
-                </AnimatePresence>
-            )}
+                )}
+            </AnimatePresence>
         </nav>
     )
 }

@@ -11,7 +11,7 @@ export default function ClubRegister() {
     const {handleLogin, setAlertMessage, setAlertMessageColor} = useAuth()
 
     const [formErrors, setFormErrors] = useState("")
-    const [serverErrors, setServerErrors] = useState("")
+    // const [serverErrors, setServerErrors] = useState("")
     const [showPassword1, setShowPassword1] = useState(false)
     const [showPassword2, setShowPassword2] = useState(false)
     const [form, setForm] = useState({
@@ -62,7 +62,7 @@ export default function ClubRegister() {
             userName : form.userName,
             email : form.email,
             password : form.password,
-            role: "67989e1d52f17c150584bf1e", 
+            role: "67a1c3497bda08801938ca29", 
             userType: "ClubAdmin"
         }
         console.log(formData)
@@ -70,31 +70,33 @@ export default function ClubRegister() {
         if(Object.keys(errors).length === 0) {
             try {
                 const response = await axios.post("http://103.134.237.3:3001/v1/users/create-user", formData)
-                const token = response.data.tokens.access
-                const user = response.data.user
-                localStorage.setItem("token", token)
-                handleLogin(user)
+                // console.log(response.data)
+                // const token = response.data.tokens.access
+                // const user = response.data.data
+                // localStorage.setItem("token", token)
+                // handleLogin(user)
                 setFormErrors("")
-                setServerErrors("")
+                // setServerErrors("")
                 // setForm({
                 //     username : "",
                 //     password : ""
                 // })
-                navigate("/account")
-                setAlertMessage("Club Successfully Registered")
+                alert("Club Registered Successfully")
+                setAlertMessage("Club Registered Successfully")
                 setAlertMessageColor("green")
+                navigate("/")
                 console.log(response)
             } catch(err) {
                 console.log(err)
                 alert(err.response.data.message)
-                setServerErrors(err.response.data.message)
+                // setServerErrors(err.response.data.message)
                 setFormErrors("")
                 setAlertMessage(err.response.data.message)
                 setAlertMessageColor("red")
             }
         } else {
             setFormErrors(errors)
-            setServerErrors("")
+            // setServerErrors("")
         }
     }
 
@@ -159,7 +161,7 @@ export default function ClubRegister() {
                                 {formErrors.confirmPassword && <div className="alert alert-danger">{formErrors.confirmPassword}</div>}
                             </div>
                         )}
-                        {serverErrors && <p className="alert alert-danger">{serverErrors}</p>}
+                        {/* {serverErrors && <p className="alert alert-danger">{serverErrors}</p>} */}
                         <button className="register-btn">Register</button>
                     </form>
                 </div>

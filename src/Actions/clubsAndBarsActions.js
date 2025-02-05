@@ -1,9 +1,11 @@
 import axios from "axios";
+import { backendApi } from "../Apis/api";
+import { useAuth } from "../Context/AuthContext";
 
 export const startGetAllClubsAndBars = () => {
     return async (dispatch) => {
         try {
-            const response = await axios.post("http://103.134.237.3:3001/v1/club/read-all-clubs",{} ,{
+            const response = await axios.post(`${backendApi}/club/read-all-clubs`, {} ,{
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
                 }
@@ -12,7 +14,7 @@ export const startGetAllClubsAndBars = () => {
             dispatch(setClubsAndBars(response.data.data.results))
         } catch(err) {
             console.log(err);
-            alert(err.message)
+            alert(err.response.data.message)
         }
     }
 }
@@ -28,7 +30,7 @@ const setClubsAndBars = (clubAndBars) => {
 //     console.log(userID)
 //     return async (dispatch) => {
 //         try {
-//             const response = await axios.get("http://103.134.237.3:3001/v1/club/read-club", {
+//             const response = await axios.get(`${backendApi}/club/read-club`, {
 //                 headers: {
 //                     "Authorization": `Bearer ${localStorage.getItem("token")}`
 //                 }
@@ -54,19 +56,24 @@ const setClubsAndBars = (clubAndBars) => {
 //     }
 // }
 
-export const startCreateClub = (formData) => {
+export const startCreateClub = (formData, setAlertMessage, setAlertMessageColor) => {
     return async (dispatch) => {
         try {
-            const response = await axios.put("http://103.134.237.3:3001/v1/club/create-club", formData, {
+            const response = await axios.post(`${backendApi}/club/create-club`, formData, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
                 }
             })
+            setAlertMessage("Club Profile Created Successfully")
+            setAlertMessageColor("green")
             console.log(response)
             dispatch(createClub(response.data.data.results))
         } catch(err) {
             console.log(err)
-            alert(err.message)
+            console.log(err.response.data.message)
+            alert(err.response.data.message)
+            setAlertMessage(err.response.data.message)
+            setAlertMessageColor("red")
         }
     }
 }
@@ -78,19 +85,22 @@ const createClub = (club) => {
     }
 }
 
-export const startUpdateClub = (formData) => {
+export const startUpdateClub = (formData, setAlertMessage, setAlertMessageColor) => {
     return async (dispatch) => {
         try {
-            const response = await axios.put("http://103.134.237.3:3001/v1/club/update-club", formData, {
+            const response = await axios.put(`${backendApi}/club/update-club`, formData, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
                 }
             })
             console.log(response)
-            dispatch(updateClub(response.data.data.results))
+            dispatch(updateClub(response.data.data))
+            setAlertMessage("Club Profile Updated Successfully")
+            setAlertMessageColor("green")
         } catch(err) {
             console.log(err)
-            alert(err.message)
+            setAlertMessage(err.response.data.message)
+            setAlertMessageColor("red")
         }
     }
 }
@@ -105,7 +115,7 @@ const updateClub = (club) => {
 export const startDeleteClub = (formData) => {
     return async (dispatch) => {
         try {
-            const response = await axios.patch("http://103.134.237.3:3001/v1/club/delete-club", { _id : formData._id}, {
+            const response = await axios.patch(`${backendApi}/club/delete-club`, { _id : formData._id}, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
                 }

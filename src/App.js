@@ -36,21 +36,9 @@ export default function App() {
     }
 
     useEffect(() => {
-        // if(localStorage.getItem("token")) {
-        //     (async () => {
-        //         try {
-        //             const response = await axios.get("http://103.134.237.3:3001/v1/club/read-club", {
-        //                 headers : {
-        //                     "Authorization" : `Bearer ${localStorage.getItem("token")}`
-        //                 }
-        //             })
-        //             console.log(response.data)
-        //         } catch(err) {
-        //             console.log(err)
-        //             alert(err.message)
-        //         }
-        //     }) ()
-        // }
+        if(localStorage.getItem("token") && localStorage.getItem("user")) {
+            handleLogin(JSON.parse(localStorage.getItem("user")))
+        }
 
         // if(localStorage.getItem("token")) {
         //     console.log("profile")

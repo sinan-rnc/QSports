@@ -110,6 +110,26 @@
                 }
             }
 
+            .form-group.gallery {
+                position: relative;
+
+                .upload-image {
+                    position: absolute;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 5px;
+                    font-size: 14px;
+                    // right: 50%;
+                    bottom: -20px;
+        
+                    .close-icon {
+                        font-size: 18px;
+                        cursor: pointer;
+                    }
+                }
+            }
+
             .btn-div {
                 display: flex;
                 flex-direction: row;
@@ -146,17 +166,17 @@
         .upload-gallery{
             display: flex;
             flex-direction: column;
+            justify-content: flex-start;
             gap: 5px;
 
-            li {
-                list-style: none;
+            p {
                 display: flex;
                 align-items: center;
                 gap: 5px;
+                cursor: pointer;
 
                 .close-icon {
                     font-size: 20px;
-                    cursor: pointer;
                 }
             }
         }

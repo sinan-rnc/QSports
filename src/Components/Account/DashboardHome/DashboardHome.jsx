@@ -7,11 +7,12 @@ import { IoClose } from "react-icons/io5"
 import UserDashboard from "../UserDashboard/UserDashboard"
 import Password from "../Password/Password"
 import UserProfile from "../UserProfile/UserProfile"
-import TournamentDashboard from "../TournamentDashboard/TournamentDashboard"
+import ClubEventDashboard from "../ClubEventDashboard/ClubEventDashboard"
 import ClubBarProfile from "../ClubBarProfile/ClubBarProfile"
 
 import "./DashboardHome.scss"
 import ClubBarDashboard from "../ClubBarDashboard/ClubBarDashboard"
+import UserEventDashboard from "../UserEventDashboard/UserEventDashboard"
 
 export default function DashboardHome() {
     const navigate = useNavigate()
@@ -26,14 +27,14 @@ export default function DashboardHome() {
         setSelectedDashboard
     } = useAuth()
 
-    console.log(user)
+    // console.log(user)
 
     const dashboardMenu = [
         { key: "dashboard", label: "Dashboard", component: user && user?.userType === "MemberUser" ? <UserDashboard setSelectedDashboard={setSelectedDashboard}/> : user && user.userType === "ClubAdmin" && <ClubBarDashboard setSelectedDashboard={setSelectedDashboard}/> },
         { key: "userProfile", label: "Edit Profile", component: user && user?.userType === "MemberUser" ? <UserProfile /> : user && user.userType === "ClubAdmin" && <ClubBarProfile /> },
         // { key: "clubBarProfile", label: "Edit Profile", component: <ClubBarProfile /> },
-        { key: "password", label: "Password", component: <Password /> },
-        { key: "myEvents", label: "My Events", component: <TournamentDashboard /> },
+        // { key: "password", label: "Password", component: <Password /> },
+        { key: "myEvents", label: "My Events", component: user && user?.userType === "MemberUser" ? <UserEventDashboard /> : user && user.userType === "ClubAdmin" && <ClubEventDashboard /> },
     ];
 
     // console.log(myTournamentButton)
@@ -59,12 +60,12 @@ export default function DashboardHome() {
                     <hr className="dashboard-hr"/>
                     <ul className="menubar-ul">
                         <li className={`menubar-li ${selectedDashboard == "dashboard" ? "active" : ""}`} onClick={() => {setSelectedDashboard("dashboard")}}>Dashboard</li>
-                        <li className={`menubar-li ${selectedDashboard == "userProfile" ? "active" : ""}`} onClick={() => {setSelectedDashboard("userProfile")}}>Edit Profile</li>
+                        <li className={`menubar-li ${selectedDashboard == "userProfile" ? "active" : ""}`} onClick={() => {setSelectedDashboard("userProfile")}}>Edit {user.userType === "ClubAdmin" ? "Club" : "User"} Profile</li>
                         {/* <ul className="dropdown-ul">
                                 <li className="dropdown-li" onClick={() => {setSelectedDashboard("userProfile")}}>User</li>
                                 <li className="dropdown-li" onClick={() => {setSelectedDashboard("clubBarProfile")}}>Club</li>
                         </ul> */}
-                        <li className={`menubar-li ${selectedDashboard == "password" ? "active" : ""}`} onClick={() => {setSelectedDashboard("password")}}>Password</li>
+                        {/* <li className={`menubar-li ${selectedDashboard == "password" ? "active" : ""}`} onClick={() => {setSelectedDashboard("password")}}>Reset Password</li> */}
                         <li className={`menubar-li ${selectedDashboard == "myEvents" ? "active" : ""}`} onClick={() => {setSelectedDashboard("myEvents")}}>My Events</li>
                     </ul>
                     <hr className="dashboard-hr"/>

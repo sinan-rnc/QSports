@@ -1,15 +1,22 @@
 import { AuthProvider, useAuth } from "../../../Context/AuthContext"
 import "./UserDashboard.scss"
 
-import photo from "../../../Assets/Common/user.png"
-import { useSelector } from "react-redux";
+import addProfile from "../../../Assets/Common/add-profile.jpg"
+import { useDispatch, useSelector } from "react-redux";
+import { startDeleteProfile } from "../../../Actions/profileActions";
 
 export default function UserDashboard({ setSelectedDashboard }) {
     const { user } = useAuth()
 
+    const dispatch = useDispatch()
+
     const profile = useSelector((state) => {
-        return state.profile.data.find(ele => ele.UserID === user?._id)
+        return state.profile.data.find(ele => !ele?.isDeleted && ele?.UserID === user?._id)
     });
+
+    const isValidImage = (url) => {
+        return url && /\.(jpeg|jpg|gif|png|webp|svg)$/i.test(url);
+    };
 
     const tournamentStatus = [
         { id: 1, date: "25 JAN 2024", name: "Rack 'Em Up Challenge", ranking: "First", total: "" },
@@ -31,22 +38,29 @@ export default function UserDashboard({ setSelectedDashboard }) {
         return `${day}-${month}-${year}`;
     };
 
+    const handleDeletProfile = (profile) => {
+        const confirmation = window.confirm("Are you sure you want to delete your profile?")
+        if (confirmation) {
+            dispatch(startDeleteProfile(profile))
+        }
+    }
+
     return (
-        <div className="dashboard-container">
+        <div className="user-dashboard-container">
             <div className="dashboard-profile">
                 <div className="heading-div">
                     <div className="dashborad-heading">
                         <h1 className='dashborad-main-heading'>User Dashboard</h1>
                         <hr className="dashborad-hr-1"/><hr className="dashborad-hr-2"/>
                     </div>
-                    <button className="edit-profile" onClick={() => {setSelectedDashboard("userProfile")}}>Edit Profile</button>
+                    <button className="edit-profile" onClick={() => {setSelectedDashboard("userProfile")}}>{profile ? "Edit User Profile" : "Create User Profile"}</button>
                 </div>
-                
-                <div className="user-profile">
-                    <div>
-                        <img src={photo} alt="user"/>
-                    </div>
-                    {(user && profile) && (
+                {(user && profile) && (
+                    <div className="user-profile">
+                        <div>
+                        <img src={addProfile} alt="user"/>
+                            {/* {isValidImage(profile.ProfilePic) ? <img src={profile.ProfilePic} alt="user"/> : <img src={addProfile} alt="user"/>} */}
+                        </div>
                         <div className="user-profile-details">
                             <h1>{user.firstName} {user.lastName}</h1>
                             <p style={{marginTop:"5px"}}>{profile.Slogan}</p>
@@ -54,11 +68,12 @@ export default function UserDashboard({ setSelectedDashboard }) {
                                 <p style={{marginTop:"20px"}}><b>Email:</b> {user.email}</p>
                                 <p style={{marginTop:"10px"}}><b>NickName:</b> {profile.NickName}</p>
                                 <p style={{marginTop:"10px"}}><b>DOB:</b> {formatDate(profile.DOB)}</p>
-                                <p style={{marginTop:"10px"}}><b>About:</b> {profile.AboutMe}</p>
+                                <p className="about" style={{marginTop:"10px"}}><b>About:</b> {profile.AboutMe}</p>
                             </div>
                         </div>
-                    )}
-                </div>
+                        {user && profile && <button className="delete-profile" onClick={() => {handleDeletProfile(profile)}}>Delete Profile</button>}
+                    </div>
+                )}
             </div>
             {(user && profile) && (
                 <div className="dashboard-history">
