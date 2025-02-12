@@ -1,24 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./ClubEventDashboard.scss"
 import axios from "axios";
 import { useAuth } from "../../../Context/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
-import { startCreateEvent } from "../../../Actions/eventsActions";
+import { startCreateEvent, startDeleteEvent, startUpdateEvent } from "../../../Actions/eventsActions";
 
 export default function ClubEventDashboard() {
+    const dispatch = useDispatch()
     const { user, setAlertMessage, setAlertMessageColor } = useAuth()
+    const [ currentEventID, setCurrentEventID ] = useState("")
+    const [ currentEvent, setCurrentEvent ] = useState("")
     const clubAndBar = useSelector((state) => {
-        return state.clubsAndBars.data.find(ele => ele?.createdBy === user?._id)
+        return state.clubsAndBars.data.find(ele => !ele.isDeleted && ele?.createdBy === user?._id)
     });
+
+    console.log(clubAndBar)
 
     const clubEvents = useSelector((state) => {
         return state.events.data
-        // .filter(ele => ele?.clubId === "64f8b0df9c89ad1234567890")
+            .filter((ele => !ele.isDeleted))
+            // .filter(ele => ele.ClubID == clubAndBar?._id)
     })
 
     console.log("Event Clubs", clubEvents)
 
-    const dispatch = useDispatch()
+    useEffect(() => {
+        if(currentEventID) {
+            setCurrentEvent(clubEvents.find(ele => ele._id === currentEventID))
+        }
+    }, [currentEventID, setCurrentEvent])
+
+    console.log(currentEvent)
 
     const [form, setForm] = useState({
         ClubID: "",
@@ -31,6 +43,35 @@ export default function ClubEventDashboard() {
         EnrollmentFee: "",
         MaxPlayers: ""
     })
+
+    const formatDate = (isoDate) => {
+        if (!isoDate) return "";  // Handle empty cases
+        const date = new Date(isoDate);
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0"); // Month starts from 0
+        const year = date.getFullYear();
+        return `${year}-${month}-${day}`;
+    };
+
+    useEffect(() => {
+        if (currentEvent) {
+            setForm({
+                ClubID: currentEvent.ClubID || "",
+                EventName: currentEvent.EventName || "",
+                EventType: currentEvent.EventType || "",
+                EventImage: currentEvent.EventImage || "",
+                StartingDate: formatDate(currentEvent.StartingDate) || "",
+                EndingDate: formatDate(currentEvent.EndingDate) || "",
+                LastEnrollmentDate: formatDate(currentEvent.LastEnrollmentDate) || "",
+                EnrollmentFee: currentEvent.EnrollmentFee || "",
+                MaxPlayers: currentEvent.MaxPlayers || ""
+            });
+        } else {
+            setOpenAddTournamentSection(false)
+        }
+    }, [currentEvent]);
+
+
     const [openAddTournamentSection, setOpenAddTournamentSection] = useState(false)
     const [formErrors, setFormErrors] = useState({})
 
@@ -52,27 +93,18 @@ export default function ClubEventDashboard() {
         if(form.EndingDate.trim().length === 0) {
             errors.EndingDate = "Ending Date is required"
         }
-        if(form.LastEnrollmentDate.trim().length === 0) {
+        if((form.LastEnrollmentDate).trim().length === 0) {
             errors.LastEnrollmentDate = "Last Enrollment Date is required"
         }
-        if(form.EnrollmentFee.trim().length === 0) {
+        if(String(form.EnrollmentFee).trim().length === 0) {
             errors.EnrollmentFee = "Enrollment Fees is required"
         }
-        if(form.MaxPlayers.trim().length === 0) {
+        if(String(form.MaxPlayers).trim().length === 0) {
             errors.MaxPlayers = "Max Players is required"
         }
     }
 
     validateErrors()
-
-    const formatDate = (isoDate) => {
-        if (!isoDate) return "";  // Handle empty cases
-        const date = new Date(isoDate);
-        const day = String(date.getDate()).padStart(2, "0");
-        const month = String(date.getMonth() + 1).padStart(2, "0"); // Month starts from 0
-        const year = date.getFullYear();
-        return `${day}-${month}-${year}`;
-    };
 
     const tournamentStatus = [
         { id: 1, date: "25 JAN 2024", name: "Rack 'Em Up Challenge", ranking: "First", total: "" },
@@ -96,6 +128,11 @@ export default function ClubEventDashboard() {
         setForm({ ...form, EventImage: URL.createObjectURL(file) });
     }
 
+    const handleEditProfile = async (eventId) => {
+        setOpenAddTournamentSection(true)
+        setCurrentEventID(eventId)
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(form);
@@ -111,22 +148,39 @@ export default function ClubEventDashboard() {
             MaxPlayers: form.MaxPlayers,
         }
         if(Object.keys(errors).length === 0) {
-            dispatch(startCreateEvent(formData, setAlertMessage, setAlertMessageColor))
+            if(currentEvent) {
+                const updatedFormData = { ...form, _id : currentEvent._id }
+                console.log("update form", updatedFormData)
+                
+                dispatch(startUpdateEvent(formData, setAlertMessage, setAlertMessageColor))
+            } else {
+                dispatch(startCreateEvent(formData, setAlertMessage, setAlertMessageColor))
+            }
+            
             setFormErrors("")
-            // setForm({
-            //     ClubID: "",
-            //     EventName: "",
-            //     EventType: "",
-            //     EventImage: "",
-            //     StartingDate: "",
-            //     EndingDate: "",
-            //     LastEnrollmentDate: "",
-            //     EnrollmentFee: "",
-            //     MaxPlayers: ""
-            // })
+            setForm({
+                ClubID: "",
+                EventName: "",
+                EventType: "",
+                EventImage: "",
+                StartingDate: "",
+                EndingDate: "",
+                LastEnrollmentDate: "",
+                EnrollmentFee: "",
+                MaxPlayers: ""
+            })
         } else {
             setFormErrors(errors)
         }
+    }
+
+    const handleDelete = (currentEventID, setAlertMessage, setAlertMessageColor) => {
+        const confirmation = window.confirm("Are you sure you want to delete this event?");
+        if (confirmation) {
+            dispatch(startDeleteEvent(currentEventID, setAlertMessage, setAlertMessageColor))
+        }
+        setCurrentEvent("")
+        setCurrentEventID("")
     }
 
     return (
@@ -144,7 +198,7 @@ export default function ClubEventDashboard() {
                             <th>EVENT DATE</th>
                             <th>EVENT NAME</th>
                             <th>EVENT TYPE</th>
-                            {/* <th>TOTAL</th> */}
+                            <th>ACTION</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -153,31 +207,32 @@ export default function ClubEventDashboard() {
                                 <td>{formatDate(ele?.StartingDate)}</td>
                                 <td>{ele?.EventName}</td>
                                 <td>{ele?.EventType}</td>
-                                {/* <td>{ele.total}</td> */}
+                                <td><button className="edit-profile" onClick={() => {handleEditProfile(ele._id)}}>Edit Event</button></td>
                             </tr>
                         ))}
                         </tbody>
                     </table>
                 ) : (
-                    <p>No EVent Found, Create new Event</p>
+                    <p>No Event Found, Create new Event</p>
                 )}
             </div>
             {(user && user?.userType === "ClubAdmin") && (
                 <div className="add-tournament-section">
                     <div className="dashborad-heading" onClick={() => {setOpenAddTournamentSection(!openAddTournamentSection)}}>
-                        <h1 className='dashborad-main-heading'>New Events</h1>
+                        <h1 className='dashborad-main-heading'>{currentEvent ? "Update Event" : "New Events"}</h1>
                         <hr className={`dashborad-hr-1 ${openAddTournamentSection && "rotate"}`}/><hr className="dashborad-hr-2"/>
+                        <h3 className="dashborad-second-heading">{currentEvent && currentEvent.EventName}</h3>
                     </div>
                     {openAddTournamentSection && (
                         <div className="tournament-from">
                             <form className="form-table" onSubmit={handleSubmit}>
                                 <div className="same-line">
                                     <div className="form-group">
-                                        <label className="form-label" for="EventName">Event Name</label>
+                                        <label className="form-label" htmlFor="EventName">Event Name</label>
                                         <input type="text" className="form-control" id="EventName" name="EventName" value={form.EventName} onChange={handleChange} placeholder="Enter your Event Name"/>
                                     </div>
                                     <div className="form-group">
-                                        <label className="form-label" for="EventType">Event Type</label>
+                                        <label className="form-label" htmlFor="EventType">Event Type</label>
                                         <select 
                                             className="form-control"
                                             id="EventType"
@@ -200,11 +255,11 @@ export default function ClubEventDashboard() {
                                 )}
                                 <div className="same-line">
                                     <div className="form-group">
-                                        <label className="form-label" for="EventImage">Event Poster</label>
+                                        <label className="form-label" htmlFor="EventImage">Event Poster</label>
                                         <input type="file" className="form-control" id="EventImage" name="EventImage" onChange={handleImageChange} placeholder="Upload your Event Poster"/>
                                     </div>
                                     <div className="form-group">
-                                        <label className="form-label" for="EnrollmentFee">Enrollment Fees</label>
+                                        <label className="form-label" htmlFor="EnrollmentFee">Enrollment Fees</label>
                                         <input type="number" className="form-control" id="EnrollmentFee" name="EnrollmentFee" value={form.EnrollmentFee} onChange={handleChange} placeholder="Enter the Enrollment Fees"/>
                                     </div>
                                 </div>
@@ -216,11 +271,11 @@ export default function ClubEventDashboard() {
                                 )}
                                 <div className="same-line">
                                     <div className="form-group">
-                                        <label className="form-label" for="StartingDate">Start Date</label>
+                                        <label className="form-label" htmlFor="StartingDate">Start Date</label>
                                         <input type="date" className="form-control" id="StartingDate" name="StartingDate" value={form.StartingDate} onChange={handleChange} placeholder="Enter the Event Starting Date"/>
                                     </div>
                                     <div className="form-group">
-                                        <label className="form-label" for="EndingDate">End Date</label>
+                                        <label className="form-label" htmlFor="EndingDate">End Date</label>
                                         <input type="date" className="form-control" id="EndingDate" name="EndingDate" value={form.EndingDate} onChange={handleChange} placeholder="Enter the Event Ending Date"/>
                                     </div>
                                 </div>
@@ -232,17 +287,17 @@ export default function ClubEventDashboard() {
                                 )}
                                 {/* <div className="same-line">
                                     <div className="form-group">
-                                        <label className="form-label" for="location">Event Time</label>
+                                        <label className="form-label" htmlFor="location">Event Time</label>
                                         <input type="time" className="form-control" id="EventType" name="EventType" value={form.EventType} onChange={handleChange} placeholder="Enter the Evnt Time"/>
                                     </div>
                                 </div> */}
                                 <div className="same-line">
                                     <div className="form-group">
-                                        <label className="form-label" for="LastEnrollmentDate">Last Enrollment Date</label>
+                                        <label className="form-label" htmlFor="LastEnrollmentDate">Last Enrollment Date</label>
                                         <input type="date" className="form-control" id="LastEnrollmentDate" name="LastEnrollmentDate" value={form.LastEnrollmentDate} onChange={handleChange} placeholder="Enter the Last Enrollment Date"/>
                                     </div>
                                     <div className="form-group">
-                                        <label className="form-label" for="MaxPlayers">No.of Players</label>
+                                        <label className="form-label" htmlFor="MaxPlayers">No.of Players</label>
                                         <input type="number" className="form-control" id="MaxPlayers" name="MaxPlayers" value={form.MaxPlayers} onChange={handleChange} placeholder="Enter the No.of Players For the Event"/>
                                     </div>
                                 </div>
@@ -252,8 +307,11 @@ export default function ClubEventDashboard() {
                                         {formErrors.MaxPlayers && <div className="alert alert-danger">{formErrors.MaxPlayers}</div>}
                                     </div>
                                 )}
-                                <button type="submit" className="save-btn">Add</button>
+                                <div className="btn-div">
+                                    <button type="submit" className="save-btn">{currentEvent ? "Update": "Add"}</button>
+                                </div>
                             </form>
+                            {currentEvent && <button className="delete-btn" onClick={() => {handleDelete(currentEventID, setAlertMessage, setAlertMessageColor)}}>Delete Club</button>}
                         </div>
                     )}
                 </div>

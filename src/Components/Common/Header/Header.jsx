@@ -22,6 +22,7 @@ import { FaFacebook, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
 import axios from "axios";
 import { MdRemoveRedEye } from "react-icons/md";
 import { useSelector } from "react-redux";
+import { backendApi } from "../../../Apis/api";
 
 export default function Header({searchOption, handleSearchOption, handleMyTournamentClick}) {
 
@@ -139,7 +140,7 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
 
         if(Object.keys(errors).length === 0) {
             try {
-                const response = await axios.post("http://103.134.237.3:3001/v1/auth/login", formData)
+                const response = await axios.post(`${backendApi}/auth/login`, formData)
                 const token = response.data.tokens.access
                 const user = response.data.user
                 console.log(response.data.user)
@@ -207,7 +208,7 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                     <div className="right_ul">
                         <ul>
                             <li><a href="/club-register"><p className="club-register">Register a new <span>Club</span></p></a></li>
-                            <li className="contact-us">Contact Us</li>
+                            <li className="contact-us"><a href="/contact-us">Contact Us</a></li>
                             {/* <li>Language: <span>EN</span></li> */}
                         </ul>
                         {/* <img src={english} alt=""/> */}
@@ -263,7 +264,8 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                         (
                             <div ref={userDashboardRef} className="user-dashboard">
                                 <div className="top">
-                                    {(!user || clubAndBar?.image || userProfile?.ProfilePic )? <img src={addProfile} alt="user"/> : user?.userType === "ClubAdmin" ? <img src={clubAndBar?.image} alt="user"/> : user?.userType === "MemberUser" && <img src={userProfile?.ProfilePic} alt="user"/>}
+                                    {/* {(!user || clubAndBar?.image || userProfile?.ProfilePic )? <img src={addProfile} alt="user"/> : user?.userType === "ClubAdmin" ? <img src={clubAndBar?.image} alt="user"/> : user?.userType === "MemberUser" && <img src={userProfile?.ProfilePic} alt="user"/>} */}
+                                    <img src={addProfile} alt="user"/>
                                     <h1>{user.firstName} {user.lastName}</h1>
                                 </div><hr className="hr-dashboard"/>
                                 <div className="details">

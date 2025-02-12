@@ -23,6 +23,7 @@ import { startGetAllEvents } from "./Actions/eventsActions";
 import axios from "axios";
 import ClubRegister from "./Components/Account/ClubRegister/ClubRegister";
 import { startGetAllProfile } from "./Actions/profileActions";
+import ContactUsPage from "./Pages/ContactUsPage";
 
 
 export default function App() {
@@ -75,6 +76,7 @@ export default function App() {
                 <Route path="/club-register" element={<ClubRegister/>} />
                 <Route path="/clubs/:clubName" element={<ClubBarDetailPage/>} />
                 <Route path="events/:eventName" element={<EventDetailPage/>} />
+                <Route path="/contact-us" element={<ContactUsPage/>}/>
             </Routes>
             <Footer/>
         </Fragment>

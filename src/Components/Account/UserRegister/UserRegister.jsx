@@ -5,6 +5,7 @@ import { BiSolidHide } from "react-icons/bi"
 import { MdRemoveRedEye } from "react-icons/md"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { backendApi } from "../../../Apis/api"
 
 export default function UserRegister() {
     const navigate = useNavigate()
@@ -69,7 +70,7 @@ export default function UserRegister() {
 
         if(Object.keys(errors).length === 0) {
             try {
-                const response = await axios.post("http://103.134.237.3:3001/v1/users/create-user", formData)
+                const response = await axios.post(`${backendApi}/users/create-user`, formData)
                 // const token = response.data.tokens.access
                 const user = response.data.data
                 // localStorage.setItem("token", token)

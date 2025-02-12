@@ -81,7 +81,7 @@ const updateProfile = (profile) => {
     }
 }
 
-export const startDeleteProfile = (profile) => {
+export const startDeleteProfile = (profile, setAlertMessage, setAlertMessageColor) => {
     return async (dispatch) => {
         try {
             const response = await axios.patch(`${backendApi}/profile/delete-profile`, { _id : profile._id}, {
@@ -91,9 +91,13 @@ export const startDeleteProfile = (profile) => {
             })
             console.log(response)
             dispatch(deleteProfile(profile._id))
+            setAlertMessage("User Profile Deleted")
+            setAlertMessageColor("green")
         } catch(err) {
             console.log(err)
             alert(err.message)
+            setAlertMessage("Unable to Delete User Profile")
+            setAlertMessageColor("green")
         }
     }
 }

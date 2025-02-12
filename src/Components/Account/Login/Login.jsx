@@ -3,6 +3,7 @@ import "./Login.scss"
 import { useState } from "react"
 import { useAuth } from "../../../Context/AuthContext"
 import axios from "axios"
+import { backendApi } from "../../../Apis/api"
 
 export default function Login() {
     const {handleLogin} = useAuth()
@@ -44,7 +45,7 @@ export default function Login() {
 
         if(Object.keys(errors).length === 0) {
             try {
-                const response = await axios.post("http://103.134.237.3:3001/v1/auth/login", formData)
+                const response = await axios.post(`${backendApi}/auth/login`, formData)
                 const token = response.data.tokens.access
                 const user = response.data.user
                 localStorage.setItem("token", token)

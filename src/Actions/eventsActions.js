@@ -51,7 +51,7 @@ const createEvents = (allEvents) => {
     }
 }
 
-export const startUpdateEvent = (formData) => {
+export const startUpdateEvent = (formData, setAlertMessage, setAlertMessageColor) => {
     return async (dispatch) => {
         try {
             const response = await axios.put(`${backendApi}/event/update-event`, formData, {
@@ -59,8 +59,10 @@ export const startUpdateEvent = (formData) => {
                     "Authorization" : `Bearer  ${localStorage.getItem("token")}`
                 }
             })
-            console.log(response.data.data.results)
-            dispatch(updateEvent(response.data.data.results))
+            console.log(response.data.data)
+            dispatch(updateEvent(response.data.data))
+            setAlertMessage("Event Updated Succcessfully")
+            setAlertMessageColor("green")
         } catch(err) {
             console.log(err)
             alert(err.message)
@@ -75,16 +77,18 @@ const updateEvent = (allEvents) => {
     }
 }
 
-export const startDeleteEvent = (formData) => {
+export const startDeleteEvent = (eventID, setAlertMessage, setAlertMessageColor) => {
     return async (dispatch) => {
         try {
-            const response = await axios.patch(`${backendApi}/event/delete-event`, { _id : formData._id }, {
+            const response = await axios.patch(`${backendApi}/event/delete-event`, { _id : eventID }, {
                 headers : {
                     "Authorization" : `Bearer  ${localStorage.getItem("token")}`
                 }
             })
-            console.log(response.data.data.results)
-            dispatch(deleteEvent(formData._id))
+            console.log(response)
+            setAlertMessage("Event Deleted Succcessfully")
+            setAlertMessageColor("green")
+            dispatch(deleteEvent(eventID))
         } catch(err) {
             console.log(err)
             alert(err.message)

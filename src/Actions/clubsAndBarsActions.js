@@ -59,6 +59,7 @@ const setClubsAndBars = (clubAndBars) => {
 export const startCreateClub = (formData, setAlertMessage, setAlertMessageColor) => {
     return async (dispatch) => {
         try {
+            console.log(formData)
             const response = await axios.post(`${backendApi}/club/create-club`, formData, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -67,7 +68,7 @@ export const startCreateClub = (formData, setAlertMessage, setAlertMessageColor)
             setAlertMessage("Club Profile Created Successfully")
             setAlertMessageColor("green")
             console.log(response)
-            dispatch(createClub(response.data.data.results))
+            dispatch(createClub(response.data.data))
         } catch(err) {
             console.log(err)
             console.log(err.response.data.message)
@@ -88,6 +89,7 @@ const createClub = (club) => {
 export const startUpdateClub = (formData, setAlertMessage, setAlertMessageColor) => {
     return async (dispatch) => {
         try {
+            console.log(formData)
             const response = await axios.put(`${backendApi}/club/update-club`, formData, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -112,19 +114,23 @@ const updateClub = (club) => {
     }
 }
 
-export const startDeleteClub = (formData) => {
+export const startDeleteClub = (clubID, setAlertMessage, setAlertMessageColor) => {
     return async (dispatch) => {
         try {
-            const response = await axios.patch(`${backendApi}/club/delete-club`, { _id : formData._id}, {
+            const response = await axios.patch(`${backendApi}/club/delete-club`, { _id : clubID}, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
                 }
             })
             console.log(response)
-            dispatch(deleteClub(formData._id))
+            dispatch(deleteClub(clubID))
+            setAlertMessage("Club Profile Deleted Successfully")
+            setAlertMessageColor("green")
         } catch(err) {
             console.log(err)
             alert(err.message)
+            setAlertMessage("Unable to Delete Club Profile")
+            setAlertMessageColor("red")
         }
     }
 }

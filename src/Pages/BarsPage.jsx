@@ -5,7 +5,7 @@ import Helmet from "../Components/Common/Helmet/Helmet";
 export default function BarAndClubPage({searchOption}) {
     return (
         <Fragment>
-        <Helmet title="Bars And Clubs">
+        <Helmet title="Bars">
             <Bars searchOption={searchOption}/>
         </Helmet>
         </Fragment>

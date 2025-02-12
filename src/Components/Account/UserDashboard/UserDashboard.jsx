@@ -4,9 +4,11 @@ import "./UserDashboard.scss"
 import addProfile from "../../../Assets/Common/add-profile.jpg"
 import { useDispatch, useSelector } from "react-redux";
 import { startDeleteProfile } from "../../../Actions/profileActions";
+import { localhostAPI, serverUrl1 } from "../../../Apis/api";
+import { GiConsoleController } from "react-icons/gi";
 
 export default function UserDashboard({ setSelectedDashboard }) {
-    const { user } = useAuth()
+    const { user, setAlertMessage, setAlertMessageColor } = useAuth()
 
     const dispatch = useDispatch()
 
@@ -38,10 +40,10 @@ export default function UserDashboard({ setSelectedDashboard }) {
         return `${day}-${month}-${year}`;
     };
 
-    const handleDeletProfile = (profile) => {
+    const handleDeleteProfile = (profile) => {
         const confirmation = window.confirm("Are you sure you want to delete your profile?")
         if (confirmation) {
-            dispatch(startDeleteProfile(profile))
+            dispatch(startDeleteProfile(profile, setAlertMessage, setAlertMessageColor))
         }
     }
 
@@ -58,8 +60,8 @@ export default function UserDashboard({ setSelectedDashboard }) {
                 {(user && profile) && (
                     <div className="user-profile">
                         <div>
-                        <img src={addProfile} alt="user"/>
-                            {/* {isValidImage(profile.ProfilePic) ? <img src={profile.ProfilePic} alt="user"/> : <img src={addProfile} alt="user"/>} */}
+                        {/* <img src={addProfile} alt="user"/> */}
+                            {isValidImage(profile.ProfilePic) ? <img src={profile.ProfilePic.replace("103.134.237.3:3001", "api.rncmediahub.com")} alt="user"/> : <img src={addProfile} alt="user"/>}
                         </div>
                         <div className="user-profile-details">
                             <h1>{user.firstName} {user.lastName}</h1>
@@ -71,7 +73,7 @@ export default function UserDashboard({ setSelectedDashboard }) {
                                 <p className="about" style={{marginTop:"10px"}}><b>About:</b> {profile.AboutMe}</p>
                             </div>
                         </div>
-                        {user && profile && <button className="delete-profile" onClick={() => {handleDeletProfile(profile)}}>Delete Profile</button>}
+                        {user && profile && <button className="delete-profile" onClick={() => {handleDeleteProfile(profile)}}>Delete Profile</button>}
                     </div>
                 )}
             </div>
@@ -88,7 +90,7 @@ export default function UserDashboard({ setSelectedDashboard }) {
                         <tr>
                             <th>SI NO.</th>
                             <th>TITLE</th>
-                            <th>NUMBERS</th>
+                            <th>RESULTS</th>
                             {/* <th>TOTAL</th> */}
                         </tr>
                         </thead>
@@ -140,14 +142,14 @@ export default function UserDashboard({ setSelectedDashboard }) {
                     <hr className="hr-1"/><hr className="hr-2"/>
                     {/* <h3 className="second-heading">Welcome User</h3> */}
                 </div>
+                <p>No Event Participated, Join a <a href="/tournaments">new Event</a></p>
                 {/* <hr className="dashboard-history-hr"/> */}
-                <table className="recent-orders__table">
+                {/* <table className="recent-orders__table">
                     <thead>
                     <tr>
                         <th>DATE</th>
                         <th>TOURNAMENT NAME</th>
                         <th>RANKING</th>
-                        {/* <th>TOTAL</th> */}
                     </tr>
                     </thead>
                     <tbody>
@@ -156,11 +158,10 @@ export default function UserDashboard({ setSelectedDashboard }) {
                             <td>{ele.date}</td>
                             <td>{ele.name}</td>
                             <td>{ele.ranking}</td>
-                            {/* <td>{ele.total}</td> */}
                         </tr>
                     ))}
                     </tbody>
-                </table>
+                </table> */}
             </div>
         </div>
     )

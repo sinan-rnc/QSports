@@ -23,7 +23,7 @@ export default function eventsReducers(state = initialState, action) {
         }
         case "DELETE_EVENTS" : {
             return { ...state, data: state.data.filter((ele) => {
-                return ele.id !== action.payload
+                return ele._id !== action.payload
             }) }
         }
         default : {

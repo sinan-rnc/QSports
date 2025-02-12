@@ -10,22 +10,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa"
 import { CgWebsite } from "react-icons/cg"
 import { startDeleteClub } from "../../../Actions/clubsAndBarsActions"
-import { localhostAPI, serverAPI } from "../../../Apis/api"
 
 export default function ClubBarDashboard({ setSelectedDashboard }) {
-    const { user } = useAuth()
+    const { user, etAlertMessage, setAlertMessageColor } = useAuth()
 
     const clubAndBar = useSelector((state) => {
         return state.clubsAndBars.data.find(ele => !ele?.isDeleted && ele?.createdBy === user?._id)
     });
+
+    console.log(clubAndBar)
 
     const dispatch = useDispatch()
 
     const isValidImage = (url) => {
         return url && /\.(jpeg|jpg|gif|png|webp|svg)$/i.test(url);
     };
-
-    console.log(clubAndBar?.pictureGallery[0]?.path?.replace(localhostAPI, serverAPI))
 
     const tournamentStatus = [
         { id: 1, date: "25 JAN 2024", name: "Rack 'Em Up Challenge", ranking: "First", total: "" },
@@ -47,10 +46,10 @@ export default function ClubBarDashboard({ setSelectedDashboard }) {
         return `${day}-${month}-${year}`;
     };
 
-    const handleDeleteClub = (profile) => {
+    const handleDeleteClub = (clubID) => {
         const confirmation = window.confirm("Are you sure you want to delete your profile?")
         if (confirmation) {
-            dispatch(startDeleteClub(profile))
+            dispatch(startDeleteClub(clubID, etAlertMessage, setAlertMessageColor))
         }
     }
 
@@ -68,8 +67,8 @@ export default function ClubBarDashboard({ setSelectedDashboard }) {
                 {(user && clubAndBar) && (
                     <div className="user-profile">
                         <div className="clubImage-div">
-                            {/* {isValidImage(clubAndBar.image) ? <img src={clubAndBar.image} alt="user"/> : <img src={addImage} alt="user"/>} */}
-                            <img src={addImage} alt=""/>
+                            {isValidImage(clubAndBar.image) ? <img src={clubAndBar.image} alt="user"/> : <img src={addImage} alt="user"/>}
+                            {/* <img src={addImage} alt=""/> */}
                         </div>
                         <div className="club-name-div">
                             <div className="left">
@@ -95,8 +94,8 @@ export default function ClubBarDashboard({ setSelectedDashboard }) {
                             <div className="gallery-grid">
                                 {clubAndBar.pictureGallery.map((image, index) => (
                                     <div className="gallery" key={image._id || index}>
-                                        <img src={addImage} alt=""/>
-                                        {/* <img src={image.path.replace(localhostAPI, serverAPI)} alt={image.title} /> */}
+                                        {/* <img src={addImage} alt=""/> */}
+                                        <img src={image.path} alt={image.title} />
                                     </div>
                                 ))}
                             </div>
@@ -140,7 +139,7 @@ export default function ClubBarDashboard({ setSelectedDashboard }) {
                                 })}
                             </div>
                         </div>
-                        <button className="delete-profile" onClick={handleDeleteClub}>Delete Club Profile</button>
+                        <button className="delete-profile" onClick={() => {handleDeleteClub(clubAndBar._id)}}>Delete Club Profile</button>
                     </div>
                 )}
             </div>

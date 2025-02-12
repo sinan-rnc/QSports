@@ -11,7 +11,7 @@ export default function UserProfile() {
     const profile = useSelector((state) => {
         return state.profile.data
             // .find(ele => ele?._id === "67a31c2c02344f4343eb6839")
-            .find(ele => ele?.isDeleted && !ele?.UserID === user?._id)
+            .find(ele => !ele?.isDeleted && ele?.UserID === user?._id)
     });
 
     if(profile) {
@@ -108,13 +108,18 @@ export default function UserProfile() {
                 formData.append("ProfilePic", form.ProfilePic);
             }
     
-            console.log("Sending form data:", formData);
+            console.log("FormData contents:");
+            formData.forEach((value, key) => {
+                console.log(key, value);
+            });
+
+            console.log("formData", formData)
     
-            if (profile) {
+            if (!profile) {
+                dispatch(startCreateProfile(formData, setAlertMessage, setAlertMessageColor));
+            } else {
                 formData.append("_id", profile._id);
                 dispatch(startUpdateProfile(formData, setAlertMessage, setAlertMessageColor));
-            } else {
-                dispatch(startCreateProfile(formData, setAlertMessage, setAlertMessageColor));
             }
     
             setFormErrors("");

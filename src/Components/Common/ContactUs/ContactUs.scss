@@ -1,0 +1,172 @@
+.contact-us {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .location {
+        width: 100%;
+        height: 500px;
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+    }
+
+    .contact-form {
+        margin-top: 50px;
+        background: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+        margin-bottom: 50px;
+        width: 1000px;
+
+        .left {
+            width: 50%;
+            .address-details {
+                margin-top: 30px;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+
+                .address {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                }
+
+                .opening-hours {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                }
+
+                .description {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                }
+            }
+        }
+
+        .right {
+            width: 50%;
+
+            .form-table {
+                margin-top: 30px;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                width: 100%;
+    
+                .same-line {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 20px;
+    
+                    .form-label {
+                        width: 50%;
+                    }
+    
+                    .form-control {
+                        width: 50%;
+                    }
+    
+                    .alert {
+                        font-size: 14px;
+                        width: 50%;
+                        text-align: left;
+                        margin-top: -10px;
+                        color: red;
+                    }
+                }
+    
+                .form-group {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    text-align: start;
+    
+                    .form-control {
+                        width: 100%;
+                        padding: 8px 30px 8px 10px;
+                        outline: none;
+                        appearance: none;
+                        border: none;
+                        display: flex;
+                        text-align: left;
+                        justify-content: flex-start;
+                        // width: 300px;
+                        background: #eaeaea;
+                        border: 2px solid #eaeaea;
+                    }
+    
+                    .form-control:hover {
+                        background: #fff;
+                        border: 2px solid #eaeaea;
+                    }
+    
+                    .form-control::placeholder {
+                        display: flex;
+                        text-align: left;
+                        align-items: left;
+                        font-style: italic;
+                    }
+    
+                    span {
+                        color: red;
+                        font-size: 14px;
+                    }
+                }
+    
+                .form-group.password-hide {
+                    position: relative;
+    
+                    svg {
+                        position: absolute;
+                        right: 10px;
+                        top: 40px;
+                    }
+                }
+    
+                .register-btn {
+                    margin-top: 10px;
+                    display: block;
+                    // justify-content: flex-end;
+                    width: 100px;
+                    padding: 10px 5px 10px;
+                    background: #fe6b00;
+                    color: white;
+                    border: none;
+                    font-weight: 700;
+                    font-size: 15px;
+                    cursor: pointer;
+                    border-radius: 5px;
+                    // margin-left: auto;
+                    margin-right: auto;
+                }
+    
+                .register-btn:hover {
+                    background: #ddcc92;
+                    color: black;
+                }
+            }
+    
+            .alert {
+                font-size: 14px;
+                width: 50%;
+                text-align: left;
+                margin-top: -10px;
+                color: red;
+            }
+        }
+    }
+}

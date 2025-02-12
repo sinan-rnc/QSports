@@ -64,62 +64,6 @@ export default function UserEventDashboard() {
         { id: 6, date: "20 DEC 2024", name: "Midnight Cue Clash", ranking: "Quater-Finalist", total: "" },
     ];
 
-
-    const handleChange = (e) => {
-        const {name} = e.target;
-        setForm({...form, [name]: e.target.value });
-        // console.log(form)
-    };
-
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        setForm({ ...form, EventImage: URL.createObjectURL(file) });
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log(form);
-        const formData = {
-            ClubID : "6797718c52f17c150584ae9d",
-            EventName: form.EventName,
-            EventType: form.EventType,
-            EventImage: form.EventImage,
-            StartingDate: form.StartingDate,
-            EndingDate: form.EndingDate,
-            LastEnrollmentDate: form.LastEnrollmentDate,
-            EnrollmentFee: form.EnrollmentFee,
-            MaxPlayers: form.MaxPlayers,
-        }
-        if(Object.keys(errors).length === 0) {
-            try {
-                const response = await axios.post("http://103.134.237.3:3001/v1/event/create-event", formData, {
-                    headers : {
-                        "Authorization" : `Bearer ${localStorage.getItem("token")}`,
-                    }
-                })
-                console.log(response.data)
-                setFormErrors("")
-                setForm({
-                    ClubID: "",
-                    EventName: "",
-                    EventType: "",
-                    EventImage: "",
-                    StartingDate: "",
-                    EndingDate: "",
-                    LastEnrollmentDate: "",
-                    EnrollmentFee: "",
-                    MaxPlayers: ""
-                })
-            } catch(err) {
-                console.log(err)
-                alert(err.message)
-                setFormErrors("")
-            }
-        } else {
-            setFormErrors(errors)
-        }
-    }
-
     return (
         <div className="user-event-container">
             <div className="user-event-dashboard">
@@ -128,13 +72,13 @@ export default function UserEventDashboard() {
                     <hr className="dashborad-hr-1"/><hr className="dashborad-hr-2"/>
                     {/* <h3 className="second-heading">Welcome User</h3> */}
                 </div>
-                <table className="recent-orders__table">
+                <p>No Event Participated, Join a <a href="/tournaments">new Event</a></p>
+                {/* <table className="recent-orders__table">
                     <thead>
                     <tr>
                         <th>DATE</th>
                         <th>EVENT NAME</th>
                         <th>RANKING</th>
-                        {/* <th>TOTAL</th> */}
                     </tr>
                     </thead>
                     <tbody>
@@ -146,23 +90,23 @@ export default function UserEventDashboard() {
                         </tr>
                     ))}
                     </tbody>
-                </table>
+                </table> */}
             </div>
-            {(user && profile) && (
+            
+            {profile && (
                 <div className="dashboard-history">
                     <div className="heading-1">
                         <h1 className='main-heading'>Game Profile</h1>
                         <hr className="hr-1"/><hr className="hr-2"/>
-                        <h3 className="second-heading">Welcome User</h3>
+                        {/* <h3 className="second-heading">Welcome User</h3> */}
                     </div>
-                    <hr className="dashboard-history-hr"/>
-                    {/* <table className="recent-orders__table">
+                    {/* <hr className="dashboard-history-hr"/> */}
+                    <table className="recent-orders__table">
                         <thead>
                         <tr>
                             <th>SI NO.</th>
                             <th>TITLE</th>
-                            <th>NUMBERS</th>
-                            <th>TOTAL</th>
+                            <th>RESULTS</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -170,41 +114,34 @@ export default function UserEventDashboard() {
                                 <td>1</td>
                                 <td>Total Score</td>
                                 <td>{profile.TotScore}</td>
-                                <td>{ele.total}</td>
                             </tr>
                             <tr>
                                 <td>2</td>
                                 <td>Ranking</td>
                                 <td>{profile.Ranking}</td>
-                                <td>{ele.total}</td>
                             </tr>
                             <tr>
                                 <td>3</td>
                                 <td>No.of Matches</td>
                                 <td>{profile.NOMatches}</td>
-                                <td>{ele.total}</td>
                             </tr>
                             <tr>
                                 <td>4</td>
                                 <td>No.of Matches Won</td>
                                 <td>{profile.MatchesWon}</td>
-                                <td>{ele.total}</td>
                             </tr>
                             <tr>
                                 <td>5</td>
                                 <td>No.of Events</td>
                                 <td>{profile.NoOfEvents}</td>
-                                <td>{ele.total}</td>
                             </tr>
                             <tr>
                                 <td>6</td>
                                 <td>No.of Events Won</td>
                                 <td>{profile.EventsWon}</td>
-                                <td>{ele.total}</td>
                             </tr>
                         </tbody>
-                    </table> */}
-                    <p>No Event Participated, Join a <a href="/tournaments">new Event</a></p>
+                    </table>
                 </div>
             )}
         </div>

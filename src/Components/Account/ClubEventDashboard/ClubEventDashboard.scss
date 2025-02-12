@@ -22,34 +22,53 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         
             &__title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 20px;
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 20px;
             }
         
             &__table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
+                width: 100%;
+                border-collapse: collapse;
+                text-align: left;
         
-            th {
-                font-size: 16px;
-                color: #555;
-                text-transform: uppercase;
-                border-bottom: 1px solid #e0e0e0;
-                padding: 12px 8px;
-            }
+                th {
+                    font-size: 16px;
+                    color: #555;
+                    text-transform: uppercase;
+                    border-bottom: 1px solid #e0e0e0;
+                    padding: 12px 8px;
+                }
+            
+                td {
+                    font-size: 14px;
+                    padding: 12px 8px;
+                    color: #333;
+
+                    .edit-profile {
+                        display: block;
+                        // justify-content: flex-end;
+                        height: auto;
+                        width: 120px;
+                        padding: 10px 5px 10px;
+                        background: #fe6b00;
+                        color: white;
+                        border: none;
+                        font-weight: 700;
+                        font-size: 15px;
+                        cursor: pointer;
+                        border-radius: 5px;
+                        // margin-left: auto;
+                        // bottom: 0px;
+                        // right: 0px;
+                        // margin-right: auto;
+                    }
         
-            td {
-                font-size: 14px;
-                padding: 12px 8px;
-                color: #333;
-            }
-        
-            .recent-orders__number {
-                color: #1a73e8; // Blue color for order number
-                cursor: pointer;
-            }
+                    .edit-profile:hover {
+                        background: #ddcc92;
+                        color: black;
+                    }
+                }
         
             //   tr {
             //     &:nth-child(even) {
@@ -85,6 +104,7 @@
         }
 
         .tournament-from {
+            position: relative;
             // padding: 30px;
             // background: white;
             // box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -152,6 +172,12 @@
                         font-style: italic;
                     }
                 }
+
+                .btn-div {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                }
         
                 .save-btn {
                     margin-top: 10px;
@@ -167,13 +193,38 @@
                     cursor: pointer;
                     border-radius: 5px;
                     // margin-left: auto;
-                    margin-right: auto;
+                    // margin-right: auto;
                 }
         
                 .save-btn:hover {
                     background: #ddcc92;
                     color: black;
                 }
+            }
+
+            .delete-btn {
+                position: absolute;
+                margin-top: 10px;
+                display: block;
+                // justify-content: flex-end;
+                width: 100px;
+                padding: 10px 5px 10px;
+                background: #fe6b00;
+                color: white;
+                border: none;
+                font-weight: 700;
+                font-size: 15px;
+                cursor: pointer;
+                border-radius: 5px;
+                right: 0;
+                bottom: 0;
+                // margin-left: auto;
+                // margin-right: auto;
+            }
+    
+            .delete-btn:hover {
+                background: #ddcc92;
+                color: black;
             }
         }
     }

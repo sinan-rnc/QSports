@@ -29,7 +29,7 @@ export default function ClubBarProfile() {
         return state.clubsAndBars.data.find(ele =>!ele?.isDeleted && ele?.createdBy === user?._id)
     });
 
-    console.log(clubAndBar)
+    console.log("ClubandBar", clubAndBar)
 
     const [ form, setForm ] = useState(clubAndBar ? {
         name: clubAndBar.name,
@@ -84,7 +84,7 @@ export default function ClubBarProfile() {
         services: []
     })
     
-    console.log(form)
+    // console.log(form)
 
     const [formErrors, setFormErrors] = useState("")
     const [serverErrors, setServerErrors] = useState("")
@@ -603,7 +603,9 @@ export default function ClubBarProfile() {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault()
-        console.log(form)
+        // console.log(form)
+
+        // const formData = { ...form }
 
         const formData = new FormData();
         
@@ -635,14 +637,16 @@ export default function ClubBarProfile() {
             console.log(`${key}:`, value);
         }
 
-        console.log(formData)
         if(Object.keys(errors).length === 0) {
-            if(clubAndBar) {
-                const updatedFormData = { ...formData, _id: clubAndBar._id, clubType: clubAndBar.clubType }
-                dispatch(startUpdateClub(updatedFormData, setAlertMessage, setAlertMessageColor))
+            if (clubAndBar) {
+                formData.append("_id", clubAndBar._id); // ✅ Add club ID for update
+                console.log("for update, formData", formData);
+                dispatch(startUpdateClub(formData, setAlertMessage, setAlertMessageColor));
             } else {
-                dispatch(startCreateClub(formData, setAlertMessage, setAlertMessageColor))
+                console.log("for create, formData", formData);
+                dispatch(startCreateClub(formData, setAlertMessage, setAlertMessageColor));
             }
+            
             // try {
             //     const response = await axios.post("http://103.134.237.3:3001/v1/club/create-club", formData, {
             //         headers: {
@@ -766,12 +770,12 @@ export default function ClubBarProfile() {
                         <div className="form-group gallery">
                             <label className="form-label" htmlFor="image">{form.clubType ? form.clubType : "Club/Bar"} Image</label>
                             <input type="file" className="form-control" id="image" name="image" onChange={handleImageChange} placeholder={`Enter the ${form.clubType ? form.clubType : "Club/Bar"} Image`}/>
-                            {form?.image?.name && (
-                            <div className="upload-image">
-                                <p>{form.image.name}</p>
-                                <IoClose className="close-icon" onClick={handleRemoveImage} />
-                            </div>
-                        )}
+                            {(form?.image || form?.image?.name)  && (
+                                <div className="upload-image">
+                                    <p>Remove Image</p>
+                                    <IoClose className="close-icon" onClick={handleRemoveImage} />
+                                </div>
+                            )}
                         </div>
                     </div>
                     {(formErrors.slogan || formErrors.image) && (
