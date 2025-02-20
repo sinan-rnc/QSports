@@ -10,9 +10,26 @@ import "./TournamentEvents.scss"
 import { MdOutlineZoomOutMap } from 'react-icons/md';
 import { tournaments } from '../../../DataSet/tournaments';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function TournamentEvents() {
     const navigate = useNavigate()
+
+    const events = useSelector((state) => {
+        return state.events.data
+    })
+
+    // console.log(events)
+
+    const formatDate = (isoDate) => {
+        if (!isoDate) return "";  // Handle empty cases
+        const date = new Date(isoDate);
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0"); // Month starts from 0
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    };
+
     return (
         <section className="tournamentevents">
         <div className="tournamentevents-section container-section">
@@ -57,23 +74,23 @@ export default function TournamentEvents() {
                   }}
                 className="tournamentevents-grid"
             >
-                {tournaments.map((ele, index) => (
+                {events?.map((ele, index) => (
                     <SwiperSlide key={index}>
-                        <div className="tournamentevents-card" onClick={() => {navigate(`/events/${ele.name.replace(/\s+/g, '-').toLowerCase()}`)}}>
+                        <div className="tournamentevents-card" onClick={() => {navigate(`/events/${ele.EventName.replace(/\s+/g, '-').toLowerCase()}`)}}>
                             <div className="tournamentevents-image">
                                 {/* <MdOutlineZoomOutMap /> */}
-                                <img src={ele.image} alt="" />
+                                <img src={ele.EventImage} alt="" />
                             </div>
                             <div className="tournamentevents-details">
                                 <div className="top">
                                     <div className="left">
-                                        <h3>{ele.name}</h3>
-                                        <p>{ele.type}</p>
-                                        <p>At {ele.clubName}</p>
+                                        <h3>{ele?.EventName}</h3>
+                                        <p>{ele.EventType}</p>
+                                        <p>At {ele.ClubID}</p>
                                     </div>
                                     <div className="right">
-                                        <p className="price">AED {ele.fees}</p>
-                                        <p className="dateNTime">{ele.date} at {ele.time}</p>
+                                        <p className="price">AED {ele.EnrollmentFee}</p>
+                                        <p className="dateNTime">{formatDate(ele.StartingDate)}</p>
                                         <button>Register Now</button>
                                     </div>
                                 </div>

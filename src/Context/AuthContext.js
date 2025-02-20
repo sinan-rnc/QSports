@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext()
 
@@ -8,13 +8,13 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
     const [ user, setUser ] = useState(null)
-    const [ searchCategory, setSearchCategory ] = useState("")
-    const [ searchCity, setSearchCity ] = useState("")
+    const [ searchFilters, setSearchFilters ] = useState({})
+    const [ seachNearByFilters, setSearchNearByFilters ] = useState({})
     const [ openUserDashboard, setOpenUserDashboard ] = useState(false)
     const [ openSearchDashboard, setOpenSearchDashboard ] = useState(false)
     const [ alertMessage, setAlertMessage ] = useState("")
     const [ alertMessageColor, setAlertMessageColor ] = useState("")
-    const [selectedDashboard, setSelectedDashboard] = useState("dashboard")
+    const [ selectedDashboard, setSelectedDashboard ] = useState("dashboard")
 
     const handleLogin = (user) => {
         setUser(user)
@@ -23,14 +23,7 @@ export const AuthProvider = ({ children }) => {
     const handleLogout = () => {
         setUser(null)
     }
-    
-    const handleSearchCategory = (option) => {
-        setSearchCategory(option)
-    }
 
-    const handleSearchCity = (option) => {
-        setSearchCity(option)
-    }
     const handleOpenUserDashboard = () => {
         setOpenUserDashboard(!openUserDashboard)
     }
@@ -39,18 +32,29 @@ export const AuthProvider = ({ children }) => {
         setOpenSearchDashboard(!openSearchDashboard)
     }
 
+    const handleSearchFilters = (filters) => {
+        setSearchFilters(filters)
+    }
+
+    const handleSearchNearByFilters = (filters) => {
+        setSearchNearByFilters(filters)
+    }
+
+    useEffect(() => {
+        console.log(searchFilters)
+        console.log(seachNearByFilters)
+    }, [searchFilters, seachNearByFilters])
+
     return (
         <AuthContext.Provider value={{ 
                 user,
                 setUser, 
                 handleLogin, 
                 handleLogout, 
-                searchCategory, 
-                setSearchCategory, 
-                searchCity, 
-                setSearchCity, 
-                handleSearchCategory, 
-                handleSearchCity, 
+                searchFilters,
+                handleSearchFilters,
+                seachNearByFilters,
+                handleSearchNearByFilters,
                 openUserDashboard, 
                 setOpenUserDashboard, 
                 handleOpenUserDashboard, 

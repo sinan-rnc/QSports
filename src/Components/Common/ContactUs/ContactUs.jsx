@@ -113,11 +113,11 @@ export default function ContactUs() {
                             <div className="same-line">
                             <div className="form-group">
                                     <label className="form-label" htmlFor="email">Email</label>
-                                    <input type="text" className="form-control" id="email" name="email" value={form.email} onChange={handleChange} placeholder="Enter the Email Address"/>
+                                    <input type="text" className="form-control" id="email" name="email" value={form.email} onChange={handleChange} placeholder="Enter the Email Email"/>
                                 </div>
                                 <div className="form-group">
                                     <label className="form-label" htmlFor="phoneNo">Phone No</label>
-                                    <input type="text" className="form-control" id="phoneNo" name="phoneNo" value={form.phoneNo} onChange={handleChange} placeholder="Enter the Username"/>
+                                    <input type="text" className="form-control" id="phoneNo" name="phoneNo" value={form.phoneNo} onChange={handleChange} placeholder="Enter the Phone No"/>
                                 </div>
                             </div>
                             {(formErrors.email || formErrors.phoneNo) && (
@@ -128,22 +128,22 @@ export default function ContactUs() {
                             )}
                             <div className="form-group">
                                 <label className="form-label" htmlFor="subject">Subject</label>
-                                <input type="text" className="form-control" id="subject" name="subject" value={form.subject} onChange={handleChange} placeholder="Enter the Username"/>
+                                <input type="text" className="form-control" id="subject" name="subject" value={form.subject} onChange={handleChange} placeholder="Enter the Subject"/>
                             </div>
-                            {formErrors.subject (
+                            {/* {formErrors?.subject (
                                 <div className="same-line">
-                                    {formErrors.subject && <div className="alert alert-danger">{formErrors.subject}</div>}
+                                    {formErrors?.subject && <div className="alert alert-danger">{formErrors?.subject}</div>}
                                 </div>
-                            )}
+                            )} */}
                             <div className="form-group">
                                 <label className="form-label" htmlFor="description">Description</label>
-                                <input type="text" className="form-control" id="description" name="description" value={form.description} onChange={handleChange} placeholder="Enter the Username"/>
+                                <textarea type="text" className="form-control" id="description" name="description" value={form.description} onChange={handleChange} placeholder="Enter the Description"/>
                             </div>
-                            {formErrors.description (
+                            {/* {formErrors.description (
                                 <div className="same-line">
                                     {formErrors.description && <div className="alert alert-danger">{formErrors.description}</div>}
                                 </div>
-                            )}
+                            )} */}
                             {/* {serverErrors && <p className="alert alert-danger">{serverErrors}</p>} */}
                             <button className="register-btn">Submit</button>
                         </form>

@@ -1,6 +1,5 @@
 import "./Bars.scss"
 import { CiGrid41, CiGrid2H, CiGrid2V } from "react-icons/ci";
-import { barsAndClubs } from "../../../DataSet/barsAndClubs"
 import { RiExpandUpDownFill } from "react-icons/ri";
 // import { ImEnlarge } from "react-icons/im";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
@@ -9,14 +8,28 @@ import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 // import { MdOutlineZoomOutMap } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { dubaiCities } from "../../../DataSet/dubaiCities";
-import {motion} from "framer-motion"
+import { motion } from "framer-motion"
 import { useAuth } from "../../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Bars({searchOption}) {
     const navigate = useNavigate()
 
-    const {searchCity, handleSearchCity} = useAuth()
+    const { handleSearchFilters } = useAuth()
+
+    const barsData = useSelector((state) => {
+        return state.clubsAndBars.data.filter(ele => ele.clubType === "Bar")
+    })
+
+    console.log(barsData)
+
+    const [ searchFilterValues, setSearchFiltersValues ] = useState({
+        isDeleted: false,
+        sortBy: "createdAt",
+        limit: 10,
+        page: 1
+    })
 
     const [sortBy, setSortBy] = useState("")
     const [showNo, setShowNo] = useState(12)
@@ -49,15 +62,14 @@ export default function Bars({searchOption}) {
     // Filtered and sorted array based on selected filters and sort option
     const getProcessedBars = () => {
         // Apply category filter
-        let filteredArray = barsAndClubs.filter((ele) => {
-            if(ele.category !== "Bar") return false
-            if (searchCity && !ele.city.includes(searchCity)) {
+        let filteredArray = barsData.filter((ele) => {
+            if (searchFilterValues.city && !ele.city.includes(searchFilterValues.city)) {
                 return false; // If category filter does not match, exclude this item
             }
             // Apply additional filters here (like priceFilter, tournamentFilter, etc.)
-            if (priceFilter === "high" && ele.amount < 150) return false;
-            if (priceFilter === "medium" && (ele.amount >= 150 || ele.amount < 100)) return false;
-            if (priceFilter === "low" && ele.amount >= 100) return false;
+            if (priceFilter === "high" && ele.normalHrRates < 150) return false;
+            if (priceFilter === "medium" && (ele.normalHrRates >= 150 || ele.normalHrRates < 100)) return false;
+            if (priceFilter === "low" && ele.normalHrRates >= 100) return false;
 
             return true; // Include the item if it passes the filters
         });
@@ -69,7 +81,7 @@ export default function Bars({searchOption}) {
             } else if (sortBy === "City") {
                 return a.city.localeCompare(b.city);
             } else if (sortBy === "Price") {
-                return a.amount - b.amount;
+                return a.normalHrRates - b.normalHrRates;
             }
             return 0; // Default to no sorting
         });
@@ -80,15 +92,14 @@ export default function Bars({searchOption}) {
         return filteredArray.slice(startIndex, endIndex);
     };
 
-    const totalFilteredItems = barsAndClubs.filter((ele) => {
-        if(ele.category !== "Bar") return false
-        if (searchCity && !ele.city.includes(searchCity)) {
+    const totalFilteredItems = barsData.filter((ele) => {
+        if (searchFilterValues.city && !ele.city.includes(searchFilterValues.city)) {
             return false; // If category filter does not match, exclude this item
         }
         // Apply additional filters here (like priceFilter, tournamentFilter, etc.)
-        if (priceFilter === "high" && ele.amount < 150) return false;
-        if (priceFilter === "medium" && (ele.amount >= 150 || ele.amount < 100)) return false;
-        if (priceFilter === "low" && ele.amount >= 100) return false;
+        if (priceFilter === "high" && ele.normalHrRates < 150) return false;
+        if (priceFilter === "medium" && (ele.normalHrRates >= 150 || ele.normalHrRates < 100)) return false;
+        if (priceFilter === "low" && ele.normalHrRates >= 100) return false;
 
         return true; // Include the item if it passes the filters
     }).length;
@@ -120,10 +131,21 @@ export default function Bars({searchOption}) {
     };
 
     const handleReset = () => {
-        // setCategoryFilter("");
-        handleSearchCity("")
         setPriceFilter("");
+        setSearchFiltersValues({
+            isDeleted: false,
+            sortBy: "createdAt",
+            limit: 10,
+            page: 1
+        });
+        handleSearchFilters(searchFilterValues)
     }
+
+    useEffect(() => {
+        if(searchFilterValues.city) {
+            handleSearchFilters(searchFilterValues)
+        }
+    }, [handleSearchFilters])
 
     // console.log(dubaiCities)
       
@@ -144,7 +166,7 @@ export default function Bars({searchOption}) {
                     <div className="filter-category">
                         <div className="filter-header" onClick={() => setCityFilterOpen(!cityFilterOpen)}>
                             <span>Cities</span>
-                            {!searchCity ? <FaCaretDown /> : <FaCaretUp/>}
+                            {!cityFilterOpen ? <FaCaretDown /> : <FaCaretUp/>}
                         </div>
                         <motion.ul
                             id="categories"
@@ -159,8 +181,11 @@ export default function Bars({searchOption}) {
                                     <input
                                         type="checkbox"
                                         value={city}
-                                        checked={searchCity === city}
-                                        onChange={() => handleSearchCity(city)}
+                                        checked={searchFilterValues.city === city}
+                                        onChange={() => {
+                                            setSearchFiltersValues({...searchFilterValues, city: city})
+                                            handleSearchFilters(searchFilterValues)
+                                        }}
                                     />
                                     <span>{city}</span>
                                 </li>
@@ -266,7 +291,7 @@ export default function Bars({searchOption}) {
                                 <label for="show-select">Show:</label>
                                 <div className="sort-select-div">
                                     <select id="show-select" value={showNo} onChange={(e) => {handleShow(e)}}>
-                                        <option value={barsAndClubs.length}>All</option>
+                                        <option value={barsData.length}>All</option>
                                         <option value="6">6</option>
                                         <option value="12">12</option>
                                         <option value="24">24</option>
@@ -309,7 +334,7 @@ export default function Bars({searchOption}) {
                                             </div>
                                         </div>
                                         <div className="right">
-                                            <p className="price">AED {ele.amount}</p>
+                                            <p className="price">AED {ele.normalHrRates}</p>
                                             <button>Book Now</button>
                                             {/* <ImEnlarge /> */}
                                         </div>
@@ -332,7 +357,7 @@ export default function Bars({searchOption}) {
                             <span className="next">❯</span>
                         </div>
                         <div className="footer-details">
-                            Showing 1-{showNo}  of {barsAndClubs.length} Clubs and Bars
+                            Showing 1-{showNo}  of {barsData.length} Clubs and Bars
                         </div>
                     </div> */}
                     <div className="footer-controls">

@@ -7,7 +7,7 @@ const initialState = {
 export default function profileReducers(state = initialState, action) {
     switch (action.type) {
         case "GET_ALL_PROFILE" : {
-            return { ...state, data: action.payload }
+            return { ...state, data: action.payload.filter(ele => !ele.isDeleted) }
         }
         case "CREATE_PROFILE" : {
             return { ...state, data: [ ...state.data , action.payload ] }

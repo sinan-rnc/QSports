@@ -8,9 +8,17 @@ import { barsAndClubs } from "../../../DataSet/barsAndClubs"
 
 import "./RecentBars.scss"
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function RecentBars() {
     const navigate = useNavigate()
+    const clubsAndBars = useSelector((state) => {
+        return state?.clubsAndBars?.data
+            .filter(ele => !ele?.isDeleted && ele?.clubType === "Bar")
+    })
+
+    // console.log(clubsAndBars)
+
     return (
         <section className="recentBars" id="recentBars">
             <div className="recentBars-section container-section">
@@ -55,7 +63,7 @@ export default function RecentBars() {
                       }}
                     className="recentBars-grid"
                 >
-                    {barsAndClubs.filter(ele => ele.category === "Bar").map((ele, index) => (
+                    {clubsAndBars.map((ele, index) => (
                         <SwiperSlide key={index}>
                             <div className="recentBars-card" onClick={() => {navigate(`/clubs/${ele.name.replace(/\s+/g, '-').toLowerCase()}`)}}>
                                 <div className="recentBars-image">
@@ -75,7 +83,7 @@ export default function RecentBars() {
                                     </div>
                                 </div>
                                 <div className="right">
-                                    <p className="price">AED {ele.amount}</p>
+                                    <p className="price">AED {ele.normalHrRates}</p>
                                     <button>Book Now</button>
                                     {/* <ImEnlarge /> */}
                                 </div>

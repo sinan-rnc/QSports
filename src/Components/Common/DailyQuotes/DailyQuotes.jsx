@@ -1,6 +1,9 @@
 import "./DailyQuotes.scss"
 
 import quote from "../../../Assets/Common/blockquote.svg"
+import axios from "axios";
+import { backendApi } from "../../../Apis/api";
+import { useEffect, useState } from "react";
 
 export default function DailyQuotes() {
     const today = new Date();
@@ -10,9 +13,23 @@ export default function DailyQuotes() {
     const day = today.getDate();
 
     // Format the date as "YYYY-MM-DD"
-    const formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day
-        .toString()
-        .padStart(2, "0")}`;
+    const formattedDate = `${day.toString().padStart(2, "0")}-${month.toString().padStart(2, "0")}-${year}`;
+
+    const [quoteOfTheDay, setQuoteOfTheDay] = useState({});
+    console.log(quoteOfTheDay)
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const response = await axios.get(`${backendApi}/quote/read-quote-of-the-day`, {})
+                // console.log(response.data.data)
+                setQuoteOfTheDay(response.data.data)
+            } catch(err) {
+                console.log(err);
+                alert(err.response.data.message)
+            }
+        }) ()
+    }, [setQuoteOfTheDay])
 
     return (
         <section>
@@ -27,8 +44,15 @@ export default function DailyQuotes() {
                         <img className="top-quote" src={quote} alt="quote" />
                         <img className="bottom-quote" src={quote} alt="quote" />
                     </blockquote>
-                    <h1 className="quotepara">Believe you can and you're halfway there.</h1>
-                    <p className="author">- Theodore Roosevelt</p>
+                    {quoteOfTheDay ? (
+                        <>
+                            <h1 className="quotepara">{quoteOfTheDay?.quote}</h1>
+                            <p className="author">- {quoteOfTheDay?.author}</p>
+                        </>
+                    ) : (
+                        <h1 className="quotepara">No Quote for Today</h1>
+                    )}
+                    
                 </div>
             </div>
         </section>

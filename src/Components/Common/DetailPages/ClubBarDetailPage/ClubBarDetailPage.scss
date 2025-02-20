@@ -15,7 +15,9 @@
 
     .banner-wrapper {
         // position: absolute;
-        width: 100%;
+        top: 0;
+        left: 0;
+        width: 100vw;
         height: 90vh;
         display: flex;
         align-items: center;
@@ -24,7 +26,7 @@
     
       .banner {
         width: 100%;
-        height: 90vh;
+        height: 100%;
         object-fit: cover;
         background-position: center;
         background-size: cover;
@@ -579,7 +581,18 @@
         background: #989898;
         border: 1px solid #989898;
         // margin-top: 20px;
-    }    
+    }
+    
+    .events-comingsoon {
+        margin-top: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        img {
+            height: 300px;
+        }
+    }
 }
 
 .book-now-box {

@@ -7,19 +7,19 @@ const initialState = {
 export default function eventsReducers(state = initialState, action) {
     switch (action.type) {
         case  "GET_ALL_EVENTS" : {
-            return { ...state, data: action.payload }
+            return { ...state, data: action.payload.filter(ele => !ele.isDeleted) }
         }
         case "CREATE_EVENTS" : {
             return { ...state, data: [ ...state.data , action.payload ] }
         }
         case "UPDATE_EVENTS" : {
-            return { ...state, data: [ ...state.data.map((ele) => {
-                if(ele.id === action.payload.id) {
+            return { ...state, data: state.data.map((ele) => {
+                if(ele._id === action.payload._id) {
                     return action.payload
                 } else {
                     return ele
                 }
-            })] }
+            })}
         }
         case "DELETE_EVENTS" : {
             return { ...state, data: state.data.filter((ele) => {

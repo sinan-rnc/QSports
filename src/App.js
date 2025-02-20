@@ -1,6 +1,10 @@
 import { Fragment, useEffect, useState } from "react";
-import Header from "./Components/Common/Header/Header";
 import { Route, Routes } from "react-router-dom";
+import { useAuth } from "./Context/AuthContext";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+
+import Header from "./Components/Common/Header/Header";
 import HomePage from "./Pages/HomePage";
 import Footer from "./Components/Common/Footer/Footer";
 import AboutUsPage from "./Pages/AboutUsPage";
@@ -9,25 +13,22 @@ import ClubsPage from "./Pages/ClubsPage";
 import TournamentPage from "./Pages/TournamentPage";
 import AccountPage from "./Pages/AccountPage";
 import Login from "./Components/Account/Login/Login";
-import UserRegister from "./Components/Account/UserRegister/UserRegister";
-import Dashboard from "./Components/Account/UserDashboard/UserDashboard";
+import UserRegister from "./Components/Account/User/UserRegister/UserRegister";
 import DashboardHome from "./Components/Account/DashboardHome/DashboardHome";
-import { useAuth } from "./Context/AuthContext";
-import ClubBarProfile from "./Components/Account/ClubBarProfile/ClubBarProfile";
 import PrivateRoutes from "./General/PrivateRoutes";
 import ClubBarDetailPage from "./Components/Common/DetailPages/ClubBarDetailPage/ClubBarDetailPage";
 import EventDetailPage from "./Components/Common/DetailPages/EventDetailPage/EventDetailPage";
-import { useDispatch } from "react-redux";
-import { startGetAllClubsAndBars } from "./Actions/clubsAndBarsActions";
-import { startGetAllEvents } from "./Actions/eventsActions";
-import axios from "axios";
-import ClubRegister from "./Components/Account/ClubRegister/ClubRegister";
-import { startGetAllProfile } from "./Actions/profileActions";
+import ClubBarRegister from "./Components/Account/ClubBar/ClubBarRegister/ClubBarRegister";
 import ContactUsPage from "./Pages/ContactUsPage";
 
+import { startGetAllProfile } from "./Actions/profileActions";
+import { startGetAllClubsAndBars, startSearchClubsAndBars } from "./Actions/clubsAndBarsActions";
+import { startGetAllEvents } from "./Actions/eventsActions";
+import UnAuthorized from "./Components/Common/UnAuthorized/UnAuthorized";
+import { startGetAllQuotes } from "./Actions/quotesAction";
 
 export default function App() {
-    const {user, handleLogin} = useAuth()
+    const {user, handleLogin, searchFilters, seachNearByFilters} = useAuth()
     const dispatch = useDispatch()
     const [myTournamentButton, setMyTournamentButton] = useState("")
 
@@ -40,15 +41,19 @@ export default function App() {
         if(localStorage.getItem("token") && localStorage.getItem("user")) {
             handleLogin(JSON.parse(localStorage.getItem("user")))
         }
-
-        // if(localStorage.getItem("token")) {
-        //     console.log("profile")
-            
-        // }
+        if(seachNearByFilters) {
+            if(seachNearByFilters.lattitude && seachNearByFilters.longitude)  {
+                dispatch(startSearchClubsAndBars(seachNearByFilters))
+            } else {
+                dispatch(startGetAllClubsAndBars(searchFilters))
+            }
+        } else {
+            dispatch(startGetAllClubsAndBars(searchFilters))
+        }
         dispatch(startGetAllProfile())
-        dispatch(startGetAllClubsAndBars())
         dispatch(startGetAllEvents())
-    }, [dispatch])
+        dispatch(startGetAllQuotes())
+    }, [dispatch, searchFilters, seachNearByFilters])
 
 
 
@@ -73,10 +78,11 @@ export default function App() {
                 } />
                 <Route path="/login" element={<Login />} />
                 <Route path="/user-register" element={<UserRegister />} />  
-                <Route path="/club-register" element={<ClubRegister/>} />
+                <Route path="/club-register" element={<ClubBarRegister/>} />
                 <Route path="/clubs/:clubName" element={<ClubBarDetailPage/>} />
                 <Route path="events/:eventName" element={<EventDetailPage/>} />
                 <Route path="/contact-us" element={<ContactUsPage/>}/>
+                <Route path="/unauthorized" element={<UnAuthorized />}/>
             </Routes>
             <Footer/>
         </Fragment>

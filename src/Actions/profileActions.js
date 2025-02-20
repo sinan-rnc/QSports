@@ -32,7 +32,7 @@ export const startCreateProfile = (formData, setAlertMessage, setAlertMessageCol
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
                 }
             })
-            dispatch(createProfile(response.data.data.results))
+            dispatch(createProfile(response.data.data))
             console.log(response)
             setAlertMessage("Profile Succcessfully Created")
             setAlertMessageColor("green")

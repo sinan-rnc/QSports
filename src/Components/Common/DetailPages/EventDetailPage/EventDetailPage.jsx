@@ -15,7 +15,12 @@ import event3 from "../../../../Assets/Events/3.jpg"
 import event4 from "../../../../Assets/Events/4.jpg"
 import event5 from "../../../../Assets/Events/5.jpg"
 import event6 from "../../../../Assets/Events/6.jpg"
+
+import image from "../../../../Assets/Tournaments/image4.png"
 import { BsCalendarDate } from "react-icons/bs";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { backendApi } from "../../../../Apis/api";
 
 const variants = {
     enter: (direction) => ({
@@ -71,18 +76,57 @@ const childVariants = {
     animate2: { y: 0, opacity: 1, transition: { duration: 0.6 } },
 };
 
-const images = [event1, event2, event3, event4, event5, event6];
-
 export default function EventDetailPage() {
     const {eventName} = useParams()
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState(0);
+    const [eventClub, setEventClub] = useState("");
 
     const eventNameNew = eventName.replace(/-/g, ' ') // Replace hyphens with spaces
                                 .split(' ') // Split the string by spaces
                                 .map(word => word.charAt(0).toUpperCase() + word.slice(1))  // Capitalize first letter of each word
                                 .join(' ')
-    const eventData = tournaments.find(ele => ele.name === eventNameNew)
+
+    console.log(eventNameNew)
+
+    const eventData = useSelector((state) => {
+        return state?.events?.data
+            .find(ele => !ele?.isDeleted && ele?.EventName.toLowerCase() === eventNameNew.toLowerCase())
+    })
+
+    const images = eventClub?.pictureGallery;
+    console.log(images)
+
+    // const eventClub = useSelector((state) => {
+    //     return state?.clubsAndBars?.data
+    //         .find(ele => !ele?.isDeleted && ele?._id === eventData?.ClubID)
+    // })
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const response = await axios.post(`${backendApi}/club/read-club`, { _id: eventData?.ClubID })
+                console.log(response.data.data)
+                setEventClub(response.data.data)
+            } catch(err) {
+                console.log(err);
+                alert(err.response.data.message)
+            }
+        }) ()
+    }, [eventData])
+
+    console.log(eventData)
+    console.log(eventClub)
+    // const eventData = tournaments.find(ele => ele.name === eventNameNew)
+
+    const formatDate = (isoDate) => {
+        if (!isoDate) return "";  // Handle empty cases
+        const date = new Date(isoDate);
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0"); // Month starts from 0
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    };
 
     const handlePrev = () => {
         setDirection(-1); // Set direction for the animation
@@ -115,7 +159,7 @@ export default function EventDetailPage() {
                         initial="enter"
                         animate="center"
                         >
-                        <img src={images[currentIndex]} alt="Club Banner" className="banner" />
+                        {images && <img src={images[currentIndex]?.path} alt="Club Banner" className="banner" />}
                     </motion.div>
                     <div className="overlay"></div>
                     <RiArrowLeftWideLine className="arrow-left" onClick={handlePrev}/>
@@ -127,9 +171,9 @@ export default function EventDetailPage() {
                         viewport={{ once: false, amount: 0.5 }}
                         key={currentIndex}
                         className="club-details container-section">
-                        <motion.h1 variants={childVariants} className="clubName">{eventData?.name}</motion.h1>
+                        <motion.h1 variants={childVariants} className="clubName">{eventData?.EventName}</motion.h1>
                         <motion.div variants={childVariants} className="book-button-div">
-                            <h3 className="clubSlogan">Secure Your Spot {eventData?.name}</h3>
+                            <h3 className="clubSlogan">Secure Your Spot at {eventData?.EventName}</h3>
                             <button className="book-button">Register Now</button>
                         </motion.div>
                         <motion.h4 variants={childVariants} className="clubSlogan2">Unleash the Champion in You – The Premier Tournament Awaits!</motion.h4>
@@ -137,17 +181,19 @@ export default function EventDetailPage() {
                             <div className="place">
                                 <MdOutlinePlace />
                                 <div>
-                                    <h1>{eventData.clubName},</h1>
-                                    <h1>{eventData.city}, Dubai, UAE</h1>
+                                    <h1>{eventClub?.name},</h1>
+                                    <h1>
+                                        {eventClub?.city},<br/>
+                                        {eventClub?.address}</h1>
                                     <h2></h2>
                                 </div>
                             </div>
                             <div className="type">
-                                <MdOutlineEmojiEvents /> {eventData.type}
+                                <MdOutlineEmojiEvents /> {eventData?.EventType}
                             </div>
                             
                             <div className="date">
-                                <BsCalendarDate /> {eventData.date}
+                                <BsCalendarDate /> {formatDate(eventData?.StartingDate)}
                             </div>
                             <div className="time">
                                 <LuClock9 /> 9:00 PM to 12:00 AM
@@ -155,7 +201,7 @@ export default function EventDetailPage() {
                         </motion.div>
                     </motion.div>
                     <div className="pagination-dots">
-                        {images.map((_, index) => (
+                        {images?.map((_, index) => (
                             <div
                                 key={index}
                                 className={`dot ${index === currentIndex ? "active" : ""}`}
@@ -198,8 +244,8 @@ export default function EventDetailPage() {
                         viewport={{ once: false, amount: 0.25 }}
                         className="history">
                         <motion.h2 variants={childVariants} className="history-title">Legacy of Champions</motion.h2>
-                        <motion.p variants={childVariants}>{eventData.clubName} has been a premier hub for tournaments and competitive events since 2010. Known for hosting iconic tournaments like The Cue Masters Cup and Dubai Championship League, the club has brought together top players and fans from around the world. Partnering with renowned venues like BreakPoint Arena, it has set new standards for thrilling matchups and elite competitions. With a rich legacy of past tournaments and a commitment to excellence, Eight Ball Showdown continues to shape the future of cue sports in Dubai.</motion.p>
-                        <motion.div 
+                        <motion.p className="history-description" variants={childVariants}>{eventClub?.name} has been a premier hub for tournaments and competitive events since 2010. Known for hosting iconic tournaments like The Cue Masters Cup and Dubai Championship League, the club has brought together top players and fans from around the world. Partnering with renowned venues like BreakPoint Arena, it has set new standards for thrilling matchups and elite competitions. With a rich legacy of past tournaments and a commitment to excellence, Eight Ball Showdown continues to shape the future of cue sports in Dubai.</motion.p>
+                        {/* <motion.div 
                             variants={textVariants}
                             initial="initial"
                             whileInView="animate"
@@ -210,7 +256,31 @@ export default function EventDetailPage() {
                                     <img src={ele} alt={`Gallery ${index + 1}`}/>
                                 </motion.div>
                             ))}
-                        </motion.div>
+                        </motion.div> */}
+                        <div className="event-details">
+                            <div className="left">
+                                {/* <img src={eventData?.EventImage} alt=""/> */}
+                                <img src={eventData?.EventImage} alt="" />
+                            </div>
+                            <div className="right">
+                                <h1 className="event-name">{eventData?.EventName}</h1>
+                                <h2 className="event-type">{eventData?.EventType}</h2>
+                                <h3 className="event-fees">Fees: {eventData?.EnrollmentFee} AED</h3>
+                                <div className="date-div">
+                                    <div className="date">
+                                        <span>From</span>
+                                        <h3> {formatDate(eventData?.StartingDate)}</h3>
+                                    </div>
+                                    <div className="date">
+                                        <span>To</span>
+                                        <h3>{formatDate(eventData?.EndingDate)}</h3>
+                                    </div>
+                                </div>
+                                <h4 className="enrollment-date">Last Enrollment Date: {formatDate(eventData?.LastEnrollmentDate)}</h4>
+                                <h3 className="max-player">Max Player: {eventData?.MaxPlayers}</h3>
+                                <p>{eventData?.EventName} is an electrifying pool and billiards league that brings together top cue sports enthusiasts for a thrilling competition. Players showcase their precision, strategy, and skill in an intense yet sportsmanlike environment. Whether you're a seasoned pro or a rising star, this league promises high-stakes matches, strategic play, and unforgettable moments on the table.</p>
+                            </div>
+                        </div>
                     </motion.div>
                 </div>
                 {/* {isOpen && (

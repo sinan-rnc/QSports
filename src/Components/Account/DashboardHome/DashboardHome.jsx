@@ -4,15 +4,15 @@ import { useNavigate } from "react-router-dom"
 import { AnimatePresence, motion } from "framer-motion"
 import { IoClose } from "react-icons/io5"
 
-import UserDashboard from "../UserDashboard/UserDashboard"
+import UserDashboard from "../User/UserDashboard/UserDashboard"
 import Password from "../Password/Password"
-import UserProfile from "../UserProfile/UserProfile"
-import ClubEventDashboard from "../ClubEventDashboard/ClubEventDashboard"
-import ClubBarProfile from "../ClubBarProfile/ClubBarProfile"
+import UserProfile from "../User/UserProfile/UserProfile"
+import ClubEventDashboard from "../ClubBar/ClubEventDashboard/ClubEventDashboard"
+import ClubBarProfile from "../ClubBar/ClubBarProfile/ClubBarProfile"
 
 import "./DashboardHome.scss"
-import ClubBarDashboard from "../ClubBarDashboard/ClubBarDashboard"
-import UserEventDashboard from "../UserEventDashboard/UserEventDashboard"
+import ClubBarDashboard from "../ClubBar/ClubBarDashboard/ClubBarDashboard"
+import UserEventDashboard from "../User/UserEventDashboard/UserEventDashboard"
 
 export default function DashboardHome() {
     const navigate = useNavigate()

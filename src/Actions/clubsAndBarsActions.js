@@ -2,10 +2,10 @@ import axios from "axios";
 import { backendApi } from "../Apis/api";
 import { useAuth } from "../Context/AuthContext";
 
-export const startGetAllClubsAndBars = () => {
+export const startGetAllClubsAndBars = (searchFilters) => {
     return async (dispatch) => {
         try {
-            const response = await axios.post(`${backendApi}/club/read-all-clubs`, {} ,{
+            const response = await axios.post(`${backendApi}/club/read-all-clubs`, searchFilters ,{
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
                 }
@@ -22,6 +22,26 @@ export const startGetAllClubsAndBars = () => {
 const setClubsAndBars = (clubAndBars) => {
     return {
         type: "GET_ALL_CLUBS_AND_BARS",
+        payload: clubAndBars
+    }
+}
+
+export const startSearchClubsAndBars = (location) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.post(`${backendApi}/club/nearby-clubs`, location)
+            console.log(response.data.data)
+            dispatch(setSearchClubsAndBars(response.data.data))
+        } catch(err) {
+            console.log(err);
+            alert(err.response.data.message)
+        }
+    }
+}
+
+const setSearchClubsAndBars = (clubAndBars) => {
+    return {
+        type: "SEARCH_CLUBS_AND_BARS",
         payload: clubAndBars
     }
 }

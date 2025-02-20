@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import Helmet from "../Components/Common/Helmet/Helmet";
-import Register from "../Components/Account/UserRegister/UserRegister";
+import Register from "../Components/Account/User/UserRegister/UserRegister";
 import Login from "../Components/Account/Login/Login"
 import DashboardHome from "../Components/Account/DashboardHome/DashboardHome";
 

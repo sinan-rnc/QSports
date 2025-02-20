@@ -6,7 +6,7 @@ export default function ContactUsPage() {
     return (
         <Fragment>
             <Helmet title="Contact Us">
-                {/* <ContactUs/> */}
+                <ContactUs/>
             </Helmet>
         </Fragment>
     )

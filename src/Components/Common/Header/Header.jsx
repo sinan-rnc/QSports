@@ -1,9 +1,9 @@
 import "./Header.scss"
 
-import { RiBilliardsFill, RiSearch2Fill } from "react-icons/ri";
+import { RiBilliardsFill, RiDeleteBin5Fill, RiSearch2Fill } from "react-icons/ri";
 import { LuUserRound } from "react-icons/lu";
 import { SiAmazongames } from "react-icons/si";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaSearchLocation } from "react-icons/fa";
 import { GiPoolTriangle } from "react-icons/gi";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
@@ -24,52 +24,68 @@ import { MdRemoveRedEye } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { backendApi } from "../../../Apis/api";
 
-export default function Header({searchOption, handleSearchOption, handleMyTournamentClick}) {
+export default function Header() {
 
     const navigate = useNavigate()
     const {
-            user, 
-            handleLogin, 
-            handleLogout, 
-            searchCategory, 
-            handleSearchCategory, 
-            searchCity, 
-            handleSearchCity, 
-            openUserDashboard, 
-            setOpenUserDashboard, 
-            handleOpenUserDashboard, 
-            openSearchDashboard, 
-            setOpenSearchDashboard,
-            handleOpenSerachDashboard,
-            alertMessage,
-            setAlertMessage,
-            alertMessageColor,
-            setAlertMessageColor,
-            selectedDashboard, 
-            setSelectedDashboard,
-        } = useAuth()
+        user, 
+        handleLogin, 
+        handleLogout,
+        handleSearchFilters,
+        handleSearchNearByFilters,
+        openUserDashboard, 
+        setOpenUserDashboard, 
+        handleOpenUserDashboard, 
+        openSearchDashboard, 
+        setOpenSearchDashboard,
+        handleOpenSerachDashboard,
+        alertMessage,
+        setAlertMessage,
+        alertMessageColor,
+        setAlertMessageColor,
+        selectedDashboard, 
+        setSelectedDashboard,
+    } = useAuth()
 
-        const clubAndBar = useSelector((state) => {
-            return state.clubsAndBars.data.find(ele => ele?.createdBy === user?._id)
-        });
+    const clubAndBar = useSelector((state) => {
+        return state.clubsAndBars.data.find(ele => ele?.createdBy === user?._id)
+    });
 
-        const userProfile = useSelector((state) => {
-            return state.profile.data.find(ele => ele?.createdBy === user?._id)
-        });
+    const userProfile = useSelector((state) => {
+        return state.profile.data.find(ele => ele?.createdBy === user?._id)
+    });
 
     // console.log(user)
 
-    // const defaultUsername = "qsports@gmail.com"
-    // const defaultPassword = "Qsports@123"
     const location = useLocation()
-    const [selectedLocation, setSelectedLocation] = useState("")
     const [form, setForm] = useState({
         username : "",
         password : ""
     })
+    const [ searchFilterValues, setSearchFiltersValues ] = useState({
+        isDeleted: false,
+        sortBy: "createdAt",
+        limit: 10,
+        page: 1
+    })
+
+    const [ searchNearByFiltersValues, setSearchNearByFiltersValues ] = useState({
+        latitude: "",
+        longitude: "",
+        clubType: "",
+        maxDistance: 5000,
+        limit: 10,
+        page: 1
+    })
+
     const [showPassword, setShowPassword] = useState(false)
     const [formErrors, setFormErrors] = useState("")
     const [serverErrors, setServerErrors] = useState("")
+    const [searchFormError, setSearchFormError] = useState("")
+    const [locationType, setlocationType] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
+    const [isSearchingNearBy, setIsSearchingNearBy] = useState(false)
+
 
     const userDashboardRef = useRef(null);
     const searchDashboardRef = useRef(null);
@@ -90,6 +106,7 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
         }
     };
 
+
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside);
             return () => {
@@ -105,7 +122,22 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
           }, 3000);
           return () => clearTimeout(timer); // Cleanup timer on unmount
         }
-      }, [alertMessage, setAlertMessage]);
+    }, [alertMessage, setAlertMessage]);
+
+    useEffect(() => {
+        if(isSearchingNearBy) {
+            if(searchNearByFiltersValues.latitude || searchNearByFiltersValues.longitude) {
+                setIsLoading(false)
+                handleSearchNearByFilters(searchNearByFiltersValues)
+                if(searchNearByFiltersValues.clubType === "Club") {
+                    navigate("/clubs")
+                } else if(searchNearByFiltersValues.clubType === "Bar") {
+                    navigate("/bars")
+                }
+                handleOpenSerachDashboard()
+            }
+        }
+    }, [isSearchingNearBy, searchNearByFiltersValues])
 
     const errors = {}
 
@@ -119,15 +151,6 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
     }
     validateErrors()
 
-    // const handleChange = (e) => {
-    //     const {name, value} = e.target
-    //     setForm({...form, [name]: value })
-    // }
-
-    // const handleCloseDashboard = () => {
-    //     setOpenUserDashboard(false)
-    // }
-    // console.log(openUserDashboard)
 
     const handleFormSubmit = async (e) => {
         e.preventDefault()
@@ -158,6 +181,10 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                 setAlertMessage("Successfully Logged In")
                 setAlertMessageColor("green")
                 console.log(response)
+                setForm({
+                    username : "",
+                    password : ""
+                })
             } catch(err) {
                 console.log(err)
                 alert("Invalid Username/Password")
@@ -170,16 +197,67 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
         }
     }
 
+    const handleClubTypeChange = (e) => {
+        setSearchFiltersValues({...searchFilterValues, clubType: e.target.value})
+        setSearchNearByFiltersValues({...searchNearByFiltersValues, clubType: e.target.value})
+    }
+
+    const handleCityChange = (e) => {
+        setSearchFiltersValues({...searchFilterValues, city: e.target.value})
+        setIsSearchingNearBy(false)
+    }
+
+    const handleSearchNearBy = () => {
+        setIsSearchingNearBy(true);
+        setSearchFiltersValues({...searchFilterValues, city: ""})
+    };
+
+    console.log(searchFilterValues)
+    console.log(searchNearByFiltersValues)
+
+
     const handleSearchSubmit = () => {
-        if(searchCategory === "Clubs") {
-            navigate("/clubs")
-        } else if(searchCategory === "Bars") {
-            navigate("/bars")
-        } else if(searchCategory === "Tournaments") {
-            navigate("/tournaments")
+        console.log(searchFilterValues)
+        console.log(searchNearByFiltersValues)
+        if(isSearchingNearBy) {
+            if(!searchNearByFiltersValues.latitude || !searchNearByFiltersValues.longitude) {
+                setIsLoading(true)
+            }
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        console.log(latitude, longitude)
+                        setSearchNearByFiltersValues({ ...searchNearByFiltersValues, latitude: latitude, longitude: longitude })
+                        // console.log("Updated Form:", { latitude: latitude, longitude: longitude });
+                    },
+                    (error) => {
+                        console.error("Error getting location:", error);
+                        alert("Failed to get location. Please enable location services.");
+                    }
+                );
+            } else {
+                setAlertMessage("Geolocation is not supported by your browser");
+                setAlertMessageColor("red")
+            }
+        } else {
+            handleSearchFilters(searchFilterValues)
+            if(searchFilterValues.clubType === "Club") {
+                navigate("/clubs")
+            } else if(searchFilterValues.clubType === "Bar") {
+                navigate("/bars")
+            }
+            handleSearchNearByFilters({})
+            handleOpenSerachDashboard()
         }
-        handleOpenSerachDashboard()
-        // console.log(searchCity)
+    //     if(searchCategory === "Clubs") {
+    //         navigate("/clubs")
+    //     } else if(searchCategory === "Bars") {
+    //         navigate("/bars")
+    //     } else if(searchCategory === "Tournaments") {
+    //         navigate("/tournaments")
+    //     }
+    //     handleOpenSerachDashboard()
     }
 
     return (
@@ -250,13 +328,13 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                             }
                         }}>
                             <LuUserRound size={"25px"}/>
-                            My Account
+                            {user?.userType === "ClubAdmin" ? "Club Account" : user?.userType === "MemberUser" ? "My Account" : "Admin Account"}
                         </li>
                         <li className="login_div" onClick={() => {handleOpenUserDashboard()}}>
                             {user ? <BiLogOut size={"30px"}/> : <BiLogIn size={"30px"}/>}
                             <div className="login">
                                 {user && localStorage.getItem("token") ? <span>{user.firstName} {user.lastName}</span> : <span>Hello, Log In</span>}
-                                My Profile
+                                {user?.userType === "ClubAdmin" ? "Club Profile" : user?.userType === "MemberUser" ? "My Profile" : "Admin Profile"}
                             </div>
                         </li>
                         {openUserDashboard && (
@@ -333,7 +411,7 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                             </div>
                             <hr className="hr-left"/>
                         </div>
-                        <input type="text" placeholder="Search For Clubs"/>
+                        <input type="text" placeholder="Search For Clubs" value={searchFilterValues.name} onChange={(e) => setSearchFiltersValues({...searchFilterValues, name: e.target.value})} />
                         <div className="icon-div">
                             <hr className="hr-right"/>
                             <div className="icon-right" onClick={handleSearchSubmit}>
@@ -347,48 +425,102 @@ export default function Header({searchOption, handleSearchOption, handleMyTourna
                         <p>Select an option from below</p>
                         <div class="radio-container">
                             <label>
-                                <input type="radio" name="Clubs" value="Clubs" checked={searchCategory === "Clubs"} onChange={(e) => {handleSearchCategory(e.target.value)}}/>
+                                <input type="radio" name="Club" value="Club" checked={searchFilterValues.clubType === "Club"} onChange={(e) => {handleClubTypeChange(e)}}/>
                                 <span class="custom-radio"></span>
                                 Play Clubs
                             </label>
                             <label>
-                                <input type="radio" name="Bars" value="Bars" checked={searchCategory === "Bars"} onChange={(e) => {handleSearchCategory(e.target.value)}}/>
+                                <input type="radio" name="Bar" value="Bar" checked={searchFilterValues.clubType === "Bar"} onChange={(e) => {handleClubTypeChange(e)}}/>
                                 <span class="custom-radio"></span>
                                 Play Bars
                             </label>
-                            <label>
-                                <input type="radio" name="Tournaments" value="Tournaments" checked={searchCategory === "Tournaments"} onChange={(e) => {handleSearchCategory(e.target.value)}}/>
-                                <span class="custom-radio"></span>
-                                Play Tournaments
-                            </label>
                         </div>
-                        <p style={{marginTop: "20px"}}>Select a City</p>
+                        <p style={{marginTop: "20px"}}>Select a City / Search from Near by City</p>
                         <div class="radio-container">
+                        <label>
+                            <input 
+                                type="radio" 
+                                name="city" 
+                                value={searchFilterValues.city} 
+                                checked={!!searchFilterValues.city} 
+                                onChange={(e) => handleCityChange(e)}
+                            />
+                            <span class="custom-radio"></span>
+                            <select id="location-select" value={searchFilterValues.city} onChange={(e) => handleCityChange(e)}>
+                                <option value="">Select City</option>
+                                {dubaiCities.map((city, index) => (
+                                    <option key={index} value={city}>
+                                        {city}
+                                    </option>
+                                ))}
+                            </select>
+                        </label>
                             <label>
-                                <input type="radio" name="city" value={searchCity} checked={searchCity} onChange={(e) => {handleSearchCity(e.target.value)}}/>
+                                <input type="radio" name="searchNearBy" checked={isSearchingNearBy} onChange={handleSearchNearBy}/>
                                 <span class="custom-radio"></span>
-                                <select id="location-select" value={searchCity} onChange={(e) => handleSearchCity(e.target.value)}>
-                                    <option value="">Select City</option>
-                                    {dubaiCities.map((city, index) => (
-                                        <option key={index} value={city}>
-                                            {city}
-                                        </option>
-                                    ))}
-                                </select>
+                                Search Near By
                             </label>
                         </div>
                         <div className="search-button-div">
                             <button className="search-btn" onClick={() => {
-                                handleSearchCategory("")
-                                setSelectedLocation("")
-                                handleSearchCity("")
+                                setSearchFiltersValues({
+                                    isDeleted: false,
+                                    sortBy: "createdAt",
+                                    limit: 10,
+                                    page: 1
+                                })
+                                setSearchNearByFiltersValues({
+                                    latitude: "",
+                                    longitude: "",
+                                    clubType: "",
+                                    maxDistance: 5000,
+                                    limit: 10,
+                                    page: 1
+                                })
+                                setIsSearchingNearBy(false)
+
                             }}>Reset</button>
-                            <button className="search-btn" onClick={handleSearchSubmit}>Search</button>
-                        </div>
-                        
+                            <button className="search-btn" onClick={handleSearchSubmit}>{!isLoading ? "Search" : "Searching..."}</button>
+                        </div>  
                     </div>
                 )}
             </div>
+
+            {/* <div class="radio-container search"> */}
+                {/* <label>
+                    <input type="radio" name="city" value={searchNearBy} checked={searchNearBy} onChange={(e) => {handleSearchCity(e.target.value)}}/>
+                    <span class="custom-radio"></span>
+                    <select 
+                        className="form-control"
+                        id="location"
+                        name="location"
+                        value={searchNearBy}
+                        onChange={handleSearchNearBy}
+                        placeholder="Select a Service">
+                            <option value="NearBy">Search Near By</option>
+                    </select>
+                </label> */}
+                {/* {locationType==="CurrentLocation" && (
+                    <button className="loading-btn" type="button">
+                        {(searchData.latitude || searchData.longitude) ? <RiDeleteBin5Fill onClick={() => {
+                        setSearchData({...searchData, latitude: "", longitude: ""});
+                        }}/>  : !isLoading ? <FaSearchLocation onClick={handleGeoLocationChange}/> : <div className="loading-spinner"></div>}
+                    </button>
+                )} */}
+            {/* {locationType && (
+                <div className="bottom">
+                    <div className="form-group">
+                        <label className="form-label" htmlFor="latitude">Latitiude</label>
+                        <input type="text" className="form-control" id="latitude" name="latitude" value={searchData.latitude} onChange={handleChange} placeholder="Value"/>
+                    </div>
+                    <div className="form-group">
+                        <label className="form-label" htmlFor="longitude">Longitude</label>
+                        <input type="text" className="form-control" id="longitude" name="longitude" value={searchData.longitude} onChange={handleChange} placeholder="Value"/>
+                    </div>
+                </div>
+            )} */}
+        {/* </div> */}
+
             <AnimatePresence>
                 {alertMessage && !user && (
                     <motion.div 
