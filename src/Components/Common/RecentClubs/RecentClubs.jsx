@@ -83,7 +83,7 @@ export default function RecentBars() {
                                 </div>
                                 <div className="right">
                                     <p className="price">AED {ele.normalHrRates}</p>
-                                    <button>Book Now</button>
+                                    <button><a href={`tel:${ele.phoneNo}`}>Book Now</a></button>
                                     {/* <ImEnlarge /> */}
                                 </div>
                             </div>

@@ -28,23 +28,24 @@ import UnAuthorized from "./Components/Common/UnAuthorized/UnAuthorized";
 import { startGetAllQuotes } from "./Actions/quotesAction";
 
 export default function App() {
-    const {user, handleLogin, searchFilters, seachNearByFilters} = useAuth()
+    const {user, handleLogin, searchFilters, searchNearByFilters} = useAuth()
     const dispatch = useDispatch()
     const [myTournamentButton, setMyTournamentButton] = useState("")
 
     const handleMyTournamentClick = () => {
         setMyTournamentButton("myTournaments")
-        console.log(myTournamentButton)
+        // console.log(myTournamentButton)
     }
 
     useEffect(() => {
         if(localStorage.getItem("token") && localStorage.getItem("user")) {
             handleLogin(JSON.parse(localStorage.getItem("user")))
         }
-        if(seachNearByFilters) {
-            if(seachNearByFilters.lattitude && seachNearByFilters.longitude)  {
-                dispatch(startSearchClubsAndBars(seachNearByFilters))
-            } else {
+        if(searchNearByFilters) {
+            if(searchNearByFilters.lattitude && searchNearByFilters.longitude)  {
+                dispatch(startSearchClubsAndBars(searchNearByFilters))
+            }
+            else {
                 dispatch(startGetAllClubsAndBars(searchFilters))
             }
         } else {
@@ -53,9 +54,10 @@ export default function App() {
         dispatch(startGetAllProfile())
         dispatch(startGetAllEvents())
         dispatch(startGetAllQuotes())
-    }, [dispatch, searchFilters, seachNearByFilters])
+    }, [dispatch, searchFilters, searchNearByFilters])
 
-
+    console.log(searchFilters)
+    console.log(searchNearByFilters)
 
     return (
         <Fragment>
@@ -65,7 +67,7 @@ export default function App() {
                 <Route path="/about-us" element={<AboutUsPage/>} />
                 <Route path="/clubs" element={<ClubsPage/>} />
                 <Route path="/bars" element={<BarsPage/>} />
-                <Route path="/tournaments" element={<TournamentPage/>} />
+                <Route path="/events" element={<TournamentPage/>} />
                 <Route path="/account" element={
                     <PrivateRoutes>
                         <AccountPage />

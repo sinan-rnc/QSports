@@ -61,7 +61,7 @@ export default function FeaturedClubsBars() {
                                 <p></p>
                             </div>
                         </div>
-                        <div className="featuredClubsBars-content1" onClick={() => {navigate(`/clubs/${clubsAndBars[3]?.name.replace(/\s+/g, '-').toLowerCase()}`)}}>
+                        {/* <div className="featuredClubsBars-content1" onClick={() => {navigate(`/clubs/${clubsAndBars[3]?.name.replace(/\s+/g, '-').toLowerCase()}`)}}>
                             <div className="featuredClubsBars-image">
                                 <img src={clubsAndBars[3]?.image} alt=""/>
                             </div>
@@ -69,7 +69,7 @@ export default function FeaturedClubsBars() {
                                 <h1>{clubsAndBars[3]?.name}</h1>
                                 <p>{clubsAndBars[3]?.introductionObjtv}</p>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

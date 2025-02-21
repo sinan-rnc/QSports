@@ -11,12 +11,15 @@ import { dubaiCities } from "../../../DataSet/dubaiCities";
 import { motion } from "framer-motion"
 import { useAuth } from "../../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { startSearchClubsAndBars } from "../../../Actions/clubsAndBarsActions";
 
-export default function Bars({searchOption}) {
+export default function Bars() {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const { handleSearchFilters, searchNearByFilters, setSearchNearByFilters } = useAuth()
 
-    const { handleSearchFilters } = useAuth()
+    console.log(searchNearByFilters)
 
     const barsData = useSelector((state) => {
         return state.clubsAndBars.data.filter(ele => ele.clubType === "Bar")
@@ -25,9 +28,10 @@ export default function Bars({searchOption}) {
     console.log(barsData)
 
     const [ searchFilterValues, setSearchFiltersValues ] = useState({
+        clubType: "Bar",
         isDeleted: false,
         sortBy: "createdAt",
-        limit: 10,
+        limit: 100,
         page: 1
     })
 
@@ -61,15 +65,23 @@ export default function Bars({searchOption}) {
 
     // Filtered and sorted array based on selected filters and sort option
     const getProcessedBars = () => {
-        // Apply category filter
+         // Find the highest normalHrRates in the dataset
+        const maxPrice = Math.max(...barsData.map(ele => ele.normalHrRates));
+        const priceSegment = maxPrice / 3; // Divide into three segments
+
+        const lowThreshold = priceSegment;
+        const mediumThreshold = priceSegment * 2;
+
+        // Apply category and price filters
         let filteredArray = barsData.filter((ele) => {
             if (searchFilterValues.city && !ele.city.includes(searchFilterValues.city)) {
-                return false; // If category filter does not match, exclude this item
+                return false; // If city filter does not match, exclude this item
             }
-            // Apply additional filters here (like priceFilter, tournamentFilter, etc.)
-            if (priceFilter === "high" && ele.normalHrRates < 150) return false;
-            if (priceFilter === "medium" && (ele.normalHrRates >= 150 || ele.normalHrRates < 100)) return false;
-            if (priceFilter === "low" && ele.normalHrRates >= 100) return false;
+
+            // Apply price filtering based on calculated segments
+            if (priceFilter === "high" && ele.normalHrRates <= mediumThreshold) return false;
+            if (priceFilter === "medium" && (ele.normalHrRates <= lowThreshold || ele.normalHrRates > mediumThreshold)) return false;
+            if (priceFilter === "low" && ele.normalHrRates > lowThreshold) return false;
 
             return true; // Include the item if it passes the filters
         });
@@ -93,13 +105,19 @@ export default function Bars({searchOption}) {
     };
 
     const totalFilteredItems = barsData.filter((ele) => {
+        const maxPrice = Math.max(...barsData.map(ele => ele.normalHrRates));
+        const priceSegment = maxPrice / 3; // Divide into three segments
+
+        const lowThreshold = priceSegment;
+        const mediumThreshold = priceSegment * 2;
+        
         if (searchFilterValues.city && !ele.city.includes(searchFilterValues.city)) {
             return false; // If category filter does not match, exclude this item
         }
         // Apply additional filters here (like priceFilter, tournamentFilter, etc.)
-        if (priceFilter === "high" && ele.normalHrRates < 150) return false;
-        if (priceFilter === "medium" && (ele.normalHrRates >= 150 || ele.normalHrRates < 100)) return false;
-        if (priceFilter === "low" && ele.normalHrRates >= 100) return false;
+            if (priceFilter === "high" && ele.normalHrRates <= mediumThreshold) return false;
+            if (priceFilter === "medium" && (ele.normalHrRates <= lowThreshold || ele.normalHrRates > mediumThreshold)) return false;
+            if (priceFilter === "low" && ele.normalHrRates > lowThreshold) return false;
 
         return true; // Include the item if it passes the filters
     }).length;
@@ -132,22 +150,45 @@ export default function Bars({searchOption}) {
 
     const handleReset = () => {
         setPriceFilter("");
+        setSearchNearByFilters({})
         setSearchFiltersValues({
+            clubType: "Bar",
             isDeleted: false,
             sortBy: "createdAt",
-            limit: 10,
+            limit: 100,
             page: 1
-        });
-        handleSearchFilters(searchFilterValues)
+        })
+        const resetFilters = {
+            clubType: "Bar",
+            isDeleted: false,
+            sortBy: "createdAt",
+            limit: 100,
+            page: 1
+        }
+        handleSearchFilters(resetFilters)
     }
 
     useEffect(() => {
         if(searchFilterValues.city) {
             handleSearchFilters(searchFilterValues)
+        } else if(searchNearByFilters) {
+            if(searchNearByFilters.lattitude || searchNearByFilters.longitude)  {
+                dispatch(startSearchClubsAndBars(searchNearByFilters))
+            }
+        } else {
+            const resetFilters = {
+                clubType: "Bar",
+                isDeleted: false,
+                sortBy: "createdAt",
+                limit: 100,
+                page: 1
+            }
+            handleSearchFilters(resetFilters)   
         }
-    }, [handleSearchFilters])
+    }, [searchFilterValues, handleSearchFilters]);
 
-    // console.log(dubaiCities)
+    console.log("searchFilterValues", searchFilterValues)
+    console.log("searchNearByFilters", searchNearByFilters)
       
     return (
         <section className="bars container-section">
@@ -201,7 +242,7 @@ export default function Bars({searchOption}) {
                         </motion.ul>
                     </div>
                     {/* <hr/> */}
-                    <div className="filter-category">
+                    {/* <div className="filter-category">
                         <div className="filter-header" onClick={() => setTournamentFilterOpen(!tournamentFilterOpen)}>
                             <span>Tournaments</span>
                             {!tournamentFilterOpen ? <FaCaretDown /> : <FaCaretUp/>}
@@ -220,7 +261,7 @@ export default function Bars({searchOption}) {
                             <li><input type="checkbox"></input><span>Ladder Tournament</span></li>
                             <li><input type="checkbox"></input><span>Swiss System</span></li>
                         </motion.ul>
-                    </div>
+                    </div> */}
                     {/* <hr/> */}
                     <div className="filter-category">
                         <div className="filter-header" onClick={() => setPriceFilterOpen(!priceFilterOpen)}>

@@ -11,6 +11,7 @@ export const startGetAllClubsAndBars = (searchFilters) => {
                 }
             })
             console.log(response.data.data.results)
+            console.log(searchFilters)
             dispatch(setClubsAndBars(response.data.data.results))
         } catch(err) {
             console.log(err);

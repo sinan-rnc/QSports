@@ -34,6 +34,19 @@ export default function ClubBarProfile() {
         return state.clubsAndBars.data.find(ele =>!ele?.isDeleted && ele?.createdBy === user?._id)
     });
 
+    // useEffect(() => {
+    //     (async () => {
+    //         try {
+    //             const response = await axios.post(`${backendApi}/club/read-club`, { _id: eventData?.ClubID })
+    //             console.log(response.data.data)
+    //             setEventClub(response.data.data)
+    //         } catch(err) {
+    //             console.log(err);
+    //             alert(err.response.data.message)
+    //         }
+    //     }) ()
+    // }, [eventData])
+
     // console.log("ClubandBar", clubAndBar.geoLocation)
 
     const [ form, setForm ] = useState(clubAndBar ? {
@@ -765,6 +778,8 @@ export default function ClubBarProfile() {
                 services: []
             })
         } else {
+            setAlertMessage("Fill All the Field Values")
+            setAlertMessageColor("red")
             setFormErrors(errors)
             console.log(formErrors)
         } 

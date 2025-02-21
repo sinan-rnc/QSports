@@ -65,7 +65,7 @@ export default function Header() {
     const [ searchFilterValues, setSearchFiltersValues ] = useState({
         isDeleted: false,
         sortBy: "createdAt",
-        limit: 10,
+        limit: 100,
         page: 1
     })
 
@@ -236,6 +236,13 @@ export default function Header() {
                         alert("Failed to get location. Please enable location services.");
                     }
                 );
+                handleSearchFilters({
+                    isDeleted: false,
+                    sortBy: "createdAt",
+                    limit: 100,
+                    page: 1
+                })
+                handleSearchNearByFilters(searchNearByFiltersValues)
             } else {
                 setAlertMessage("Geolocation is not supported by your browser");
                 setAlertMessageColor("red")
@@ -306,7 +313,7 @@ export default function Header() {
                         <a href="/bars" className={location.pathname==="/bars" ? "active" : ""}><li>
                             Play Bars
                         </li></a>
-                        <a href="/tournaments" className={location.pathname==="/tournaments" ? "active" : ""}><li>
+                        <a href="/events" className={location.pathname==="/events" ? "active" : ""}><li>
                             Tournaments
                         </li></a>
                         {/* <a href="/account" className={location.pathname==="/account" ? "active" : ""}><li>
@@ -328,13 +335,13 @@ export default function Header() {
                             }
                         }}>
                             <LuUserRound size={"25px"}/>
-                            {user?.userType === "ClubAdmin" ? "Club Account" : user?.userType === "MemberUser" ? "My Account" : "Admin Account"}
+                            {user?.userType === "ClubAdmin" ? "Club Account" : user?.userType === "MemberUser" ? "My Account" : "Account"}
                         </li>
                         <li className="login_div" onClick={() => {handleOpenUserDashboard()}}>
                             {user ? <BiLogOut size={"30px"}/> : <BiLogIn size={"30px"}/>}
                             <div className="login">
                                 {user && localStorage.getItem("token") ? <span>{user.firstName} {user.lastName}</span> : <span>Hello, Log In</span>}
-                                {user?.userType === "ClubAdmin" ? "Club Profile" : user?.userType === "MemberUser" ? "My Profile" : "Admin Profile"}
+                                {user?.userType === "ClubAdmin" ? "Club Profile" : user?.userType === "MemberUser" ? "My Profile" : "Profile"}
                             </div>
                         </li>
                         {openUserDashboard && (

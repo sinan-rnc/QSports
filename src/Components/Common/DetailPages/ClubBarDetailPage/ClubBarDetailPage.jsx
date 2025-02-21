@@ -191,7 +191,7 @@ export default function ClubBarDetailPage() {
                         <motion.h1 variants={childVariants} className="clubName">{clubData?.name}</motion.h1>
                         <motion.div variants={childVariants} className="book-button-div">
                             <h3 className="clubSlogan">Book Your Games at {clubData?.name}</h3>
-                            <button className="book-button">Call Now</button>
+                            <button className="book-button"><a href={`tel:${clubData.phoneNo}`}>Call Now</a></button>
                         </motion.div>
                         <motion.h4 variants={childVariants} className="clubSlogan2">{clubData?.slogan}</motion.h4>
                         <motion.div variants={childVariants} className="place-time">
@@ -237,8 +237,8 @@ export default function ClubBarDetailPage() {
                         whileInView="animate2"
                         viewport={{ once: false, amount: 0.5 }}
                         className="callout-buttons">
-                        <motion.button variants={childVariants} className="callout-btn hotel-btn">Book club</motion.button>
-                        <motion.button variants={childVariants} className="callout-btn hotel-btn">Play Tournaments</motion.button>
+                        <motion.button variants={childVariants} className="callout-btn hotel-btn"><a href={`tel:${clubData.phoneNo}`}>Book club</a></motion.button>
+                        <motion.button variants={childVariants} className="callout-btn hotel-btn"><a href="#upcoming-events">Play Tournaments</a></motion.button>
                     </motion.div>
                 </div>
             </section>
@@ -275,7 +275,7 @@ export default function ClubBarDetailPage() {
                     </motion.div>
                 </div>
             </section>
-            <section>
+            <section id="upcoming-events">
                 <div className="upcoming-events container-section">
                     <div className="heading">
                         <h1 className='main-heading'>Upcoming Events</h1>
@@ -308,8 +308,8 @@ export default function ClubBarDetailPage() {
                                             <div className="right">
                                                 <h1>{ele.EventName}</h1>
                                                 <div className="time">
-                                                <div className="arrow" onClick={() => {navigate(`/events/${ele.name.replace(/\s+/g, '-').toLowerCase()}`)}}><IoIosArrowRoundForward /></div>
-                                                    <span>{ele.time} - 05:00 PM</span>
+                                                <div className="arrow" onClick={() => {navigate(`/events/${ele.EventName.replace(/\s+/g, '-').toLowerCase()}`)}}><IoIosArrowRoundForward /></div>
+                                                    <span>05:00 PM</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -371,7 +371,7 @@ export default function ClubBarDetailPage() {
                         <motion.h1 variants={childVariants}>BOOK YOUR PARTY</motion.h1>
                         <motion.p variants={childVariants}>Gather your friends, choose your dates and experience Paradise!</motion.p>
                     </div>
-                    <motion.button variants={childVariants}>Book Now</motion.button>
+                    <motion.button variants={childVariants}><a href={`tel:${clubData.phoneNo}`}>Book Now</a></motion.button>
                 </motion.div>
             </section>
         </Fragment>

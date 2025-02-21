@@ -68,12 +68,12 @@ export default function Footer() {
                         {/* <h3 className="dashborad-second-heading">Club</h3> */}
                     </div>
                     <ul>
-                        <li>Home</li>
-                        <li>About Us</li>
-                        <li>Play Clubs</li>
-                        <li>Play Bars</li>
-                        <li>Tournaments</li>
-                        <li>Contact Us</li>
+                        <li><a className={location.pathname==="/" ? "active" : ""} href="/">Home</a></li>
+                        <li><a className={location.pathname==="/about-us" ? "active" : ""} href="/about-us">About Us</a></li>
+                        <li><a className={location.pathname==="/clubs" ? "active" : ""} href="/clubs">Play Clubs</a></li>
+                        <li><a className={location.pathname==="/bars" ? "active" : ""} href="/bars">Play Bars</a></li>
+                        <li><a className={location.pathname==="/events" ? "active" : ""} href="/events">Tournaments</a></li>
+                        <li><a className={location.pathname==="/contact-us" ? "active" : ""} href="/contact-us">Contact Us</a></li>
                         {/* <li></li> */}
                     </ul>
                 </div>
@@ -84,12 +84,12 @@ export default function Footer() {
                         {/* <h3 className="dashborad-second-heading">Club</h3> */}
                     </div>
                     <ul>
-                        <li>Dashboard</li>
-                        <li>Profile</li>
-                        <li>My Tournaments</li>
-                        <li>Login</li>
-                        <li>Regsiter</li>
-                        <li>Club Register</li>
+                        <li><a href="/login">Login</a></li>
+                        <li><a href="/user-register">Regsiter</a></li>
+                        <li><a href="/club-register">Club Register</a></li>
+                        <li><a href="/account">Dashboard</a></li>
+                        <li><a href="/account">Profile</a></li>
+                        <li><a href="/account">My Tournaments</a></li>
                     </ul>
                 </div>
                 <div className="footer_col">

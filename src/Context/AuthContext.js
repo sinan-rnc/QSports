@@ -8,8 +8,13 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
     const [ user, setUser ] = useState(null)
-    const [ searchFilters, setSearchFilters ] = useState({})
-    const [ seachNearByFilters, setSearchNearByFilters ] = useState({})
+    const [ searchFilters, setSearchFilters ] = useState({
+        isDeleted: false,
+        sortBy: "createdAt",
+        limit: 100,
+        page: 1
+    })
+    const [ searchNearByFilters, setSearchNearByFilters ] = useState({})
     const [ openUserDashboard, setOpenUserDashboard ] = useState(false)
     const [ openSearchDashboard, setOpenSearchDashboard ] = useState(false)
     const [ alertMessage, setAlertMessage ] = useState("")
@@ -40,10 +45,10 @@ export const AuthProvider = ({ children }) => {
         setSearchNearByFilters(filters)
     }
 
-    useEffect(() => {
+    // useEffect(() => {
         console.log(searchFilters)
-        console.log(seachNearByFilters)
-    }, [searchFilters, seachNearByFilters])
+        console.log(searchNearByFilters)
+    // }, [searchFilters, searchNearByFilters])
 
     return (
         <AuthContext.Provider value={{ 
@@ -53,7 +58,8 @@ export const AuthProvider = ({ children }) => {
                 handleLogout, 
                 searchFilters,
                 handleSearchFilters,
-                seachNearByFilters,
+                searchNearByFilters,
+                setSearchNearByFilters,
                 handleSearchNearByFilters,
                 openUserDashboard, 
                 setOpenUserDashboard, 

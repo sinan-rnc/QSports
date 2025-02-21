@@ -15,7 +15,7 @@ export default function DailyQuotes() {
     // Format the date as "YYYY-MM-DD"
     const formattedDate = `${day.toString().padStart(2, "0")}-${month.toString().padStart(2, "0")}-${year}`;
 
-    const [quoteOfTheDay, setQuoteOfTheDay] = useState({});
+    const [quoteOfTheDay, setQuoteOfTheDay] = useState("");
     console.log(quoteOfTheDay)
 
     useEffect(() => {
@@ -26,7 +26,7 @@ export default function DailyQuotes() {
                 setQuoteOfTheDay(response.data.data)
             } catch(err) {
                 console.log(err);
-                alert(err.response.data.message)
+                // alert(err.response.data.message)
             }
         }) ()
     }, [setQuoteOfTheDay])

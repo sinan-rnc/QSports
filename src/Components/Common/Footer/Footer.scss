@@ -124,6 +124,19 @@ footer {
                     list-style: none;
                     padding-top: 10px;
                     font-size: 14px;
+                    transition: .3s;
+
+                    a:hover {
+                        color: #fe6b00;
+                        transition: .3s;
+                    }
+
+                    a.active {
+                        color: #fe6b00;
+                        transition: .3s;
+                    }
+
+
                 }
             }
 

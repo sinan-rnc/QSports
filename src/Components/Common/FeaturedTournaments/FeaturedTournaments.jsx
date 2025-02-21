@@ -1,8 +1,34 @@
 import "./FeaturedTournaments.scss"
 import image1 from "../../../Assets/Tournaments/image4.png"
 import image2 from "../../../Assets/Tournaments/image6.jpeg"
+import { useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 
 export default function TopTournaments() {
+    const navigate = useNavigate()
+    const tournaments = useSelector((state) => {
+        return state.events.data
+    })
+
+    const eventClub1 = useSelector((state) => {
+        return state?.clubsAndBars?.data
+            .find(ele => !ele?.isDeleted && ele?._id === tournaments[0].ClubID)
+    })
+
+    const eventClub2 = useSelector((state) => {
+        return state?.clubsAndBars?.data
+            .find(ele => !ele?.isDeleted && ele?._id === tournaments[1].ClubID)
+    })
+
+    const formatDate = (isoDate) => {
+        if (!isoDate) return "";  // Handle empty cases
+        const date = new Date(isoDate);
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0"); // Month starts from 0
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    };
+
     return (
         <section>
             <div className="tournamentevents1-section container-section">
@@ -19,44 +45,44 @@ export default function TopTournaments() {
                 <div className="section-bottom">
                     <div className="event">
                         <div className="event-left">
-                            <img src={image1} alt="" />
+                            <img src={tournaments[0]?.EventImage} alt="" />
                         </div>
                         <div className="event-right">
-                            <h1>Rack 'Em Up Challenge</h1>
-                            <h2>Single Elimination Tournament</h2>
+                            <h1>{tournaments[0]?.EventName}</h1>
+                            <h2>{tournaments[0]?.EventType}</h2>
                             <div className="details">
                                 <div className="date">
                                     <h3>When</h3>
-                                    <h4>25 DEC 2024</h4>
+                                    <h4>{formatDate(tournaments[0]?.StartingDate)}</h4>
                                 </div>
                                 <div className="date">
                                     <h3>Where</h3>
-                                    <h4>The Velvet Lounge</h4>
-                                    <h4>Al Barsha</h4>
+                                    <h4>{eventClub1?.city}</h4>
+                                    <h4>{eventClub1?.address}</h4>
                                 </div>
                             </div>
-                            <button className="btn-style">Book Now</button>
+                            <button className="btn-style" onClick={() => {navigate(`/events/${tournaments[0]?.EventName.replace(/\s+/g, '-').toLowerCase()}`)}}>View More</button>
                         </div>
                     </div>
                     <div className="event second">
                         <div className="event-left">
-                            <img src={image2} alt="" />
+                            <img src={tournaments[1]?.EventImage} alt="" />
                         </div>
                         <div className="event-right">
-                            <h1>The Cue Masters Cup</h1>
-                            <h2>Ladder Tournament</h2>
+                            <h1>{tournaments[1]?.EventName}</h1>
+                            <h2>{tournaments[1]?.EventType}</h2>
                             <div className="details">
                                 <div className="date">
                                     <h3>When</h3>
-                                    <h4>30 DEC 2024</h4>
+                                    <h4>{formatDate(tournaments[1]?.StartingDate)}</h4>
                                 </div>
                                 <div className="place">
                                     <h3>Where</h3>
-                                    <h4>Blue Lagoon Bar</h4>
-                                    <h4>Dubai Marina</h4>
+                                    <h4>{eventClub2?.city}</h4>
+                                    <h4>{eventClub2?.address}</h4>
                                 </div>
                             </div>
-                            <button className="btn-style">Book Now</button>
+                            <button className="btn-style" onClick={() => {navigate(`/events/${tournaments[1]?.EventName.replace(/\s+/g, '-').toLowerCase()}`)}}>View More</button>
                         </div>
                     </div>
                 </div>

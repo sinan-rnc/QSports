@@ -1,4 +1,4 @@
-.bars {
+.clubs {
     padding-top: 50px;
     padding-bottom: 50px;
     // height: 100vh;
@@ -295,7 +295,7 @@
                     
                     .product-image {
                         width: auto;
-                        height: auto;
+                        height: 300px;
                         background: #ddd;
                         display: flex;
                         align-items: center;
@@ -321,6 +321,7 @@
                         img {
                             width: 100%;
                             height: 100%;
+                            object-fit: cover;
                         }
                     }
                     
@@ -453,13 +454,13 @@
 
 
 @media (max-width : 2600px) {
-    .bars .section .content .product-grid {
+    .clubs .section .content .product-grid {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media (max-width : 2000px) {
-    .bars .section .content .product-grid {
+    .clubs .section .content .product-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }

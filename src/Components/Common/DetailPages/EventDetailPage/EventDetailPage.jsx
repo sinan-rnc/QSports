@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Fragment } from "react";
 import { tournaments } from "../../../../DataSet/tournaments";
@@ -77,6 +77,7 @@ const childVariants = {
 };
 
 export default function EventDetailPage() {
+    const navigate = useNavigate()
     const {eventName} = useParams()
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState(0);
@@ -103,16 +104,18 @@ export default function EventDetailPage() {
     // })
 
     useEffect(() => {
-        (async () => {
-            try {
-                const response = await axios.post(`${backendApi}/club/read-club`, { _id: eventData?.ClubID })
-                console.log(response.data.data)
-                setEventClub(response.data.data)
-            } catch(err) {
-                console.log(err);
-                alert(err.response.data.message)
-            }
-        }) ()
+        if (eventData) {
+            (async () => {
+                try {
+                    const response = await axios.post(`${backendApi}/club/read-club`, { _id: eventData?.ClubID })
+                    console.log(response.data.data)
+                    setEventClub(response.data.data)
+                } catch(err) {
+                    console.log(err);
+                    alert(err.response.data.message)
+                }
+            }) ()
+        }
     }, [eventData])
 
     console.log(eventData)
@@ -174,7 +177,7 @@ export default function EventDetailPage() {
                         <motion.h1 variants={childVariants} className="clubName">{eventData?.EventName}</motion.h1>
                         <motion.div variants={childVariants} className="book-button-div">
                             <h3 className="clubSlogan">Secure Your Spot at {eventData?.EventName}</h3>
-                            <button className="book-button">Register Now</button>
+                            <button className="book-button"><a href={`tel:${eventClub?.phoneNo}`}>Register Now</a></button>
                         </motion.div>
                         <motion.h4 variants={childVariants} className="clubSlogan2">Unleash the Champion in You – The Premier Tournament Awaits!</motion.h4>
                         <motion.div variants={childVariants} className="place-time">
@@ -230,8 +233,8 @@ export default function EventDetailPage() {
                         whileInView="animate2"
                         viewport={{ once: false, amount: 0.5 }}
                         className="callout-buttons">
-                        <motion.button variants={childVariants} className="callout-btn hotel-btn">Book club</motion.button>
-                        <motion.button variants={childVariants} className="callout-btn hotel-btn">Register Tournaments</motion.button>
+                        <motion.button variants={childVariants} className="callout-btn hotel-btn" onClick={() => {navigate(`/clubs/${eventClub?.name?.replace(/\s+/g, '-').toLowerCase()}`)}}>View club</motion.button>
+                        <motion.button variants={childVariants} className="callout-btn hotel-btn"><a href={`tel:${eventClub?.phoneNo}`}>Register Tournaments</a></motion.button>
                     </motion.div>
                 </div>
             </section>
@@ -306,7 +309,7 @@ export default function EventDetailPage() {
                         <motion.p variants={childVariants}>Assemble your team, select your dates, and gear up for an unforgettable battle to claim victory and showcase your skills!</motion.p>
                     </div>
                     <div className="right">
-                        <motion.button variants={childVariants}>Register Now</motion.button>
+                        <motion.button variants={childVariants}><a href={`tel:${eventClub?.phoneNo}`}>Register Now</a></motion.button>
                     </div>
                 </motion.div>
             </section>
