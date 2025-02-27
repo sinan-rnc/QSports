@@ -6,13 +6,13 @@ import 'swiper/css/pagination';
 
 import stick from "../../../Assets/Common/Billiard-Stick.png"
 
-import "./TournamentEvents.scss"
+import "./UpcomingEvents.scss"
 import { MdOutlineZoomOutMap } from 'react-icons/md';
 import { tournaments } from '../../../DataSet/tournaments';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-export default function TournamentEvents() {
+export default function UpcomingEvents() {
     const navigate = useNavigate()
 
     const events = useSelector((state) => {
@@ -86,7 +86,7 @@ export default function TournamentEvents() {
                                     <div className="left">
                                         <h3>{ele?.EventName}</h3>
                                         <p>{ele.EventType}</p>
-                                        <p>At {ele.ClubID}</p>
+                                        {/* <p>At {ele.ClubID}</p> */}
                                     </div>
                                     <div className="right">
                                         <p className="price">AED {ele.EnrollmentFee}</p>

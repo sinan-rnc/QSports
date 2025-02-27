@@ -10,7 +10,7 @@ import Footer from "./Components/Common/Footer/Footer";
 import AboutUsPage from "./Pages/AboutUsPage";
 import BarsPage from "./Pages/BarsPage";
 import ClubsPage from "./Pages/ClubsPage";
-import TournamentPage from "./Pages/TournamentPage";
+import EventsPage from "./Pages/EventsPage";
 import AccountPage from "./Pages/AccountPage";
 import Login from "./Components/Account/Login/Login";
 import UserRegister from "./Components/Account/User/UserRegister/UserRegister";
@@ -26,6 +26,8 @@ import { startGetAllClubsAndBars, startSearchClubsAndBars } from "./Actions/club
 import { startGetAllEvents } from "./Actions/eventsActions";
 import UnAuthorized from "./Components/Common/UnAuthorized/UnAuthorized";
 import { startGetAllQuotes } from "./Actions/quotesAction";
+import AdminAccountPage from "./Pages/AdminAccountPage";
+import { startGetAllUsers } from "./Actions/usersAction";
 
 export default function App() {
     const {user, handleLogin, searchFilters, searchNearByFilters} = useAuth()
@@ -54,10 +56,11 @@ export default function App() {
         dispatch(startGetAllProfile())
         dispatch(startGetAllEvents())
         dispatch(startGetAllQuotes())
+        dispatch(startGetAllUsers())
     }, [dispatch, searchFilters, searchNearByFilters])
 
-    console.log(searchFilters)
-    console.log(searchNearByFilters)
+    // console.log(searchFilters)
+    // console.log(searchNearByFilters)
 
     return (
         <Fragment>
@@ -67,14 +70,19 @@ export default function App() {
                 <Route path="/about-us" element={<AboutUsPage/>} />
                 <Route path="/clubs" element={<ClubsPage/>} />
                 <Route path="/bars" element={<BarsPage/>} />
-                <Route path="/events" element={<TournamentPage/>} />
+                <Route path="/events" element={<EventsPage/>} />
+                <Route path="/admin-account" element={
+                    <PrivateRoutes permittedRoles={["620f8c5c377b3fd29e10c054"]}>
+                        <AdminAccountPage />
+                     </PrivateRoutes>
+                } />
                 <Route path="/account" element={
-                    <PrivateRoutes>
+                    <PrivateRoutes permittedRoles={["67989e7b52f17c150584bfcb", "67a1c3497bda08801938ca29"]}>
                         <AccountPage />
                      </PrivateRoutes>
                 } />
                 <Route path="/dashboard" element={
-                    <PrivateRoutes>
+                    <PrivateRoutes permittedRoles={["67989e7b52f17c150584bfcb", "67a1c3497bda08801938ca29"]}>
                         <DashboardHome />
                     </PrivateRoutes>
                 } />

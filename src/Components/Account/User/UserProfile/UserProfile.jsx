@@ -79,7 +79,7 @@ export default function UserProfile() {
     const handleImageChange = (e) => {
         const file = e.target.files[0]
         setForm({ ...form, ProfilePic: file });
-        console.log(file)
+        // console.log(file)
 
         const fileInput = document.getElementById("ProfilePic");
         if (fileInput) {
@@ -93,7 +93,7 @@ export default function UserProfile() {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        console.log(form);
+        // console.log(form);
     
         if (Object.keys(errors).length === 0) {
             const formData = new FormData();
@@ -113,7 +113,7 @@ export default function UserProfile() {
             //     console.log(key, value);
             // });
 
-            console.log("Creating formData", formData)
+            // console.log("Creating formData", formData)
 
             // const formData = { ...form , UserID: user._id };
     
@@ -122,7 +122,7 @@ export default function UserProfile() {
             } else {
                 formData.append("_id", profile._id);
                 // const updatedFormData = { ...form , _id: profile._id }
-                console.log("Updating formData",formData)
+                // console.log("Updating formData",formData)
                 dispatch(startUpdateProfile(formData, setAlertMessage, setAlertMessageColor));
             }
     

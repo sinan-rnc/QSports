@@ -11,6 +11,7 @@
             display: flex;
             gap: 30px;
             align-items: center;
+            justify-content: center;
 
             .left {
                 width: 50%;
@@ -106,6 +107,15 @@
                         }
                     }
                 }
+
+                .featuredClubsBars-content1.none {
+                    display: none;
+                }
+            }
+
+            .right.none {
+                width: 100%;
+                display: none;
             }
         }
     }

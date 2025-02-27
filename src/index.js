@@ -9,11 +9,11 @@ import { Provider } from "react-redux"
 import configureStore from './Store/configureStore';
 
 const store = configureStore()
-console.log(store.getState())
+// console.log(store.getState())
 
-store.subscribe(() => {
-  console.log(store.getState())
-})
+// store.subscribe(() => {
+//   console.log(store.getState())
+// })
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

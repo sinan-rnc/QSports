@@ -21,6 +21,7 @@ import { BsCalendarDate } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { backendApi } from "../../../../Apis/api";
+import { useAuth } from "../../../../Context/AuthContext";
 
 const variants = {
     enter: (direction) => ({
@@ -77,49 +78,52 @@ const childVariants = {
 };
 
 export default function EventDetailPage() {
+    const { user, setAlertMessage, setAlertMessageColor } = useAuth()
     const navigate = useNavigate()
     const {eventName} = useParams()
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState(0);
-    const [eventClub, setEventClub] = useState("");
+    // const [eventClub, setEventClub] = useState("");
 
     const eventNameNew = eventName.replace(/-/g, ' ') // Replace hyphens with spaces
                                 .split(' ') // Split the string by spaces
                                 .map(word => word.charAt(0).toUpperCase() + word.slice(1))  // Capitalize first letter of each word
                                 .join(' ')
 
-    console.log(eventNameNew)
+    // console.log(eventNameNew)
 
     const eventData = useSelector((state) => {
         return state?.events?.data
             .find(ele => !ele?.isDeleted && ele?.EventName.toLowerCase() === eventNameNew.toLowerCase())
     })
 
+    const eventClub = useSelector((state) => {
+        return state?.clubsAndBars?.data
+            .find(ele => !ele?.isDeleted && ele?._id === eventData?.ClubID)
+    })
+
+    // console.log(eventClub)
+
     const images = eventClub?.pictureGallery;
-    console.log(images)
+    // console.log(images)
 
-    // const eventClub = useSelector((state) => {
-    //     return state?.clubsAndBars?.data
-    //         .find(ele => !ele?.isDeleted && ele?._id === eventData?.ClubID)
-    // })
+    // useEffect(() => {
+    //     if (eventData) {
+    //         (async () => {
+    //             try {
+    //                 const response = await axios.post(`${backendApi}/club/read-club`, { _id: eventData?.ClubID })
+    //                 console.log(response.data.data)
+    //                 setEventClub(response.data.data)
+    //             } catch(err) {
+    //                 console.log(err);
+    //                 alert(err.response.data.message)
+    //             }
+    //         }) ()
+    //     }
+    // }, [eventData])
 
-    useEffect(() => {
-        if (eventData) {
-            (async () => {
-                try {
-                    const response = await axios.post(`${backendApi}/club/read-club`, { _id: eventData?.ClubID })
-                    console.log(response.data.data)
-                    setEventClub(response.data.data)
-                } catch(err) {
-                    console.log(err);
-                    alert(err.response.data.message)
-                }
-            }) ()
-        }
-    }, [eventData])
-
-    console.log(eventData)
-    console.log(eventClub)
+    // console.log(eventData)
+    // console.log(eventClub)
     // const eventData = tournaments.find(ele => ele.name === eventNameNew)
 
     const formatDate = (isoDate) => {
@@ -150,6 +154,36 @@ export default function EventDetailPage() {
             window.scrollTo(0, 0); // Scroll to the top-left corner of the page
     }, []);
 
+    const handleRegsiterEvent = async () => {
+        if(!user) {
+            setAlertMessage("Login to register for the event")
+            setAlertMessageColor("red")
+        } else {
+            const formData = {
+                EventID: eventData._id,
+                UserID: user._id,
+                Fee: eventData.EnrollmentFee,
+                FeePaid: true
+            }
+            try {
+                await axios.post(`${backendApi}/enrollment/create-enrollment`, formData, {
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    }
+                })
+                setAlertMessage("Successfully registered for the event")
+                setAlertMessageColor("green")
+            } catch(err) {
+                setAlertMessage("Unable to register for the event")
+                setAlertMessageColor("red")
+            }
+            
+
+
+        }
+
+    }
+
     return (
         <Fragment>
             <section>
@@ -177,7 +211,11 @@ export default function EventDetailPage() {
                         <motion.h1 variants={childVariants} className="clubName">{eventData?.EventName}</motion.h1>
                         <motion.div variants={childVariants} className="book-button-div">
                             <h3 className="clubSlogan">Secure Your Spot at {eventData?.EventName}</h3>
-                            <button className="book-button"><a href={`tel:${eventClub?.phoneNo}`}>Register Now</a></button>
+                            <button className="book-button" onClick={handleRegsiterEvent}>
+                                {/* <a href={`tel:${eventClub?.phoneNo}`}> */}
+                                Register Now
+                                {/* </a> */}
+                            </button>
                         </motion.div>
                         <motion.h4 variants={childVariants} className="clubSlogan2">Unleash the Champion in You – The Premier Tournament Awaits!</motion.h4>
                         <motion.div variants={childVariants} className="place-time">

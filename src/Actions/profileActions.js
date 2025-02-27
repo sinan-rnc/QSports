@@ -4,12 +4,12 @@ import { backendApi } from "../Apis/api";
 export const startGetAllProfile = () => {
     return async (dispatch) => {
         try {
-            const response = await axios.post(`${backendApi}/profile/read-all-profiles`);
-            console.log(response.data.data.results)
+            const response = await axios.post(`${backendApi}/profile/read-all-profiles`, { limit: 100 });
+            // console.log(response.data.data.results)
             dispatch(getProfile(response.data.data.results))
         } catch(err) {
-            console.log(err)
-            alert(err.message)
+            // console.log(err)
+            // alert(err.message)
         }
     }
 }
@@ -22,25 +22,25 @@ const getProfile = (profile) => {
 }
 
 export const startCreateProfile = (formData, setAlertMessage, setAlertMessageColor) => {
-    console.log("hii-1", formData)
+    // console.log("hii-1", formData)
     return async (dispatch) => {
-        console.log("hii-2", formData)
+        // console.log("hii-2", formData)
         try {
-            console.log("hii-3", formData)
+            // console.log("hii-3", formData)
             const response = await axios.post(`${backendApi}/profile/create-profile`, formData, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
                 }
             })
             dispatch(createProfile(response.data.data))
-            console.log(response)
+            // console.log(response)
             setAlertMessage("Profile Succcessfully Created")
             setAlertMessageColor("green")
         } catch(err) {
-            console.log("error hii")
-            console.log(err)
-            alert(err.message)
-            setAlertMessage(err.response.data.message)
+            // console.log("error hii")
+            // console.log(err)
+            // alert(err.message)
+            setAlertMessage("Failed to Create Profile")
             setAlertMessageColor("red")
         }
     }
@@ -61,14 +61,14 @@ export const startUpdateProfile = (formData, setAlertMessage, setAlertMessageCol
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
                 }
             })
-            console.log(response.data)
+            // console.log(response.data)
             dispatch(updateProfile(response.data.data))
             setAlertMessage("Profile Succcessfully Updated")
             setAlertMessageColor("green")
         } catch(err) {
-            console.log(err)
-            alert(err.message)
-            setAlertMessage(err.response.data.message)
+            // console.log(err)
+            // alert(err.message)
+            setAlertMessage(" Failed to Update Profile")
             setAlertMessageColor("red")
         }
     }
@@ -89,15 +89,15 @@ export const startDeleteProfile = (profile, setAlertMessage, setAlertMessageColo
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
                 }
             })
-            console.log(response)
+            // console.log(response)
             dispatch(deleteProfile(profile._id))
             setAlertMessage("User Profile Deleted")
             setAlertMessageColor("green")
         } catch(err) {
-            console.log(err)
-            alert(err.message)
+            // console.log(err)
+            // alert(err.message)
             setAlertMessage("Unable to Delete User Profile")
-            setAlertMessageColor("green")
+            setAlertMessageColor("red")
         }
     }
 }

@@ -135,7 +135,7 @@ export default function ClubEventDashboard() {
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        console.log(file)
+        // console.log(file)
         setForm({ ...form, EventImage: file });
     }
 
@@ -150,7 +150,7 @@ export default function ClubEventDashboard() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(form);
+        // console.log(form);
     
         // Use FormData for handling file uploads
         const formData = new FormData();
@@ -173,7 +173,7 @@ export default function ClubEventDashboard() {
         if (Object.keys(errors).length === 0) {
             if (currentEvent) {
                 formData.append("_id", currentEvent._id);
-                console.log("update form", formData);
+                // console.log("update form", formData);
                 dispatch(startUpdateEvent(formData, setAlertMessage, setAlertMessageColor));
             } else {
                 dispatch(startCreateEvent(formData, setAlertMessage, setAlertMessageColor));

@@ -1,0 +1,318 @@
+.admin-club-dashboard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    .admin-club-dashboard {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        padding: 30px;
+        background: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+        // .dashborad-heading {
+        //     // padding: 30px;
+        // }
+
+        .recent-orders {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        
+            &__title {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+        
+            &__table {
+                width: 100%;
+                border-collapse: collapse;
+                text-align: left;
+        
+                th {
+                    font-size: 16px;
+                    color: #555;
+                    text-transform: uppercase;
+                    border-bottom: 1px solid #e0e0e0;
+                    padding: 12px 8px;
+                }
+            
+                td {
+                    font-size: 14px;
+                    padding: 12px 8px;
+                    color: #333;
+
+                    .action-div {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 5px;
+                    }
+
+                    .edit-profile {
+                        display: block;
+                        // justify-content: flex-end;
+                        height: auto;
+                        width: 120px;
+                        padding: 10px 5px 10px;
+                        background: #fe6b00;
+                        color: white;
+                        border: none;
+                        font-weight: 700;
+                        font-size: 15px;
+                        cursor: pointer;
+                        border-radius: 5px;
+                        // margin-left: auto;
+                        // bottom: 0px;
+                        // right: 0px;
+                        // margin-right: auto;
+                    }
+        
+                    .edit-profile:hover {
+                        background: #ddcc92;
+                        color: black;
+                    }
+                }
+        
+            //   tr {
+            //     &:nth-child(even) {
+            //       background-color: #f9f9f9; // Alternate row color
+            //     }
+            //   }
+            }
+        }
+    }
+
+    .edit-club-section {
+        padding: 30px;
+        background: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+
+        .dashborad-heading {
+            cursor: pointer;
+
+            .dashborad-hr-2 {
+                margin-left: -28px;
+            }
+
+            .dashborad-hr-1.rotate {
+                transform: rotate(90deg);
+            }
+        }
+
+        .dashborad-heading:hover .dashborad-main-heading {
+            color: #fe6b00;
+        }
+
+        .form-table {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            overflow: hidden;
+
+            .form-label-head {
+                text-align: left;
+                font-weight: 600;
+                font-size: 20px;
+            }
+
+            .same-line {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+
+                .form-label {
+                    width: 50%;
+                }
+
+                .form-control {
+                    width: 50%;
+                }
+
+                .alert {
+                    font-size: 14px;
+                    width: 50%;
+                    text-align: left;
+                    margin-top: -10px;
+                    color: red;
+                }
+
+                .loading-btn {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 50px;
+                    height: 38px;
+                    padding: 5px 5px 5px;
+                    background: #fe6b00;
+                    color: white;
+                    border: none;
+                    font-weight: 700;
+                    font-size: 20px;
+                    cursor: pointer;
+                    border-radius: 5px;
+
+                    .loading-spinner {
+                        width: 20px;
+                        height: 20px;
+                        border: 4px solid rgba(0, 0, 0, 0.2);
+                        border-top: 4px solid black; /* Change color as needed */
+                        border-radius: 50%;
+                        animation: spin 2s linear infinite;
+                    }
+                    
+                    @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                }
+
+                .loading-btn:hover {
+                    background: #ddcc92;
+                    color: black;
+                }
+            }
+
+            .close-icon {
+                font-size: 30px;
+                // color: red;
+                cursor: pointer;
+              }
+
+            .same-line-openclose {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+
+                .form-label {
+                    width: 50% !important;
+                }
+
+                .form-control {
+                    width: 50% !important;
+                }
+            }
+    
+            .form-group {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                text-align: start;
+                overflow: hidden;
+
+                h1 {
+                    font-size: 25px;
+                }
+    
+                .form-control {
+                    width: 100%;
+                    padding: 8px 30px 8px 10px;
+                    outline: none;
+                    // appearance: none;
+                    border: none;
+                    display: flex;
+                    text-align: left;
+                    justify-content: flex-start;
+                    // width: 300px;
+                    background: #eaeaea;
+                    border: 2px solid #eaeaea;
+                    overflow: hidden;
+                }
+    
+                .form-control:hover {
+                    background: #fff;
+                    border: 2px solid #eaeaea;
+                }
+    
+                .form-control::placeholder {
+                    display: flex;
+                    text-align: left;
+                    align-items: left;
+                    font-style: italic;
+                }
+            }
+
+            .form-group.gallery {
+                position: relative;
+
+                .upload-image {
+                    position: absolute;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 5px;
+                    font-size: 14px;
+                    // right: 50%;
+                    bottom: -20px;
+                    right: 0;
+        
+                    .close-icon {
+                        font-size: 18px;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            .btn-div {
+                display: flex;
+                flex-direction: row;
+
+                .save-btn {
+                    margin-top: 10px;
+                    display: block;
+                    // justify-content: flex-end;
+                    width: 100px;
+                    padding: 10px 5px 10px;
+                    background: #fe6b00;
+                    color: white;
+                    border: none;
+                    font-weight: 700;
+                    font-size: 15px;
+                    cursor: pointer;
+                    border-radius: 5px;
+                    // margin-left: auto;
+                    // margin-right: auto;
+                }
+        
+                .save-btn:hover {
+                    background: #ddcc92;
+                    color: black;
+                }
+
+                .save-btn.clear {
+                    margin-left: auto;
+                    
+                }
+            }
+        }
+
+        .upload-gallery{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 5px;
+
+            p {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                cursor: pointer;
+
+                .close-icon {
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+}

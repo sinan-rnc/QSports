@@ -6,7 +6,7 @@ import axios from "axios"
 import { backendApi } from "../../../Apis/api"
 
 export default function Login() {
-    const {handleLogin} = useAuth()
+    const {handleLogin, setAlertMessage, setAlertMessageColor} = useAuth()
     const navigate = useNavigate()
     // const defaultUsername = "qsports@gmail.com"
     // const defaultPassword = "Qsports@123"
@@ -41,7 +41,7 @@ export default function Login() {
             email : form.email,
             password : form.password
         }
-        console.log(formData)
+        // console.log(formData)
 
         if(Object.keys(errors).length === 0) {
             try {
@@ -49,6 +49,7 @@ export default function Login() {
                 const token = response.data.tokens.access
                 const user = response.data.user
                 localStorage.setItem("token", token)
+                localStorage.setItem("user", JSON.stringify(user))
                 handleLogin(user)
                 setFormErrors("")
                 setServerErrors("")
@@ -56,11 +57,19 @@ export default function Login() {
                 //     username : "",
                 //     password : ""
                 // })
-                navigate("/account")
-                console.log(response)
+                if(user.userType === "SuperAdmin") {
+                    navigate("/admin-account")
+                } else {
+                    navigate("/account")
+                }
+                setAlertMessage("Login Successfull")
+                setAlertMessageColor("green")
+                // console.log(response)
             } catch(err) {
-                console.log(err)
-                alert("Invalid Username/Password")
+                setAlertMessage(err.response.data.message)
+                setAlertMessageColor("red")
+                // console.log(err)
+                // alert("Invalid Username/Password")
             }
             // if(formData.username === defaultUsername && formData.password === defaultPassword) {
             //     alert("Successfully Logged In")

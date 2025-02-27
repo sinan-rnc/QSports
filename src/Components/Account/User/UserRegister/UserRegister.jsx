@@ -66,7 +66,7 @@ export default function UserRegister() {
             role: "67989e7b52f17c150584bfcb", 
             userType: "MemberUser"
         }
-        console.log(formData)
+        // console.log(formData)
 
         if(Object.keys(errors).length === 0) {
             try {
@@ -85,9 +85,9 @@ export default function UserRegister() {
                 setAlertMessage("User Successfully Registered")
                 setAlertMessageColor("green")
                 navigate("/")
-                console.log(response)
+                // console.log(response)
             } catch(err) {
-                console.log(err)
+                // console.log(err)
                 // alert(err.response.data.message)
                 // setServerErrors(err.response.data.message)
                 setFormErrors("")

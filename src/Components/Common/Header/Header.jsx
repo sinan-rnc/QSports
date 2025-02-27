@@ -1,6 +1,6 @@
 import "./Header.scss"
 
-import { RiBilliardsFill, RiDeleteBin5Fill, RiSearch2Fill } from "react-icons/ri";
+import { RiBilliardsFill, RiDeleteBin5Fill, RiMenu2Line, RiSearch2Fill } from "react-icons/ri";
 import { LuUserRound } from "react-icons/lu";
 import { SiAmazongames } from "react-icons/si";
 import { FaSearch, FaSearchLocation } from "react-icons/fa";
@@ -45,6 +45,8 @@ export default function Header() {
         setAlertMessageColor,
         selectedDashboard, 
         setSelectedDashboard,
+        selectedAdminDashboard,
+        setSelectedAdminDashboard,
     } = useAuth()
 
     const clubAndBar = useSelector((state) => {
@@ -85,7 +87,67 @@ export default function Header() {
     const [locationType, setlocationType] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [isSearchingNearBy, setIsSearchingNearBy] = useState(false)
+    const [ mobileMenu, setMobileMenu ] = useState(false)
 
+    const toggleMenu = () => {
+        setMobileMenu(!mobileMenu)
+    }
+
+    const userDashboardNavigation = [
+        {
+            id: 1,
+            title: "Dashboard",
+            section: "dashboard",
+        },
+        {
+            id: 2,
+            title: "Edit Profile",
+            section: "userProfile",
+        },
+        {
+            id: 3,
+            title: "My Events",
+            section: "myEvents",
+        },
+        {
+            id: 4,
+            title: "Reset Password",
+            section: "password",
+        },
+    ]
+
+    const adminDashboardNavigation = [
+        {
+            id: 1,
+            title: "Users",
+            section: "users",
+        },
+        {
+            id: 2,
+            title: "Bars",
+            section: "bars",
+        },
+        {
+            id: 3,
+            title: "Clubs",
+            section: "clubs",
+        },
+        {
+            id: 4,
+            title: "Events",
+            section: "events",
+        },
+        {
+            id: 5,
+            title: "Quotes",
+            section: "quotes",
+        },
+        {
+            id: 2,
+            title: "Reset Password",
+            section: "password",
+        },
+    ]
 
     const userDashboardRef = useRef(null);
     const searchDashboardRef = useRef(null);
@@ -166,7 +228,7 @@ export default function Header() {
                 const response = await axios.post(`${backendApi}/auth/login`, formData)
                 const token = response.data.tokens.access
                 const user = response.data.user
-                console.log(response.data.user)
+                // console.log(response.data.user)
                 localStorage.setItem("token", token)
                 localStorage.setItem("user", JSON.stringify(user))
                 handleLogin(user)
@@ -176,19 +238,25 @@ export default function Header() {
                 //     username : "",
                 //     password : ""
                 // })
-                navigate("/account")
+                if(user?.userType === "SuperAdmin") {
+                    navigate("/admin-account")
+                } else {
+                    navigate("/account")
+                }
                 handleOpenUserDashboard()
                 setAlertMessage("Successfully Logged In")
                 setAlertMessageColor("green")
-                console.log(response)
+                // console.log(response)
                 setForm({
                     username : "",
                     password : ""
                 })
             } catch(err) {
-                console.log(err)
-                alert("Invalid Username/Password")
-                setServerErrors("Invalid Username/Password")
+                // console.log(err)
+                // alert("Invalid Username/Password")
+                setAlertMessage(err.response.data.message)
+                setAlertMessageColor("green")
+                setServerErrors(err.response.data.message)
                 setFormErrors("")
             }
         } else {
@@ -212,13 +280,13 @@ export default function Header() {
         setSearchFiltersValues({...searchFilterValues, city: ""})
     };
 
-    console.log(searchFilterValues)
-    console.log(searchNearByFiltersValues)
+    // console.log(searchFilterValues)
+    // console.log(searchNearByFiltersValues)
 
 
     const handleSearchSubmit = () => {
-        console.log(searchFilterValues)
-        console.log(searchNearByFiltersValues)
+        // console.log(searchFilterValues)
+        // console.log(searchNearByFiltersValues)
         if(isSearchingNearBy) {
             if(!searchNearByFiltersValues.latitude || !searchNearByFiltersValues.longitude) {
                 setIsLoading(true)
@@ -227,7 +295,7 @@ export default function Header() {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         const { latitude, longitude } = position.coords;
-                        console.log(latitude, longitude)
+                        // console.log(latitude, longitude)
                         setSearchNearByFiltersValues({ ...searchNearByFiltersValues, latitude: latitude, longitude: longitude })
                         // console.log("Updated Form:", { latitude: latitude, longitude: longitude });
                     },
@@ -300,34 +368,40 @@ export default function Header() {
                     </div>
                 </div>
                 <div className="navbar_middle">
-                    <ul className="menubar">
-                        <a href="/" className={location.pathname==="/" ? "active" : ""}><li>
-                            Home
-                        </li></a>
-                        <a href="/about-us" className={location.pathname==="/about-us" ? "active" : ""}><li>
-                            About Us
-                        </li></a>
-                        <a href="/clubs" className={location.pathname==="/clubs" ? "active" : ""}><li>
-                            Play Clubs
-                        </li></a>
-                        <a href="/bars" className={location.pathname==="/bars" ? "active" : ""}><li>
-                            Play Bars
-                        </li></a>
-                        <a href="/events" className={location.pathname==="/events" ? "active" : ""}><li>
-                            Tournaments
-                        </li></a>
-                        {/* <a href="/account" className={location.pathname==="/account" ? "active" : ""}><li>
-                            Account
-                        </li></a> */}
-                    </ul>
+                    <div>
+                        <RiMenu2Line className={mobileMenu ? "menu-icon-close" : "menu-icon"} onClick={toggleMenu}/>
+                        <ul className={`menubar ${mobileMenu ? "" : "hide-menubar"}`}>
+                            {mobileMenu && <IoClose onClick={toggleMenu} className="close-btn"/>}
+                            <a href="/" className={location.pathname==="/" ? "active" : ""}><li>
+                                Home
+                            </li></a>
+                            <a href="/about-us" className={location.pathname==="/about-us" ? "active" : ""}><li>
+                                About Us
+                            </li></a>
+                            <a href="/clubs" className={location.pathname==="/clubs" ? "active" : ""}><li>
+                                Play Clubs
+                            </li></a>
+                            <a href="/bars" className={location.pathname==="/bars" ? "active" : ""}><li>
+                                Play Bars
+                            </li></a>
+                            <a href="/events" className={location.pathname==="/events" ? "active" : ""}><li>
+                                Tournaments
+                            </li></a>
+                            {/* <a href="/account" className={location.pathname==="/account" ? "active" : ""}><li>
+                                Account
+                            </li></a> */}
+                        </ul>
+                    </div>
                     <div className="logo">
                         <a href="/"><h1><span>Q</span>SPORTS</h1></a>
                         {/* <img src={logo} alt="logo"/> */}
                     </div>
                     <ul className="acc_details">
                         <li onClick={() => {
-                            console.log("Navigating to account page");
-                            if(user) {
+                            // console.log("Navigating to account page");
+                            if(user?.userType == "SuperAdmin") {
+                                navigate("/admin-account")
+                            } else if(user) {
                                 navigate("/account")
                             } else {
                                 setAlertMessage("Login to access to your account")
@@ -335,7 +409,9 @@ export default function Header() {
                             }
                         }}>
                             <LuUserRound size={"25px"}/>
-                            {user?.userType === "ClubAdmin" ? "Club Account" : user?.userType === "MemberUser" ? "My Account" : "Account"}
+                            <div className="account">
+                                {user?.userType === "ClubAdmin" ? "Club Account" : user?.userType === "MemberUser" ? "My Account" : "Account"}
+                            </div>
                         </li>
                         <li className="login_div" onClick={() => {handleOpenUserDashboard()}}>
                             {user ? <BiLogOut size={"30px"}/> : <BiLogIn size={"30px"}/>}
@@ -355,7 +431,32 @@ export default function Header() {
                                 </div><hr className="hr-dashboard"/>
                                 <div className="details">
                                     <ul>
-                                        <li 
+                                        {user.userType ==="SuperAdmin" ? (
+                                            adminDashboardNavigation.map((ele) => {
+                                                return(
+                                                    <li 
+                                                        className={selectedAdminDashboard === ele.section ? "active" : ""}
+                                                        onClick={() => {
+                                                            setSelectedAdminDashboard(ele.section)
+                                                            navigate("/admin-account")
+                                                        }}
+                                                    >{ele.title}</li>
+                                                )
+                                            })
+                                        ) : (
+                                            userDashboardNavigation.map((ele) => {
+                                                return(
+                                                    <li 
+                                                        className={selectedDashboard === ele.section ? "active" : ""}
+                                                        onClick={() => {
+                                                            setSelectedDashboard(ele.section)
+                                                            navigate("/account")
+                                                        }}
+                                                    >{ele.title}</li>
+                                                )
+                                            })
+                                        )}
+                                        {/* <li 
                                             className={selectedDashboard === "dashboard" ? "active" : ""}
                                             onClick={() => {
                                                 setSelectedDashboard("dashboard")
@@ -375,7 +476,7 @@ export default function Header() {
                                                 setSelectedDashboard("myEvents")
                                                 navigate("/account")
                                             }}
-                                        >My Tournament</li>
+                                        >My Events</li> */}
                                     </ul>
                                 </div><hr className="hr-dashboard"/>
                                 <div className="button-div">
@@ -529,7 +630,7 @@ export default function Header() {
         {/* </div> */}
 
             <AnimatePresence>
-                {alertMessage && !user && (
+                {alertMessage && (
                     <motion.div 
                         className={`alert-message ${alertMessageColor}`}
                         initial={{ x: "100%" }} // Start off-screen

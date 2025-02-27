@@ -35,7 +35,7 @@ export default function ClubBarDetailPage() {
             .find(ele => !ele?.isDeleted && ele?.name === clubNameNew)
     })
     // const clubData = barsAndClubs.find(ele => ele.name === clubNameNew)
-    console.log(clubData)
+    // console.log(clubData)
 
     const clubEvents = useSelector((state) => {
         return state.events.data
@@ -43,7 +43,7 @@ export default function ClubBarDetailPage() {
             .filter(ele => ele.ClubID == clubData?._id)
     })
 
-    console.log(clubEvents)
+    // console.log(clubEvents)
 
     const images = clubData?.pictureGallery;
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -75,7 +75,7 @@ export default function ClubBarDetailPage() {
     }, []);
 
     const openLightbox = (index) => {
-        console.log('Opening image:', index);
+        // console.log('Opening image:', index);
         setCurrentIndex1(index);
 
         setTimeout(() => {

@@ -104,12 +104,12 @@ export default function ClubBarProfile() {
         services: []
     })
 
-    console.log(form)
+    // console.log(form)
 
     const [locationType, setlocationType] = useState()
 
-    console.log(form.longitude)
-    console.log(form.latitude)
+    // console.log(form.longitude)
+    // console.log(form.latitude)
     
     // console.log(form.pictureGallery)
 
@@ -289,7 +289,7 @@ export default function ClubBarProfile() {
     const handleChange = (e) => {
         const {name} = e.target;
         setForm({...form, [name]: e.target.value });
-        console.log(form)
+        // console.log(form)
     };
 
     const handlePhoneChange = (value) => {
@@ -344,7 +344,7 @@ export default function ClubBarProfile() {
                 ), // Remove duplicates
             };
         });
-        console.log(form.updatedGallery)
+        // form.updatedGallery
     
         e.target.value = ""; // Reset input
     };
@@ -681,7 +681,7 @@ export default function ClubBarProfile() {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault()
-        console.log(form)
+        // console.log(form)
         // const formData = { ...form }
 
         const formData = new FormData();
@@ -738,15 +738,15 @@ export default function ClubBarProfile() {
                 formData.append("_id", clubAndBar._id);
                 // console.log("for update, formData", form);
                 // const updatedForm = { ...form, _id: clubAndBar._id }
-                console.log("for update, formData", formData);
+                // console.log("for update, formData", formData);
                 dispatch(startUpdateClub(formData, setAlertMessage, setAlertMessageColor));
             } else {
-                console.log("for create, formData", formData);
+                // console.log("for create, formData", formData);
                 dispatch(startCreateClub(formData, setAlertMessage, setAlertMessageColor));
             }
             setSelectedDashboard("dashboard")
             setFormErrors("")
-            console.log(formErrors)
+            // console.log(formErrors)
             setForm({
                 name: "",
                 clubType: "",
@@ -781,7 +781,7 @@ export default function ClubBarProfile() {
             setAlertMessage("Fill All the Field Values")
             setAlertMessageColor("red")
             setFormErrors(errors)
-            console.log(formErrors)
+            // console.log(formErrors)
         } 
     }
     

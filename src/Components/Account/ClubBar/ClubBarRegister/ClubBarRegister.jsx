@@ -66,7 +66,7 @@ export default function ClubBarRegister() {
             role: "67a1c3497bda08801938ca29", 
             userType: "ClubAdmin"
         }
-        console.log(formData)
+        // console.log(formData)
 
         if(Object.keys(errors).length === 0) {
             try {
@@ -86,13 +86,14 @@ export default function ClubBarRegister() {
                 setAlertMessage("Club Registered Successfully")
                 setAlertMessageColor("green")
                 navigate("/")
-                console.log(response)
+                // console.log(response)
             } catch(err) {
-                console.log(err)
-                alert(err.response.data.message)
+                // console.log(err)
+                // alert(err.response.data.message)
                 // setServerErrors(err.response.data.message)
                 setFormErrors("")
-                setAlertMessage(err.response.data.message)
+                setAlertMessage("Failed to Register Club")
+                // setAlertMessage(err.response.data.message)
                 setAlertMessageColor("red")
             }
         } else {

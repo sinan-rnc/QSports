@@ -19,7 +19,7 @@ export default function Hero() {
     const [selectedTournament, setSelectedTournament] = useState("");
 
     const handleSearch = () => {
-        console.log(selectedLocation, selectedBar, selectedTournament, "Hii")
+    //     console.log(selectedLocation, selectedBar, selectedTournament, "Hii")
     }          
       
     return (

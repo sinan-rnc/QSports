@@ -1,18 +1,15 @@
 const initialState = {
     data: [],
     loading: false,
-    serverErrors: [],
+    serverError: []
 }
 
-export default function quotesReducers(state = initialState, action) {
+export default function userReducers(state = initialState, action) {
     switch(action.type) {
-        case "GET_ALL_QUOTES" : {
-            return { ...state, data: action.payload }
+        case  "GET_ALL_USERS" : {
+            return { ...state, data: action.payload.filter(ele => !ele.isDeleted) }
         }
-        case "CREATE_QUOTE" : {
-            return { ...state, data: [...state.data, action.payload] }
-        }
-        case "UPDATE_QUOTE" : {
+        case "UPDATE_USER" : {
             return { ...state, data: state.data.map((ele) => {
                 if(ele._id === action.payload._id) {
                     return action.payload
@@ -21,10 +18,10 @@ export default function quotesReducers(state = initialState, action) {
                 }
             })}
         }
-        case "DELETE_QUOTE" : {
-            return { ...state, data : state.data.filter((ele) => {
+        case "DELETE_USER" : {
+            return { ...state, data: state.data.filter((ele) => {
                 return ele._id !== action.payload
-            })}
+            }) }
         }
         default : {
             return { ...state }

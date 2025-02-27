@@ -147,7 +147,13 @@
         background: #fafafa;
         box-shadow: 0px 1px 5px rgba(0, 0, 0, .1);
 
+        .menu-icon {
+            display: none;
+            font-size: 25px;
+        }
+
         .menubar {
+            // margin-left: -20px;
             display: flex;
             gap: 20px;
             align-items: center;
@@ -790,5 +796,65 @@
         //         }
         //      }
         // }
+    }
+}
+
+@media (max-width: 1400px) {
+    .navbar .navbar_middle .menu-icon {
+        display: block;
+    }
+
+    .navbar .navbar_top .left_ul ul .social {
+        display: none;
+    }
+
+    .navbar .navbar_middle {
+        position: relative;
+
+        .menubar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 100px;
+            padding-left: 50px;
+            background: white;
+            height: 100%;
+            width: -300px;
+            justify-content: flex-start;
+            align-items: flex-start;
+            flex-direction: column;
+            transition: 0.5s;
+            z-index: 1000;
+
+            .close-btn {
+                position: absolute;
+                right: 10px;
+                top: 10px;
+                font-size: 25px;
+                color: #999;
+            }
+        }
+
+        .menubar {
+            margin-left: 0;
+            width: 300px;
+            transition: 0.5s;
+        }
+
+        .hide-menubar {
+            margin-left: -300px;
+        }
+    }
+}
+
+@media (max-width: 1000px) {
+    .navbar .navbar_bottom .acc_details {
+        .account {
+            display: none;
+        }
+
+        .login {
+            display: none;
+        }
     }
 }

@@ -19,13 +19,13 @@ export default function Bars() {
     const dispatch = useDispatch()
     const { handleSearchFilters, searchNearByFilters, setSearchNearByFilters } = useAuth()
 
-    console.log(searchNearByFilters)
+    // console.log(searchNearByFilters)
 
     const barsData = useSelector((state) => {
         return state.clubsAndBars.data.filter(ele => ele.clubType === "Bar")
     })
 
-    console.log(barsData)
+    // console.log(barsData)
 
     const [ searchFilterValues, setSearchFiltersValues ] = useState({
         clubType: "Bar",
@@ -187,8 +187,8 @@ export default function Bars() {
         }
     }, [searchFilterValues, handleSearchFilters]);
 
-    console.log("searchFilterValues", searchFilterValues)
-    console.log("searchNearByFilters", searchNearByFilters)
+    // console.log("searchFilterValues", searchFilterValues)
+    // console.log("searchNearByFilters", searchNearByFilters)
       
     return (
         <section className="bars container-section">

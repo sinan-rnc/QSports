@@ -24,6 +24,15 @@ export default function clubsAndBarsReducers(state = initialState, action) {
                 }
             }) }
         }
+        case "FEATURE_CLUB" : {
+            return { ...state, data: state.data.map((ele) => {
+                if(ele._id === action.payload._id) {
+                    return action.payload
+                } else {
+                    return ele
+                }
+            }) }
+        }
         case "DELETE_CLUB" : {
             return { ...state, data: state.data.filter((ele) => {
                 return ele._id !== action.payload

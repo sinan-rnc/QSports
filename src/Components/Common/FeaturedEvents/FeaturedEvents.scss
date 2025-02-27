@@ -16,9 +16,13 @@
 
     .section-bottom {
         margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
 
         .event {
             display: flex;
+            flex-direction: row;
             // gap: 100px;
             padding-left: 100px;
             padding-right: 100px;
@@ -74,6 +78,10 @@
                         }
                     }
                 }
+
+                button {
+                    margin-top: 20px;
+                }
             }
 
             .event-right::before {
@@ -97,9 +105,7 @@
             }
         }
 
-        .event.second {
-            margin-top: 50px;
-            display: flex;
+        .event:nth-child(even) {
             flex-direction: row-reverse;
         }
     }

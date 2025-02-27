@@ -43,10 +43,10 @@ export default function ContactUs() {
 
         if(Object.keys(errors).length === 0) {
             try {
-                console.log(form)
+                // console.log(form)
             } catch(err) {
-                console.log(err)
-                alert(err.response.data.message)
+                // console.log(err)
+                // alert(err.response.data.message)
             }
         } else {
             setFormErrors(errors)

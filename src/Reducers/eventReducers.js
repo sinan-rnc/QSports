@@ -21,6 +21,15 @@ export default function eventsReducers(state = initialState, action) {
                 }
             })}
         }
+        case "FEATURE_EVENT" : {
+            return { ...state, data: state.data.map((ele) => {
+                if(ele._id === action.payload._id) {
+                    return action.payload
+                } else {
+                    return ele
+                }
+            })}
+        }
         case "DELETE_EVENTS" : {
             return { ...state, data: state.data.filter((ele) => {
                 return ele._id !== action.payload

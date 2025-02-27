@@ -10,12 +10,12 @@ export const startGetAllClubsAndBars = (searchFilters) => {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
                 }
             })
-            console.log(response.data.data.results)
-            console.log(searchFilters)
+            // console.log(response.data.data.results)
+            // console.log(searchFilters)
             dispatch(setClubsAndBars(response.data.data.results))
         } catch(err) {
             console.log(err);
-            alert(err.response.data.message)
+            // alert(err.response.data.message)
         }
     }
 }
@@ -31,7 +31,7 @@ export const startSearchClubsAndBars = (location) => {
     return async (dispatch) => {
         try {
             const response = await axios.post(`${backendApi}/club/nearby-clubs`, location)
-            console.log(response.data.data)
+            // console.log(response.data.data)
             dispatch(setSearchClubsAndBars(response.data.data))
         } catch(err) {
             console.log(err);
@@ -80,7 +80,7 @@ const setSearchClubsAndBars = (clubAndBars) => {
 export const startCreateClub = (formData, setAlertMessage, setAlertMessageColor) => {
     return async (dispatch) => {
         try {
-            console.log(formData)
+            // console.log(formData)
             const response = await axios.post(`${backendApi}/club/create-club`, formData, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -88,12 +88,12 @@ export const startCreateClub = (formData, setAlertMessage, setAlertMessageColor)
             })
             setAlertMessage("Club Profile Created Successfully")
             setAlertMessageColor("green")
-            console.log(response)
+            // console.log(response)
             dispatch(createClub(response.data.data))
         } catch(err) {
-            console.log(err)
-            console.log(err.response.data.message)
-            alert(err.response.data.message)
+            // console.log(err)
+            // console.log(err.response.data.message)
+            // alert(err.response.data.message)
             setAlertMessage(err.response.data.message)
             setAlertMessageColor("red")
         }
@@ -110,18 +110,18 @@ const createClub = (club) => {
 export const startUpdateClub = (formData, setAlertMessage, setAlertMessageColor) => {
     return async (dispatch) => {
         try {
-            console.log(formData)
+            // console.log(formData)
             const response = await axios.put(`${backendApi}/club/update-club`, formData, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
                 }
             })
-            console.log(response)
+            // console.log(response)
             dispatch(updateClub(response.data.data))
             setAlertMessage("Club Profile Updated Successfully")
             setAlertMessageColor("green")
         } catch(err) {
-            console.log(err)
+            // console.log(err)
             setAlertMessage(err.response.data.message)
             setAlertMessageColor("red")
         }
@@ -135,6 +135,39 @@ const updateClub = (club) => {
     }
 }
 
+export const startFeatureClub = (formData, setAlertMessage, setAlertMessageColor) => {
+    return async (dispatch) => {
+        try {
+            // console.log(formData)
+            const response = await axios.put(`${backendApi}/club/update-club`, formData, {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                }
+            })
+            // console.log(response)
+            dispatch(featureClub(response.data.data))
+            if(response.data.data.isFeaturedClub) {
+                setAlertMessage(`${response.data.data.clubType} marked as Featured`)
+                setAlertMessageColor("green")
+            } else {
+                setAlertMessage(`${response.data.data.clubType} removed from Featured`)
+                setAlertMessageColor("green")
+            }
+        } catch(err) {
+            // console.log(err)
+            setAlertMessage(err.response.data.message)
+            setAlertMessageColor("red")
+        }
+    }
+}
+
+const featureClub = (club) => {
+    return {
+        type : "FEATURE_CLUB",
+        payload : club
+    }
+}
+
 export const startDeleteClub = (clubID, setAlertMessage, setAlertMessageColor) => {
     return async (dispatch) => {
         try {
@@ -143,13 +176,13 @@ export const startDeleteClub = (clubID, setAlertMessage, setAlertMessageColor) =
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
                 }
             })
-            console.log(response)
+            // console.log(response)
             dispatch(deleteClub(clubID))
             setAlertMessage("Club Profile Deleted Successfully")
             setAlertMessageColor("green")
         } catch(err) {
             console.log(err)
-            alert(err.message)
+            // alert(err.message)
             setAlertMessage("Unable to Delete Club Profile")
             setAlertMessageColor("red")
         }

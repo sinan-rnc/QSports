@@ -33,7 +33,7 @@ export default function DashboardHome() {
         { key: "dashboard", label: "Dashboard", component: user && user?.userType === "MemberUser" ? <UserDashboard setSelectedDashboard={setSelectedDashboard}/> : user && user.userType === "ClubAdmin" && <ClubBarDashboard setSelectedDashboard={setSelectedDashboard}/> },
         { key: "userProfile", label: "Edit Profile", component: user && user?.userType === "MemberUser" ? <UserProfile /> : user && user.userType === "ClubAdmin" && <ClubBarProfile /> },
         // { key: "clubBarProfile", label: "Edit Profile", component: <ClubBarProfile /> },
-        // { key: "password", label: "Password", component: <Password /> },
+        { key: "password", label: "Password", component: <Password /> },
         { key: "myEvents", label: "My Events", component: user && user?.userType === "MemberUser" ? <UserEventDashboard /> : user && user.userType === "ClubAdmin" && <ClubEventDashboard /> },
     ];
 
@@ -65,8 +65,8 @@ export default function DashboardHome() {
                                 <li className="dropdown-li" onClick={() => {setSelectedDashboard("userProfile")}}>User</li>
                                 <li className="dropdown-li" onClick={() => {setSelectedDashboard("clubBarProfile")}}>Club</li>
                         </ul> */}
-                        {/* <li className={`menubar-li ${selectedDashboard == "password" ? "active" : ""}`} onClick={() => {setSelectedDashboard("password")}}>Reset Password</li> */}
                         <li className={`menubar-li ${selectedDashboard == "myEvents" ? "active" : ""}`} onClick={() => {setSelectedDashboard("myEvents")}}>My Events</li>
+                        <li className={`menubar-li ${selectedDashboard == "password" ? "active" : ""}`} onClick={() => {setSelectedDashboard("password")}}>Reset Password</li>
                     </ul>
                     <hr className="dashboard-hr"/>
                     <button className="logout-btn" onClick={() => {

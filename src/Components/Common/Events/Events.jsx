@@ -3,7 +3,7 @@ import { useAuth } from "../../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import "./Tournaments.scss"
+import "./Events.scss"
 import { CiGrid41, CiGrid2H, CiGrid2V } from "react-icons/ci";
 import { tournaments } from "../../../DataSet/tournaments"
 import { RiExpandUpDownFill } from "react-icons/ri";
@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 import { dubaiCities } from "../../../DataSet/dubaiCities";
 
 
-export default function Tournaments({searchOption}) {
+export default function Events({searchOption}) {
 
     const {searchCity, handleSearchCity} = useAuth()
     const navigate = useNavigate();
@@ -32,7 +32,7 @@ export default function Tournaments({searchOption}) {
             .find(ele => !ele?.isDeleted && ele?._id === tournaments.ClubID)
     })
 
-    console.log(eventClub)
+    // console.log(eventClub)
 
     const [sortBy, setSortBy] = useState("")
     const [showNo, setShowNo] = useState(6)

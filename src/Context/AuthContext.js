@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }) => {
     const [ alertMessage, setAlertMessage ] = useState("")
     const [ alertMessageColor, setAlertMessageColor ] = useState("")
     const [ selectedDashboard, setSelectedDashboard ] = useState("dashboard")
+    const [ selectedAdminDashboard, setSelectedAdminDashboard ] = useState("users")
 
     const handleLogin = (user) => {
         setUser(user)
@@ -46,8 +47,8 @@ export const AuthProvider = ({ children }) => {
     }
 
     // useEffect(() => {
-        console.log(searchFilters)
-        console.log(searchNearByFilters)
+        // console.log(searchFilters)
+        // console.log(searchNearByFilters)
     // }, [searchFilters, searchNearByFilters])
 
     return (
@@ -73,6 +74,8 @@ export const AuthProvider = ({ children }) => {
                 setAlertMessageColor,
                 selectedDashboard, 
                 setSelectedDashboard,
+                selectedAdminDashboard,
+                setSelectedAdminDashboard,
             }}>
             { children }
         </AuthContext.Provider>

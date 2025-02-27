@@ -49,6 +49,7 @@ export default function RecentBars() {
                     pagination={false}
                     spaceBetween={20}
                     slidesPerView={3}
+                    loopFillGroupWithBlank= {true}
                     loop={true}
                     speed={1000}
                     effect={'coverflow'}
