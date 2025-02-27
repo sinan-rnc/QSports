@@ -12,7 +12,7 @@ export default function PrivateRoutes({ children, permittedRoles }) {
         return <Navigate to="/"/>
     }
 
-    if(!permittedRoles.includes(user?.role)) {
+    if(!permittedRoles.includes(user?.userType)) {
         return <Navigate to="/unauthorized" />
     }
 

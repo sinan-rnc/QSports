@@ -6,7 +6,7 @@ import { useAuth } from "../../../Context/AuthContext"
 import { BiSolidHide } from "react-icons/bi"
 import { MdRemoveRedEye } from "react-icons/md"
 
-export default function Password() {
+export default function Password({setSelectedDashboard}) {
     const { setAlertMessage, setAlertMessageColor } = useAuth()
     const [form, setForm] = useState({
         oldPassword: "",
@@ -44,7 +44,7 @@ export default function Password() {
         const formData = form
         if(Object.keys(errors).length === 0) {
             try {
-                const response = await axios.post(`${backendApi}/users/update-reset-password`, formData, {
+                await axios.post(`${backendApi}/users/update-reset-password`, formData, {
                     headers: {
                         "Authorization": `Bearer ${localStorage.getItem("token")}`
                     }
@@ -61,6 +61,12 @@ export default function Password() {
                 setAlertMessageColor("red")
                 setFormErrors("")
             }
+            setSelectedDashboard("dashboard")
+            setForm({
+                oldPassword: "",
+                newPassword: "",
+            })
+            setConfirmPassword("")
         } else {
             setFormErrors(errors)
         } 

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { startCreateProfile, startUpdateProfile } from "../../../../Actions/profileActions";
 import { IoClose } from "react-icons/io5";
 
-export default function UserProfile() {
+export default function UserProfile({setSelectedDashboard}) {
     const {user, setAlertMessage, setAlertMessageColor} = useAuth()
     const dispatch = useDispatch()
     const profile = useSelector((state) => {
@@ -125,7 +125,7 @@ export default function UserProfile() {
                 // console.log("Updating formData",formData)
                 dispatch(startUpdateProfile(formData, setAlertMessage, setAlertMessageColor));
             }
-    
+            setSelectedDashboard("dashboard")
             setFormErrors("");
         } else {
             setFormErrors(errors);

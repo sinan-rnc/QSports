@@ -19,7 +19,7 @@ export default function AdminUserDashboard() {
             // .filter((ele => !ele.isDeleted))
     })
 
-    // console.log(allUsers)
+    console.log(allUsers)
 
     const [openAddTournamentSection, setOpenAddTournamentSection] = useState(false)
     const [ openChangePasswordSection, setOpenChangePasswordSection ] = useState(false)
@@ -141,6 +141,7 @@ export default function AdminUserDashboard() {
             });
             setCurrentUser("")
             setCurrentUserID("")
+            setOpenAddTournamentSection(false)
         } else {
             setFormErrors(errors);
         }

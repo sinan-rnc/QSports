@@ -72,7 +72,7 @@ export default function UserEventDashboard() {
                     <hr className="dashborad-hr-1"/><hr className="dashborad-hr-2"/>
                     {/* <h3 className="second-heading">Welcome User</h3> */}
                 </div>
-                <p>No Event Participated, Join a <a href="/tournaments">new Event</a></p>
+                <p>No Event Participated, Join a <a href="/events">new Event</a></p>
                 {/* <table className="recent-orders__table">
                     <thead>
                     <tr>

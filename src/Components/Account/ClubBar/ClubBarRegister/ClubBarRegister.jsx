@@ -63,7 +63,7 @@ export default function ClubBarRegister() {
             userName : form.userName,
             email : form.email,
             password : form.password,
-            role: "67a1c3497bda08801938ca29", 
+            role: "67989e1d52f17c150584bf1e", 
             userType: "ClubAdmin"
         }
         // console.log(formData)
@@ -82,7 +82,7 @@ export default function ClubBarRegister() {
                 //     username : "",
                 //     password : ""
                 // })
-                alert("Club Registered Successfully")
+                // alert("Club Registered Successfully")
                 setAlertMessage("Club Registered Successfully")
                 setAlertMessageColor("green")
                 navigate("/")

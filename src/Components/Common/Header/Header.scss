@@ -150,6 +150,7 @@
         .menu-icon {
             display: none;
             font-size: 25px;
+            z-index: 10000;
         }
 
         .menubar {
@@ -171,12 +172,16 @@
             }
         }
 
+        .mobile-menu-footer {
+            display: none;
+        }
 
         .logo {
             position: absolute;
             left: 50%;
             // top: 50px;
             transform: translateX(-50%);
+            z-index: 10000;
 
             h1 {
                 font-size: 40px;
@@ -828,11 +833,17 @@
 
             .close-btn {
                 position: absolute;
-                right: 10px;
-                top: 10px;
-                font-size: 25px;
-                color: #999;
+                left: 45px;
+                top: 15px;
+                font-size: 30px;
             }
+            .menu-hr {
+                position: absolute;
+                left: 45px;
+                top: 15px;
+                width: 10px;
+            }
+
         }
 
         .menubar {
@@ -848,13 +859,107 @@
 }
 
 @media (max-width: 1000px) {
-    .navbar .navbar_bottom .acc_details {
-        .account {
-            display: none;
+    .navbar .navbar_top {
+        padding-left: 50px !important;
+        padding-right: 50px !important;
+    }
+
+    .navbar .navbar_middle {
+        padding-left: 50px !important;
+        padding-right: 50px !important;
+
+        .acc_details {
+            .account {
+                display: none;
+            }
+
+            .login_div .login {
+                display: none;
+            }
+        }
+    }
+}
+
+@media (max-width: 900px) {
+    .navbar .navbar_top {
+        display: none;
+    }
+
+    .navbar .navbar_middle {
+        padding: 15px;
+        .logo {
+            // position: relative;
+            left: 100px;
+            transform: translateX(0px);
+            h1 {
+                font-size: 30px;
+                margin-top: 0;
+
+                span {
+                    font-size: 40px;
+                }
+            }
+        }
+    }
+
+    .navbar .navbar_bottom {
+        display: none;
+    }
+
+    .navbar .navbar_middle .mobile-menu-footer {
+        display: block;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        width: 300px;
+
+        .social {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            gap: 10px;
+
+            .social_head {
+                color: #333;
+                transition: .5s;
+                cursor: text;
+            }
+
+
+            .social_links {
+                display: flex;
+                gap: 5px;
+
+                svg {
+                    font-size: 20px;
+                    color: #333;
+                    transition: .5s;
+                }
+
+                svg:hover {
+                    color: #fe6b00;
+                    transition: .5s;
+                }
+            }
         }
 
-        .login {
-            display: none;
+        .call-us {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            // margin-left: auto;
+            // margin-right: auto;
+            padding: 10px 20px;
+            background: #4d4d4d;
+            color: white;
+            width: 100%;
         }
+
+        .call-us:hover {
+            color: #fe6b00;
+        }
+        
     }
 }

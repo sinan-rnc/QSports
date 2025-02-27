@@ -10,7 +10,7 @@ export const startGetAllClubsAndBars = (searchFilters) => {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
                 }
             })
-            // console.log(response.data.data.results)
+            console.log(response.data.data.results)
             // console.log(searchFilters)
             dispatch(setClubsAndBars(response.data.data.results))
         } catch(err) {

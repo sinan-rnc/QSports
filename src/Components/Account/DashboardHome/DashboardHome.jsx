@@ -31,9 +31,9 @@ export default function DashboardHome() {
 
     const dashboardMenu = [
         { key: "dashboard", label: "Dashboard", component: user && user?.userType === "MemberUser" ? <UserDashboard setSelectedDashboard={setSelectedDashboard}/> : user && user.userType === "ClubAdmin" && <ClubBarDashboard setSelectedDashboard={setSelectedDashboard}/> },
-        { key: "userProfile", label: "Edit Profile", component: user && user?.userType === "MemberUser" ? <UserProfile /> : user && user.userType === "ClubAdmin" && <ClubBarProfile /> },
+        { key: "userProfile", label: "Edit Profile", component: user && user?.userType === "MemberUser" ? <UserProfile  setSelectedDashboard={setSelectedDashboard}/> : user && user.userType === "ClubAdmin" && <ClubBarProfile /> },
         // { key: "clubBarProfile", label: "Edit Profile", component: <ClubBarProfile /> },
-        { key: "password", label: "Password", component: <Password /> },
+        { key: "password", label: "Password", component: <Password setSelectedDashboard={setSelectedDashboard}/> },
         { key: "myEvents", label: "My Events", component: user && user?.userType === "MemberUser" ? <UserEventDashboard /> : user && user.userType === "ClubAdmin" && <ClubEventDashboard /> },
     ];
 

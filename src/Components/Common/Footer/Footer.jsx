@@ -44,11 +44,11 @@ export default function Footer() {
                         <div className="contact_details">
                             <div className="details">
                                 <h2>Phone Number</h2>
-                                <p>+1 (800) 060-07-30</p>
+                                <p><a href="tel:971566246705"></a>971 566246705</p>
                             </div>
                             <div className="details">
                                 <h2>Email Address</h2>
-                                <p>qsports@gmail.com</p>
+                                <p><a href="mailto:qsportsdxb@gmail.com"></a>qsportsdxb@gmail.com</p>
                             </div>
                             <div className="details">
                                 <h2>Our Location</h2>
@@ -56,7 +56,7 @@ export default function Footer() {
                             </div>
                             <div className="details">
                                 <h2>Working Hours</h2>
-                                <p>Mon-Sat 10:00pm - 7:00pm</p>
+                                <p>24x7</p>
                             </div>
                         </div>
                     </div>
@@ -87,9 +87,9 @@ export default function Footer() {
                         <li><a href="/login">Login</a></li>
                         <li><a href="/user-register">Regsiter</a></li>
                         <li><a href="/club-register">Club Register</a></li>
-                        <li><a href="/account">Dashboard</a></li>
+                        {/* <li><a href="/account">Dashboard</a></li>
                         <li><a href="/account">Profile</a></li>
-                        <li><a href="/account">My Tournaments</a></li>
+                        <li><a href="/account">My Tournaments</a></li> */}
                     </ul>
                 </div>
                 <div className="footer_col">
@@ -106,11 +106,11 @@ export default function Footer() {
                         </div>
                         <p className="social_head">Follow us On :</p>
                         <div className="social_links">
-                            <FaFacebook />
-                            <RiInstagramFill />
-                            <FaYoutube />
-                            <FaTwitter />
-                            <FaLinkedin />
+                            <a href="https://www.facebook.com/qsportsdxb/"><FaFacebook /></a>
+                            <a href="https://www.instagram.com/qsportsdxb?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><RiInstagramFill /></a>
+                            <a href=""><FaYoutube /></a>
+                            <a href=""><FaTwitter /></a>
+                            <a href=""><FaLinkedin /></a>
                         </div>
                     </div>
                 </div>

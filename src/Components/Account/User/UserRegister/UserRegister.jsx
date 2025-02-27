@@ -81,7 +81,7 @@ export default function UserRegister() {
                 //     username : "",
                 //     password : ""
                 // })
-                alert("User Successfully Registered")
+                // alert("User Successfully Registered")
                 setAlertMessage("User Successfully Registered")
                 setAlertMessageColor("green")
                 navigate("/")

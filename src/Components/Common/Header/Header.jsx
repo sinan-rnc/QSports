@@ -369,9 +369,10 @@ export default function Header() {
                 </div>
                 <div className="navbar_middle">
                     <div>
-                        <RiMenu2Line className={mobileMenu ? "menu-icon-close" : "menu-icon"} onClick={toggleMenu}/>
+                        {/* <RiMenu2Line className={mobileMenu ? "menu-icon-close" : "menu-icon"} onClick={toggleMenu}/> */}
                         <ul className={`menubar ${mobileMenu ? "" : "hide-menubar"}`}>
                             {mobileMenu && <IoClose onClick={toggleMenu} className="close-btn"/>}
+                            {/* <hr className="menu-hr"/> */}
                             <a href="/" className={location.pathname==="/" ? "active" : ""}><li>
                                 Home
                             </li></a>
@@ -391,6 +392,21 @@ export default function Header() {
                                 Account
                             </li></a> */}
                         </ul>
+                        {mobileMenu && (
+                            <div className="mobile-menu-footer">
+                                <div className="social">
+                                <p className="social_head">Follow us On :</p>
+                                <div className="social_links">
+                                    <FaFacebook />
+                                    <RiInstagramFill />
+                                    <FaYoutube />
+                                    <FaTwitter />
+                                    <FaLinkedin />
+                                </div>
+                            </div>
+                                <div className="call-us">Call Us : <span>971 012345678</span></div>
+                            </div>
+                        )}
                     </div>
                     <div className="logo">
                         <a href="/"><h1><span>Q</span>SPORTS</h1></a>

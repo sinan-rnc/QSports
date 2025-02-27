@@ -72,17 +72,17 @@ export default function App() {
                 <Route path="/bars" element={<BarsPage/>} />
                 <Route path="/events" element={<EventsPage/>} />
                 <Route path="/admin-account" element={
-                    <PrivateRoutes permittedRoles={["620f8c5c377b3fd29e10c054"]}>
+                    <PrivateRoutes permittedRoles={["SuperAdmin"]}>
                         <AdminAccountPage />
                      </PrivateRoutes>
                 } />
                 <Route path="/account" element={
-                    <PrivateRoutes permittedRoles={["67989e7b52f17c150584bfcb", "67a1c3497bda08801938ca29"]}>
+                    <PrivateRoutes permittedRoles={["ClubAdmin", "MemberUser"]}>
                         <AccountPage />
                      </PrivateRoutes>
                 } />
                 <Route path="/dashboard" element={
-                    <PrivateRoutes permittedRoles={["67989e7b52f17c150584bfcb", "67a1c3497bda08801938ca29"]}>
+                    <PrivateRoutes permittedRoles={["ClubAdmin", "MemberUser"]}>
                         <DashboardHome />
                     </PrivateRoutes>
                 } />

@@ -25,7 +25,7 @@ export default function Bars() {
         return state.clubsAndBars.data.filter(ele => ele.clubType === "Bar")
     })
 
-    // console.log(barsData)
+    console.log(barsData)
 
     const [ searchFilterValues, setSearchFiltersValues ] = useState({
         clubType: "Bar",
