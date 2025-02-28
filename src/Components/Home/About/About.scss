@@ -36,3 +36,22 @@
         }
     }
 }
+
+@media (max-width: 900px) {
+    .about-div {
+        flex-direction: column;
+        .left, .right {
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .about-div {
+        flex-direction: column;
+        .left {
+            align-items: center;
+            text-align: center;
+        }
+    }
+}

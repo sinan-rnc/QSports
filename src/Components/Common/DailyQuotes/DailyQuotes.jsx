@@ -33,7 +33,7 @@ export default function DailyQuotes() {
 
     return (
         <section>
-            <div className="quotes-section">
+            <div className="quotes-section container">
                 <div className="heading">
                     <h1 className='main-heading'>Quote of the Day</h1>
                     <hr className="hr-1"/><hr className="hr-2"/>

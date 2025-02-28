@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "https://api.rncmediahub.com",
-  "homepage": "https://qsports.ae/",
   "dependencies": {
     "@splidejs/react-splide": "^0.7.12",
     "axios": "^1.7.9",

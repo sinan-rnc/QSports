@@ -1,7 +1,7 @@
 import "./HomeHero.scss"
 import { RiBilliardsFill, RiSearch2Fill } from "react-icons/ri";
 import { RiExpandUpDownFill } from "react-icons/ri";
-import herobanner from "../../../Assets/Banner/herobanner1.jpg"
+import herobanner from "../../../Assets/Banner/herobanner.jpg"
 import { dubaiCities } from "../../../DataSet/dubaiCities";
 import { barsAndClubsNames } from "../../../DataSet/barsAndClubs";
 import { barClubTournaments } from "../../../DataSet/barClubTournaments";
@@ -28,11 +28,11 @@ export default function Hero() {
                 <div className="overlay"></div>
                 <img src={herobanner} alt=""/>
                 <div className="search_container container">
-                    {/* <h1>Find your Clubs and Bars for the Party</h1>
-                    <p>Discover the hottest venues, events, and unforgettable experiences!</p> */}
-                    <div className="search_bars">
+                    <h1>Master <span>the Game</span><br/> <span>Elevate</span> Your Skills!</h1>
+                    <p>Whether you're a beginner or a pro, better your shots, improve your strategy, and play like a champion!</p>
+                    <h3>Join us today & level up your game!</h3>
+                    {/* <div className="search_bars">
                         <div className="bars">
-                            {/* Select Location */}
                             <select id="location-select" value={selectedLocation} onChange={(e) => setSelectedLocation(e.target.value)}>
                                 <option value="">Select Location</option>
                                 {dubaiCities.map((city, index) => (
@@ -44,7 +44,6 @@ export default function Hero() {
                             <RiExpandUpDownFill/>
                         </div>
                         <div className="bars">
-                            {/* Select Clubs or Bars */}
                             <select id="location-select" value={selectedBar} onChange={(e) => setSelectedBar(e.target.value)} disabled={selectedLocation ? false : true}>
                                 <option value="">Select Clubs/Bars</option>
                                 {barsAndClubsNames.map((bars, index) => (
@@ -56,7 +55,6 @@ export default function Hero() {
                             <RiExpandUpDownFill/>
                         </div>
                         <div className="bars">
-                            {/* Select Tournaments */}
                             <select id="location-select" value={selectedTournament} onChange={(e) => setSelectedTournament(e.target.value)} disabled={selectedLocation ? false : true}>
                                 <option value="">Select Tournaments</option>
                                 {barClubTournaments.map((tournaments, index) => (
@@ -71,7 +69,7 @@ export default function Hero() {
                             Search 
                             <FaSearch/>
                         </div></a>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </section>

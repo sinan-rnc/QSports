@@ -42,6 +42,9 @@ export default function App() {
     useEffect(() => {
         if(localStorage.getItem("token") && localStorage.getItem("user")) {
             handleLogin(JSON.parse(localStorage.getItem("user")))
+            if(user?.userType === "SuperAdmin") {
+                dispatch(startGetAllUsers())
+            }
         }
         if(searchNearByFilters) {
             if(searchNearByFilters.lattitude && searchNearByFilters.longitude)  {
@@ -56,8 +59,7 @@ export default function App() {
         dispatch(startGetAllProfile())
         dispatch(startGetAllEvents())
         dispatch(startGetAllQuotes())
-        dispatch(startGetAllUsers())
-    }, [dispatch, searchFilters, searchNearByFilters])
+    }, [user?.userType, dispatch, searchFilters, searchNearByFilters])
 
     // console.log(searchFilters)
     // console.log(searchNearByFilters)

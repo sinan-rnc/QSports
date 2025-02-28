@@ -18,7 +18,7 @@ export default function Footer() {
     return (
         <footer>
             {/* <hr className="footer-hr"/> */}
-            {location.pathname === "/" && <img src={stick} alt="" className="stick"/> } 
+            {/* {location.pathname === "/" && <img src={stick} alt="" className="stick"/> }  */}
             <div className="footer_row container">
                 {/* <div className="footer_col">
                     <div className="logo_div">

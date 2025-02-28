@@ -63,7 +63,7 @@ export default function ClubBarRegister() {
             userName : form.userName,
             email : form.email,
             password : form.password,
-            role: "67989e1d52f17c150584bf1e", 
+            role: "67989e1d52f17c150584bf1e",
             userType: "ClubAdmin"
         }
         // console.log(formData)

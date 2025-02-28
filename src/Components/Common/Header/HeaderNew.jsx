@@ -370,46 +370,68 @@ export default function Header() {
                 <div className="navbar_middle">
                     <div>
                         <RiMenu2Line className={mobileMenu ? "menu-icon-close" : "menu-icon"} onClick={toggleMenu}/>
-                        <ul className={`menubar ${mobileMenu ? "" : "hide-menubar"}`}>
-                            {mobileMenu && <IoClose onClick={toggleMenu} className="close-btn"/>}
-                            {/* <hr className="menu-hr"/> */}
-                            <a href="/" className={location.pathname==="/" ? "active" : ""}><li>
-                                Home
-                            </li></a>
-                            <a href="/about-us" className={location.pathname==="/about-us" ? "active" : ""}><li>
-                                About Us
-                            </li></a>
-                            <a href="/clubs" className={location.pathname==="/clubs" ? "active" : ""}><li>
-                                Play Clubs
-                            </li></a>
-                            <a href="/bars" className={location.pathname==="/bars" ? "active" : ""}><li>
-                                Play Bars
-                            </li></a>
-                            <a href="/events" className={location.pathname==="/events" ? "active" : ""}><li>
-                                Tournaments
-                            </li></a>
-                            {/* <a href="/account" className={location.pathname==="/account" ? "active" : ""}><li>
-                                Account
-                            </li></a> */}
-                        </ul>
+                        {!mobileMenu && (
+                            <ul className={`menubar`}>
+                                <a href="/" className={location.pathname==="/" ? "active" : ""}><li>
+                                    Home
+                                </li></a>
+                                <a href="/about-us" className={location.pathname==="/about-us" ? "active" : ""}><li>
+                                    About Us
+                                </li></a>
+                                <a href="/clubs" className={location.pathname==="/clubs" ? "active" : ""}><li>
+                                    Play Clubs
+                                </li></a>
+                                <a href="/bars" className={location.pathname==="/bars" ? "active" : ""}><li>
+                                    Play Bars
+                                </li></a>
+                                <a href="/events" className={location.pathname==="/events" ? "active" : ""}><li>
+                                    Tournaments
+                                </li></a>
+                                {/* <a href="/account" className={location.pathname==="/account" ? "active" : ""}><li>
+                                    Account
+                                </li></a> */}
+                            </ul>
+                        )}
                         {mobileMenu && (
                             <div className="mobile-menu">
-                                {/* <div className="serach_game">
-                                    <i class="ri-search-fill"/>
-                                    <div className="icon-div">
-                                        <div className="icon-left" onClick={handleOpenSerachDashboard}>
-                                            <RiBilliardsFill size={22}/>
-                                        </div>
-                                        <hr className="hr-left"/>
+                                <ul className={`menubar ${mobileMenu ? "" : "hide-menubar"}`}>
+                                    {mobileMenu && <IoClose onClick={toggleMenu} className="close-btn"/>}
+                                    {/* <hr className="menu-hr"/> */}
+                                    <a href="/" className={location.pathname==="/" ? "active" : ""}><li>
+                                        Home
+                                    </li></a>
+                                    <a href="/about-us" className={location.pathname==="/about-us" ? "active" : ""}><li>
+                                        About Us
+                                    </li></a>
+                                    <a href="/clubs" className={location.pathname==="/clubs" ? "active" : ""}><li>
+                                        Play Clubs
+                                    </li></a>
+                                    <a href="/bars" className={location.pathname==="/bars" ? "active" : ""}><li>
+                                        Play Bars
+                                    </li></a>
+                                    <a href="/events" className={location.pathname==="/events" ? "active" : ""}><li>
+                                        Tournaments
+                                    </li></a>
+                                    {/* <a href="/account" className={location.pathname==="/account" ? "active" : ""}><li>
+                                        Account
+                                    </li></a> */}
+                                </ul>
+                                <div className="serach_game">
+                                {/* <i class="ri-search-fill"/> */}
+                                <div className="icon-div">
+                                    <div className="icon-left" onClick={handleOpenSerachDashboard}>
+                                        <RiBilliardsFill size={22}/>
                                     </div>
-                                    <input type="text" placeholder="Search For Clubs" value={searchFilterValues.name} onChange={(e) => setSearchFiltersValues({...searchFilterValues, name: e.target.value})} />
-                                    <div className="icon-div">
-                                        <hr className="hr-right"/>
-                                        <div className="icon-right" onClick={handleSearchSubmit}>
-                                            <ImSearch size={20}/>
-                                        </div>
+                                    <hr className="hr-left"/>
+                                </div>
+                                <input type="text" placeholder="Search For Clubs" value={searchFilterValues.name} onChange={(e) => setSearchFiltersValues({...searchFilterValues, name: e.target.value})} />
+                                <div className="icon-div">
+                                    <hr className="hr-right"/>
+                                    <div className="icon-right" onClick={handleSearchSubmit}>
+                                        <ImSearch size={20}/>
                                     </div>
-                                </div> */}
+                                </div>
+                            </div>
                                 <div className="mobile-menu-footer">
                                     <div className="social">
                                         <p className="social_head">Follow us On :</p>
