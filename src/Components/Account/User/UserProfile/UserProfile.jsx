@@ -190,7 +190,7 @@ export default function UserProfile({setSelectedDashboard}) {
                         {formErrors.ProfilePic && <div className="alert alert-danger">{formErrors.ProfilePic}</div>}
                     </div>
                 )}
-                <div className="form-group">
+                <div className="form-group about-me">
                     <label className="form-label" htmlFor="AboutMe">About Me</label>
                     <textarea type="text" className="form-control" id="AboutMe" name="AboutMe" value={form.AboutMe} onChange={handleChange} placeholder="Describe about Yourself"/>
                 </div>

@@ -42,6 +42,19 @@
                     width: 50%;
                 }
 
+                .service-div {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+
+                    svg {
+                        font-size: 20px;
+                        // color: red;
+                        cursor: pointer;
+                    }
+                }
+
                 .alert {
                     font-size: 14px;
                     width: 50%;
@@ -146,6 +159,10 @@
                     align-items: left;
                     font-style: italic;
                 }
+
+                textarea {
+                    height: 100px;
+                }
             }
 
             .form-group.gallery {
@@ -230,6 +247,27 @@
 
         a:hover {
            color: #fe6b00;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .clubBar-profile-container .clubBar-profile-section .form-table .same-line {
+        flex-direction: column;
+    }
+
+    .clubBar-profile-container .clubBar-profile-section .form-table .same-line.mobile {
+        flex-direction: row;
+        
+    }
+
+    .clubBar-profile-container .clubBar-profile-section .form-table .same-line-openclose {
+        .form-label {
+            width: 100% !important;
+        }
+
+        .form-control {
+            width: 100% !important;
         }
     }
 }

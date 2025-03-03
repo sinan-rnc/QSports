@@ -206,7 +206,7 @@ export default function Bars() {
                     {/* <hr/> */}
                     <div className="filter-category">
                         <div className="filter-header" onClick={() => setCityFilterOpen(!cityFilterOpen)}>
-                            <span>Cities</span>
+                            <span>Emirates</span>
                             {!cityFilterOpen ? <FaCaretDown /> : <FaCaretUp/>}
                         </div>
                         <motion.ul
@@ -263,7 +263,7 @@ export default function Bars() {
                         </motion.ul>
                     </div> */}
                     {/* <hr/> */}
-                    <div className="filter-category">
+                    {/* <div className="filter-category">
                         <div className="filter-header" onClick={() => setPriceFilterOpen(!priceFilterOpen)}>
                             <span>Price</span>
                             {!priceFilterOpen ? <FaCaretDown /> : <FaCaretUp/>}
@@ -295,7 +295,7 @@ export default function Bars() {
                                 onChange={(e) => setPriceFilter(e.target.value)} 
                             /><span>Low</span></li>
                         </motion.ul>
-                    </div>
+                    </div> */}
                     {/* <hr/> */}
                     {/* <!-- Add more filter sections as needed --> */}
                     <button 

@@ -59,8 +59,6 @@
                 }
             }
 
-            
-
             .club-name-div {
                 display: flex;
                 flex-direction: row;
@@ -340,5 +338,47 @@
             }
           }
           
+    }
+}
+
+@media (max-width: 800px) {
+    .clubBar-dashboard-container .dashboard-profile .user-profile .social-media-details .social-links .social {
+        height: 50px;
+        p {
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+    }
+}
+
+@media (max-width: 650px) {
+    .clubBar-dashboard-container .dashboard-profile .user-profile .club-gallery .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .clubBar-dashboard-container .dashboard-profile .heading-div {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .clubBar-dashboard-container .dashboard-profile .user-profile .club-gallery .gallery-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .clubBar-dashboard-container .dashboard-profile .user-profile .club-name-div {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 450px) {
+    .clubBar-dashboard-container .dashboard-profile .user-profile .clubImage-div {
+        height: 250px;
+
+        img {
+            height: 250px;
+        }
     }
 }

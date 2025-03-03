@@ -1,20 +1,22 @@
-.admin-event-dashboard-container {
+.admin-quotes-dashboard-container {
     display: flex;
     flex-direction: column;
     gap: 30px;
 
-    .admin-event-dashboard {
+    .admin-quotes-dashboard {
         display: flex;
         flex-direction: column;
         gap: 30px;
         padding: 30px;
         background: white;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: scroll;
 
         .dashborad-heading-div {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+
             .edit-profile {
                 display: block;
                 // justify-content: flex-end;
@@ -64,6 +66,15 @@
                     border-bottom: 1px solid #e0e0e0;
                     padding: 12px 8px;
                 }
+
+                th:first-child, td:first-child {
+                    width: 200px; // Adjust width as needed
+                    min-width: 250px;
+                    max-width: 250px;
+                    // white-space: nowrap; // Prevent text from wrapping
+                    // overflow: hidden;
+                    // text-overflow: ellipsis; // Add "..." for overflowing text
+                }
             
                 td {
                     font-size: 14px;
@@ -110,7 +121,7 @@
         }
     }
 
-    .add-tournament-section {
+    .add-quotes-section {
         padding: 30px;
         background: white;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -134,7 +145,7 @@
             color: #fe6b00;
         }
 
-        .tournament-from {
+        .quotes-from {
             position: relative;
             // padding: 30px;
             // background: white;
@@ -201,6 +212,10 @@
                         text-align: left;
                         align-items: left;
                         font-style: italic;
+                    }
+
+                    textarea {
+                        height: 100px;
                     }
                 }
 
@@ -278,5 +293,11 @@
                 color: black;
             }
         }
+    }
+}
+
+@media (max-width: 600px) {
+    .admin-quotes-dashboard-container .add-quotes-section .quotes-from .form-table .same-line {
+        flex-direction: column;
     }
 }

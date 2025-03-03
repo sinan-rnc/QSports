@@ -12,7 +12,6 @@ import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 
 
 import stick from "../../../Assets/Common/Billiard-Stick.png"
-import event from "../../../Assets/Events/4.jpg"
 import { MdOutlineZoomOutMap } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { dubaiCities } from "../../../DataSet/dubaiCities";
@@ -23,16 +22,31 @@ export default function Events({searchOption}) {
     const {searchCity, handleSearchCity} = useAuth()
     const navigate = useNavigate();
 
-    const tournaments = useSelector((state) => {
+    const events = useSelector((state) => {
         return state.events.data
     })
 
-    const eventClub = useSelector((state) => {
-        return state?.clubsAndBars?.data
-            .find(ele => !ele?.isDeleted && ele?._id === tournaments.ClubID)
+    // const eventClub = useSelector((state) => {
+    //     return state?.clubsAndBars?.data
+    //         .find(ele => !ele?.isDeleted && ele?._id === events.ClubID)
+    // })
+    let eventTypes = [] 
+    events.forEach(ele => {
+        if(!(Array.isArray(ele.EventType))) {
+            if (!eventTypes.includes(ele.EventType)) {
+                eventTypes.push(ele.EventType)
+            }
+        } 
+        // else {
+        //     ele.category.forEach(category => {
+        //         if (!categories.includes(category)) {
+        //             categories.push(category)
+        //         }
+        //     })
+        // }
     })
 
-    // console.log(eventClub)
+    console.log(eventTypes)
 
     const [sortBy, setSortBy] = useState("")
     const [showNo, setShowNo] = useState(6)
@@ -41,8 +55,8 @@ export default function Events({searchOption}) {
     const [categoryFilterOpen, setCategoryFilterOpen] = useState(true)
     const [priceFilter, setPriceFilter] = useState("")
     const [priceFilterOpen, setPriceFilterOpen] = useState(true)
-    const [tournamentFilter, setTournamentFilter] = useState([])
-    const [tournamentFilterOpen, setTournamentFilterOpen] = useState(true)
+    const [eventTypeFilter, setEventTypeFilter] = useState([])
+    const [eventTypeFilterOpen, setEventTypeFilterOpen] = useState(true)
     const [currentPage, setCurrentPage] = useState(1);
     const [gridDisplay, setGridDisplay] = useState("style1")
     const [clubId, setClubId] = useState("")
@@ -59,24 +73,33 @@ export default function Events({searchOption}) {
     // console.log(sortBy, showNo)
 
     // Filtered and sorted array based on selected filters and sort option
-    const getProcessedBarsAndClubs = () => {
+    const getProcessedEvents = () => {
+        // Find the highest EnrollmentFee in the dataset
+        const maxPrice = Math.max(...events.map(ele => ele.EnrollmentFee));
+        const priceSegment = maxPrice / 3; // Divide into three segments
+
+        const lowThreshold = priceSegment;
+        const mediumThreshold = priceSegment * 2;
+
+        console.log(maxPrice)
+
         // Apply category filter
-        let filteredArray = tournaments.filter((ele) => {
-            if (categoryFilter && !ele?.category?.includes(categoryFilter)) {
-                return false; // If category filter does not match, exclude this item
-            }
+        let filteredArray = events.filter((ele) => {
+            // if (categoryFilter && !ele?.category?.includes(categoryFilter)) {
+            //     return false; // If category filter does not match, exclude this item
+            // }
 
-            if (searchCity && !ele?.city?.includes(searchCity)) {
-                return false; // If category filter does not match, exclude this item
-            }
+            // if (searchCity && !ele?.city?.includes(searchCity)) {
+            //     return false; // If category filter does not match, exclude this item
+            // }
 
-            if (tournamentFilter && !ele?.EventType?.includes(tournamentFilter)) {
+            if (eventTypeFilter && !ele?.EventType?.includes(eventTypeFilter)) {
                 return false;
             }
-            // Apply additional filters here (like priceFilter, tournamentFilter, etc.)
-            if (priceFilter === "high" && ele.fees < 250) return false;
-            if (priceFilter === "medium" && (ele.fees >= 250 || ele.fees < 200)) return false;
-            if (priceFilter === "low" && ele.fees >= 200) return false;
+            // Apply additional filters here (like priceFilter, eventTypeFilter, etc.)
+            if (priceFilter === "high" && ele.EnrollmentFee <= mediumThreshold) return false;
+            if (priceFilter === "medium" && (ele.EnrollmentFee <= lowThreshold || ele.EnrollmentFee > mediumThreshold)) return false;
+            if (priceFilter === "low" && ele.EnrollmentFee > lowThreshold) return false;
 
             return true; // Include the item if it passes the filters
         });
@@ -84,11 +107,11 @@ export default function Events({searchOption}) {
         // Sort the array based on selected sort criteria
         filteredArray = filteredArray.sort((a, b) => {
             if (sortBy === "Name") {
-                return a.name.localeCompare(b.name);
-            } else if (sortBy === "City") {
-                return a.city.localeCompare(b.city);
+                return a.EventName.localeCompare(b.EventName);
+            } else if (sortBy === "Type") {
+                return a.EventType.localeCompare(b.EventType);
             } else if (sortBy === "Fees") {
-                return a.fees - b.fees;
+                return a.EnrollmentFee - b.EnrollmentFee;
             }
             return 0; // Default to no sorting
         });
@@ -99,23 +122,30 @@ export default function Events({searchOption}) {
         return filteredArray.slice(startIndex, endIndex);
     };
 
-    const totalFilteredItems = tournaments.filter((ele) => {
-        if (categoryFilter && !ele.category.includes(categoryFilter)) {
-            return false; // If category filter does not match, exclude this item
-        }
+    const totalFilteredItems = events.filter((ele) => {
+        // Find the highest EnrollmentFee in the dataset
+        const maxPrice = Math.max(...events.map(ele => ele.EnrollmentFee));
+        const priceSegment = maxPrice / 3; // Divide into three segments
 
-        if (searchCity && !ele.city.includes(searchCity)) {
-            return false; // If category filter does not match, exclude this item
-        }
+        const lowThreshold = priceSegment;
+        const mediumThreshold = priceSegment * 2;
 
-        if (tournamentFilter && !ele?.EventType?.includes(tournamentFilter)) {
+        // if (categoryFilter && !ele.category.includes(categoryFilter)) {
+        //     return false; // If category filter does not match, exclude this item
+        // }
+
+        // if (searchCity && !ele.city.includes(searchCity)) {
+        //     return false; // If category filter does not match, exclude this item
+        // }
+
+        if (eventTypeFilter && !ele?.EventType?.includes(eventTypeFilter)) {
             return false;
         }
 
-        // Apply additional filters here (like priceFilter, tournamentFilter, etc.)
-        if (priceFilter === "high" && ele.fees < 250) return false;
-        if (priceFilter === "medium" && (ele.fees >= 250 || ele.fees < 200)) return false;
-        if (priceFilter === "low" && ele.fees >= 200) return false;
+        // Apply additional filters here (like priceFilter, eventTypeFilter, etc.)
+        if (priceFilter === "high" && ele.EnrollmentFee <= mediumThreshold) return false;
+            if (priceFilter === "medium" && (ele.EnrollmentFee <= lowThreshold || ele.EnrollmentFee > mediumThreshold)) return false;
+            if (priceFilter === "low" && ele.EnrollmentFee > lowThreshold) return false;
 
         return true; // Include the item if it passes the filters
     }).length;
@@ -147,26 +177,24 @@ export default function Events({searchOption}) {
     };
 
     const handleReset = () => {
-        setCategoryFilter("");
         setPriceFilter("");
-        setTournamentFilter("")
-        handleSearchCity("")
+        setEventTypeFilter("")
     }
 
     // console.log(pageNumbers)
       
     return (
-        <section className="tournament container-section">
+        <section className="events container-section">
             <div className="heading">
-                <h1 className='main-heading'>Tournaments</h1>
+                <h1 className='main-heading'>Events</h1>
                 <hr className="hr-1"/><hr className="hr-2"/>
-                <h3 className="second-heading">All Events</h3>
+                <h3 className="second-heading">All</h3>
             </div>
             <div className="section">
                 {/* <!-- Filters Sidebar --> */}
-                {/* <div className="filters">
+                <div className="filters">
                     <h3>Filters</h3>
-                    <div className="filter-category">
+                    {/* <div className="filter-category">
                         <div className="filter-header" onClick={() => setCategoryFilterOpen(!categoryFilterOpen)}>
                             <span>Categories</span>
                             {!categoryFilterOpen ? <FaCaretDown /> : <FaCaretUp/>}
@@ -197,8 +225,8 @@ export default function Events({searchOption}) {
                                 />
                                 <span>Bars</span></li>
                         </motion.ul>
-                    </div>
-                    <div className="filter-category">
+                    </div> */}
+                    {/* <div className="filter-category">
                         <div className="filter-header" onClick={() => setCityFilterOpen(!cityFilterOpen)}>
                             <span>Cities</span>
                             {!cityFilterOpen ? <FaCaretDown /> : <FaCaretUp/>}
@@ -223,35 +251,39 @@ export default function Events({searchOption}) {
                                 </li>
                             ))}                    
                         </motion.ul>
-                    </div>
+                    </div> */}
                     <div className="filter-category">
-                        <div className="filter-header" onClick={() => setTournamentFilterOpen(!tournamentFilterOpen)}>
-                            <span>Tournaments</span>
-                            {!tournamentFilterOpen ? <FaCaretDown /> : <FaCaretUp/>}
+                        <div className="filter-header" onClick={() => setEventTypeFilterOpen(!eventTypeFilterOpen)}>
+                            <span>Event Types</span>
+                            {!eventTypeFilterOpen ? <FaCaretDown /> : <FaCaretUp/>}
                         </div>
                         <motion.ul
                             id="categories"
                             initial={false}
-                            animate={{ height: tournamentFilterOpen ? "auto" : 0 }}
+                            animate={{ height: eventTypeFilterOpen ? "auto" : 0 }}
                             transition={{ duration: 0.5, ease: "easeInOut" }}
                             className="filter-content"
                             style={{ overflow: "hidden" }}
                             >
-                            <li>
-                                <input 
-                                    type="checkbox"
-                                    value="Single Elimination"
-                                    checked={tournamentFilter === "Single Elimination"}
-                                    onChange={(e) => setTournamentFilter(e.target.value)}
-                                />
-                                <span>Single Elimination</span>
-                            </li>
-                            <li>
+                            {eventTypes.map((ele) => {
+                                return (
+                                    <li>
+                                        <input 
+                                            type="checkbox"
+                                            value={ele}
+                                            checked={eventTypeFilter === ele}
+                                            onChange={(e) => setEventTypeFilter(e.target.value)}
+                                        />
+                                        <span>{ele}</span>
+                                    </li>
+                                )
+                            })}
+                            {/* <li>
                                 <input 
                                     type="checkbox"
                                     value="Double Elimination"
-                                    checked={tournamentFilter === "Double Elimination"}
-                                    onChange={(e) => setTournamentFilter(e.target.value)}
+                                    checked={eventTypeFilter === "Double Elimination"}
+                                    onChange={(e) => setEventTypeFilter(e.target.value)}
                                 />
                                 <span>Double Elimination</span>
                             </li>
@@ -259,8 +291,8 @@ export default function Events({searchOption}) {
                                 <input 
                                     type="checkbox"
                                     value="Round Robin"
-                                    checked={tournamentFilter === "Round Robin"}
-                                    onChange={(e) => setTournamentFilter(e.target.value)}
+                                    checked={eventTypeFilter === "Round Robin"}
+                                    onChange={(e) => setEventTypeFilter(e.target.value)}
                                 />
                                 <span>Round Robin</span>
                             </li>
@@ -268,8 +300,8 @@ export default function Events({searchOption}) {
                                 <input 
                                     type="checkbox"
                                     value="Ladder Tournament"
-                                    checked={tournamentFilter === "Ladder Tournament"}
-                                    onChange={(e) => setTournamentFilter(e.target.value)}
+                                    checked={eventTypeFilter === "Ladder Tournament"}
+                                    onChange={(e) => setEventTypeFilter(e.target.value)}
                                 />
                                 <span>Ladder Tournament</span>
                             </li>
@@ -277,11 +309,11 @@ export default function Events({searchOption}) {
                                 <input 
                                     type="checkbox"
                                     value="Swiss System"
-                                    checked={tournamentFilter === "Swiss System"}
-                                    onChange={(e) => setTournamentFilter(e.target.value)}
+                                    checked={eventTypeFilter === "Swiss System"}
+                                    onChange={(e) => setEventTypeFilter(e.target.value)}
                                 />
                                 <span>Swiss System</span>
-                            </li>
+                            </li> */}
                         </motion.ul>
                     </div>
                     <div className="filter-category">
@@ -320,20 +352,20 @@ export default function Events({searchOption}) {
                     <button 
                         className="reset-btn"
                         onClick={handleReset}>Reset</button>
-                </div> */}
+                </div>
 
                 {/* <!-- Main Content --> */}
                 <div className="content">
                     {/* <!-- Header --> */}
-                    {/* <div className="header-controls">
+                    <div className="header-controls">
                         <div className="product_views">
                             <CiGrid41 className={`style1 ${gridDisplay === "style1" ? "" : ""}`} onClick={() => setGridDisplay("style1")}/>
-                            <CiGrid2H className={`style2 ${gridDisplay === "style2" ? "active" : ""}`} onClick={() => setGridDisplay("style2")}/>
-                            <CiGrid2V className={`style2 ${gridDisplay === "style3" ? "active" : ""}`} onClick={() => setGridDisplay("style3")}/>
+                            {/* <CiGrid2H className={`style2 ${gridDisplay === "style2" ? "active" : ""}`} onClick={() => setGridDisplay("style2")}/>
+                            <CiGrid2V className={`style2 ${gridDisplay === "style3" ? "active" : ""}`} onClick={() => setGridDisplay("style3")}/> */}
                         </div>
                         
-                        <button className="view-grid active">Grid</button>
-                        <button className="view-list">List</button>
+                        {/* <button className="view-grid active">Grid</button>
+                        <button className="view-list">List</button> */}
                         <div className="product_filters">
                             <div className="sort-show">
                                 <label for="sort-select">Sort:</label>
@@ -341,7 +373,7 @@ export default function Events({searchOption}) {
                                     <select id="sort-select" value={sortBy} onChange={(e) => {setSortBy(e.target.value)}}>
                                         <option value="">Default</option>
                                         <option value="Name">Name</option>
-                                        <option value="City">City</option>
+                                        <option value="Type">Type</option>
                                         <option value="Fees">Fees</option>
                                     </select>
                                     <RiExpandUpDownFill/>
@@ -351,7 +383,7 @@ export default function Events({searchOption}) {
                                 <label for="show-select">Show:</label>
                                 <div className="sort-select-div">
                                     <select id="show-select" value={showNo} onChange={(e) => {handleShow(e)}}>
-                                        <option value={tournaments.length}>All</option>
+                                        <option value={events.length}>All</option>
                                         <option value="6">6</option>
                                         <option value="9">9</option>
                                         <option value="12">12</option>
@@ -360,29 +392,29 @@ export default function Events({searchOption}) {
                                 </div>
                             </div>
                         </div>
-                    </div> */}
+                    </div>
 
                     {/* <!-- Product Grid --> */}
-                    {getProcessedBarsAndClubs().length === 0 ? (
-                        <div className="tournament-grid-zero">
+                    {getProcessedEvents().length === 0 ? (
+                        <div className="events-grid-zero">
                             <p>No Record Found,  <button className="no-record" onClick={handleReset}>Show All</button> </p>
                         </div>
                     ) : (
-                        <div className="tournament-grid">
-                        {getProcessedBarsAndClubs().map((ele) => {
+                        <div className="events-grid">
+                        {getProcessedEvents().map((ele) => {
                             return (
-                                <div className="tournament-card" key={ele.id} onClick={() => {navigate(`/events/${ele?.EventName?.replace(/\s+/g, '-')?.toLowerCase()}`)}}>
+                                <div className="events-card" key={ele.id} onClick={() => {navigate(`/events/${ele?.EventName?.replace(/\s+/g, '-')?.toLowerCase()}`)}}>
                                     {/* <div className="product-badges">
                                         <span className="badge sale">Sale</span>
                                         <span className="badge new">New</span>
                                         <span className="badge hot">Hot</span>
                                     </div> */}
-                                    <div className="tournament-image">
+                                    <div className="events-image">
                                         {/* <MdOutlineZoomOutMap /> */}
                                         <img src={ele?.EventImage} alt=""/>
                                         {/* <img src={event} alt=""/> */}
                                     </div>
-                                    <div className="tournament-details">
+                                    <div className="events-details">
                                         <div className="top">
                                             <div className="left">
                                                 <h3>{ele?.EventName}</h3>
@@ -445,7 +477,7 @@ export default function Events({searchOption}) {
                         </div>
                         <div className="footer-details">
                             Showing {(currentPage - 1) * showNo + 1}-
-                            {Math.min(currentPage * showNo, totalFilteredItems)} of {totalFilteredItems} Tournaments
+                            {Math.min(currentPage * showNo, totalFilteredItems)} of {totalFilteredItems} Events
                         </div>
                     </div>
                 </div>

@@ -1,10 +1,3 @@
-import image1 from "../Assets/Tournaments/1.jpg"
-import image2 from "../Assets/Tournaments/2.jpg"
-import image3 from "../Assets/Tournaments/3.jpg"
-import image4 from "../Assets/Tournaments/4.jpg"
-import image5 from "../Assets/Tournaments/10.jpg"
-import image6 from "../Assets/Tournaments/11.jpg"
-
 export const tournaments = [
     {
       id: 1,
@@ -15,7 +8,7 @@ export const tournaments = [
       date: "2024-12-25",
       time: "10 PM",
       fees: 200,
-      image: image1,
+      // image: image1,
       city: "Al Barsha",
     },
     {
@@ -27,7 +20,7 @@ export const tournaments = [
       date: "2024-12-30",
       time: "9 PM",
       fees: 250,
-      image: image2,
+      // image: image2,
       city: "Dubai Marina",
     },
     {
@@ -39,7 +32,7 @@ export const tournaments = [
       date: "2024-12-31",
       time: "8 PM",
       fees: 150,
-      image: image3,
+      // image: image3,
       city: "Oud Metha",
     },
     {
@@ -51,7 +44,7 @@ export const tournaments = [
       date: "2025-01-05",
       time: "7 PM",
       fees: 180,
-      image: image4,
+      // image: image4,
       city: "Jumeirah",
     },
     {
@@ -63,7 +56,7 @@ export const tournaments = [
       date: "2025-01-10",
       time: "6 PM",
       fees: 220,
-      image: image5,
+      // image: image5,
       city: "Downtown Dubai",
     },
     {
@@ -75,7 +68,7 @@ export const tournaments = [
       date: "2025-01-12",
       time: "9 PM",
       fees: 190,
-      image: image6,
+      // image: image6,
       city: "Business Bay",
     },
     {
@@ -87,7 +80,7 @@ export const tournaments = [
       date: "2025-01-15",
       time: "8 PM",
       fees: 210,
-      image: image1,
+      // image: image1,
       city: "Al Wasl",
     },
     {
@@ -99,7 +92,7 @@ export const tournaments = [
       date: "2025-01-20",
       time: "7 PM",
       fees: 230,
-      image: image6,
+      // image: image6,
       city: "Dubai Festival City",
     },
     {
@@ -111,7 +104,7 @@ export const tournaments = [
       date: "2025-01-22",
       time: "6 PM",
       fees: 200,
-      image: image2,
+      // image: image2,
       city: "Hor Al Anz",
     },
     {
@@ -123,7 +116,7 @@ export const tournaments = [
       date: "2025-01-25",
       time: "8 PM",
       fees: 220,
-      image: image1,
+      // image: image1,
       city: "Al Twar",
     },
     {
@@ -135,7 +128,7 @@ export const tournaments = [
       date: "2025-01-28",
       time: "9 PM",
       fees: 190,
-      image: image6,
+      // image: image6,
       city: "Academic City",
     },
     {
@@ -147,7 +140,7 @@ export const tournaments = [
       date: "2025-02-01",
       time: "7 PM",
       fees: 240,
-      image: image1,
+      // image: image1,
       city: "Jebel Ali",
     },
     {
@@ -159,7 +152,7 @@ export const tournaments = [
       date: "2025-02-03",
       time: "8 PM",
       fees: 200,
-      image: image4,
+      // image: image4,
       city: "Al Sufouh",
     },
     {
@@ -171,7 +164,7 @@ export const tournaments = [
       date: "2025-02-05",
       time: "9 PM",
       fees: 170,
-      image: image3,
+      // image: image3,
       city: "Al Warqaa",
     },
     {
@@ -183,7 +176,7 @@ export const tournaments = [
       date: "2025-02-10",
       time: "6 PM",
       fees: 200,
-      image: image6,
+      // image: image6,
       city: "Palm Jumeirah",
     },
     {
@@ -195,7 +188,7 @@ export const tournaments = [
       date: "2025-02-14",
       time: "8 PM",
       fees: 250,
-      image: image2,
+      // image: image2,
       city: "Al Quoz",
     },
     {
@@ -207,7 +200,7 @@ export const tournaments = [
       date: "2025-02-18",
       time: "7 PM",
       fees: 230,
-      image: image4,
+      // image: image4,
       city: "Za'abeel",
     },
     {
@@ -219,7 +212,7 @@ export const tournaments = [
       date: "2025-02-22",
       time: "9 PM",
       fees: 210,
-      image: image5,
+      // image: image5,
       city: "Umm Al Sheif",
     },
     {
@@ -231,7 +224,7 @@ export const tournaments = [
       date: "2025-02-25",
       time: "8 PM",
       fees: 200,
-      image: image3,
+      // image: image3,
       city: "Sheikh Zayed",
     },
     {
@@ -243,7 +236,7 @@ export const tournaments = [
       date: "2025-02-28",
       time: "6 PM",
       fees: 250,
-      image: image2,
+      // image: image2,
       city: "Palm Jumeirah",
     },
     {
@@ -256,7 +249,7 @@ export const tournaments = [
         time: "7 PM",
         fees: 220,
         city: "Business Bay",
-        image: image4,
+        // image: image4,
     },
     {
         id: 22,
@@ -268,7 +261,7 @@ export const tournaments = [
         time: "9 PM",
         fees: 180,
         city: "Downtown Dubai",
-        image: image5,
+        // image: image5,
     },
     {
         id: 23,
@@ -280,7 +273,7 @@ export const tournaments = [
         time: "8:30 PM",
         fees: 200,
         city: "Jumeirah",
-        image: image6,
+        // image: image6,
     },
     {
         id: 24,
@@ -292,7 +285,7 @@ export const tournaments = [
         time: "10:30 PM",
         fees: 175,
         city: "Al Wasl",
-        image: image1,
+        // image: image1,
     },
     {
         id: 25,
@@ -304,7 +297,7 @@ export const tournaments = [
         time: "8 PM",
         fees: 220,
         city: "Dubai Silicon Oasis",
-        image: image2,
+        // image: image2,
     },
     {
         id: 26,
@@ -316,7 +309,7 @@ export const tournaments = [
         time: "9 PM",
         fees: 190,
         city: "Discovery Gardens",
-        image: image3,
+        // image: image3,
     },
     {
         id: 27,
@@ -328,7 +321,7 @@ export const tournaments = [
         time: "7:30 PM",
         fees: 240,
         city: "Mirdif",
-        image: image4,
+        // image: image4,
     },
     {
         id: 28,
@@ -340,7 +333,7 @@ export const tournaments = [
         time: "10 PM",
         fees: 260,
         city: "Dubai Festival City",
-        image: image5,
+        // image: image5,
     },
     {
         id: 29,
@@ -352,7 +345,7 @@ export const tournaments = [
         time: "8:45 PM",
         fees: 200,
         city: "Jebel Ali",
-        image: image6,
+        // image: image6,
     },
     {
         id: 30,
@@ -364,7 +357,7 @@ export const tournaments = [
         time: "9 PM",
         fees: 250,
         city: "Hor Al Anz",
-        image: image1,
+        // image: image1,
     },
     {
         id:31,
@@ -376,7 +369,7 @@ export const tournaments = [
         time: "7 PM",
         fees: 190,
         city: "Dubai Healthcare City",
-        image: image2,
+        // image: image2,
     },
     {
         id: 32,
@@ -388,7 +381,7 @@ export const tournaments = [
         time: "8 PM",
         fees: 210,
         city: "Za'abeel",
-        image: image3,
+        // image: image3,
     },
     {
         id: 33,
@@ -400,7 +393,7 @@ export const tournaments = [
         time: "9:30 PM",
         fees: 230,
         city: "Al Warqaa",
-        image: image4,
+        // image: image4,
     },
     {
         id: 34,
@@ -412,7 +405,7 @@ export const tournaments = [
         time: "10 PM",
         fees: 280,
         city: "Knowledge Village",
-        image: image5,
+        // image: image5,
     },
     {
         id: 35,
@@ -424,7 +417,7 @@ export const tournaments = [
         time: "8 PM",
         fees: 300,
         city: "Palm Jumeirah",
-        image: image6,
+        // image: image6,
     },
     {
         id: 36,
@@ -436,7 +429,7 @@ export const tournaments = [
         time: "7 PM",
         fees: 270,
         city: "Palm Jumeirah",
-        image: image1,
+        // image: image1,
     },
     {
         id: 37,
@@ -448,6 +441,6 @@ export const tournaments = [
         time: "8:30 PM",
         fees: 250,
         city: "Academic City",
-        image: image2,
+        // image: image2,
     },
   ];

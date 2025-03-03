@@ -118,6 +118,9 @@
 
     .login-link {
         margin-top: 50px;
+        display: flex;
+        // flex-direction: column;
+        gap: 10px;
 
         a {
             text-decoration: underline;
@@ -126,5 +129,20 @@
         a:hover {
            color: #fe6b00;
         }
+    }
+}
+
+@media (max-width: 768px) {
+    .login-component {
+        margin-top: 50px;
+        .form-component {
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .login-component .login-link {
+        flex-direction: column;
     }
 }

@@ -18,14 +18,36 @@ import img9 from "../../../Assets/Highlights/img9.jpeg"
 import img10 from "../../../Assets/Highlights/img10.jpeg"
 import img11 from "../../../Assets/Highlights/img11.jpeg"
 import img12 from "../../../Assets/Highlights/img12.jpeg"
+import { useEffect, useState } from 'react';
 
 export default function Highlights() {
+    const [screenWidth, setScreenWidth] = useState(0);
+    
+    useEffect(() => {
+        // Function to update screen size
+        const updateScreenSize = () => {
+        setScreenWidth(window.innerWidth);
+        };
+    
+        // Initial size update
+        updateScreenSize();
+    
+        // Add event listener for screen resize
+        window.addEventListener("resize", updateScreenSize);
+    
+        // Cleanup on component unmount
+        return () => {
+        window.removeEventListener("resize", updateScreenSize);
+        };
+    }, []);
     return (
         <section>
             <div className="highlights container-section">
-                <div className="heading">
-                    <h1 className='main-heading'>HighLights 2024</h1>
-                    <hr className="hr-1"/><hr className="hr-2"/>
+                <div className="heading-div">
+                    <div className='heading'>
+                        <h1 className='main-heading'>HighLights 2024</h1>
+                        <hr className="hr-1"/><hr className="hr-2"/>
+                    </div>
                     <h3 className="second-heading">Immerse yourself in the pulse of the game!<br/>Capture and share your exciting action shots on @qsports and join our vibrant Instagram community.</h3>
                 </div>
                 <Swiper
@@ -36,7 +58,7 @@ export default function Highlights() {
                     }}
                     pagination={false}
                     spaceBetween={20}
-                    slidesPerView={4}
+                    slidesPerView={screenWidth >= 2000 ? 5 : screenWidth >= 1200 ? 4 : screenWidth >= 800 ? 3 : 2}
                     loop={true}
                     autoplay={{
                         delay: 1000,

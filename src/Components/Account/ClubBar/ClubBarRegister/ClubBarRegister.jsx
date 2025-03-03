@@ -88,7 +88,7 @@ export default function ClubBarRegister() {
                 navigate("/")
                 // console.log(response)
             } catch(err) {
-                // console.log(err)
+                console.log(err)
                 // alert(err.response.data.message)
                 // setServerErrors(err.response.data.message)
                 setFormErrors("")

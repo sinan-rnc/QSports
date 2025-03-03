@@ -110,3 +110,15 @@
         width: 100%;
     }
 }
+
+@media (max-width: 1300px) {
+    .admin-dashboardhome-container {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 600px) {
+    .admin-dashboardhome-container .dashboard-navigation {
+        width: 100%;
+    }
+}

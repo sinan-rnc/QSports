@@ -184,3 +184,15 @@
         }
     }
 }
+
+@media (max-width: 850px) {
+    .club-register-component .form-component {
+        width: 100%;
+    }
+}
+
+@media (max-width: 715px) {
+    .club-register-component .form-component .form-table .same-line {
+        flex-direction: column;
+    }
+}

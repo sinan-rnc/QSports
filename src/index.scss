@@ -298,5 +298,129 @@ a {
 }
 
 @media (max-width: 600px) {
+  .container {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .container-section {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .heading {  
+    .main-heading {
+        font-size: 25px;
+        letter-spacing: 1px;
   
+        span {
+            font-size: 30px;
+        }
+    }
+  
+    .hr-1 {
+        height: 20px;
+    }
+  
+    .hr-2 {
+        width: 20px;
+    }
+  
+    .second-heading {
+        font-size: 15px;
+    }
+  }
+
+  .dashborad-heading {
+    .dashborad-main-heading {
+        font-size: 18px;
+  
+        span {
+            font-size: 25px;
+        }
+    }
+  
+    .dashborad-hr-1 {
+        height: 12px;
+    }
+  
+    .dashborad-hr-2 {
+        width: 12px;
+    }
+  
+    .dashborad-second-heading {
+        font-size: 14px;
+    }
+  }
+
+  .btn-style {
+    display: block;
+    width: 120px;
+    padding: 10px 6px;
+    background: #fe6b00;
+    color: white;
+    border: none;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    text-transform: uppercase;
+    border-radius: 5px;
+  }
+}
+
+@media (max-width: 400px) {
+  .container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .container-section {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .heading {  
+    .main-heading {
+        font-size: 22px;
+        letter-spacing: 1px;
+  
+        span {
+            font-size: 25px;
+        }
+    }
+  
+    .hr-1 {
+        height: 15px;
+    }
+  
+    .hr-2 {
+        width: 15px;
+    }
+  
+    .second-heading {
+        font-size: 14px;
+    }
+  }
+
+  .dashborad-heading {
+    .dashborad-main-heading {
+        font-size: 16px;
+  
+        span {
+            font-size: 22px;
+        }
+    }
+  
+    .dashborad-hr-1 {
+        height: 10px;
+    }
+  
+    .dashborad-hr-2 {
+        width: 10px;
+    }
+  
+    .dashborad-second-heading {
+        font-size: 13px;
+    }
+  }
 }

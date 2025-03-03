@@ -2,12 +2,18 @@
     margin-top: 50px;
     // margin-bottom: 100px;
     padding-top: 50px;
-    padding-bottom: 50px;
+    // padding-bottom: 50px;
     background: #333;
     color: white;
 
-    .heading {
-        .second-heading {
+    .heading-div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 30px;
+
+        h3 {
+            // margin-top: 30px;
             font-size: 14px;
         }
     }
@@ -17,7 +23,7 @@
 
         .img-container {
             width: 100%;
-            height: 100%;
+            height: 300px;
             display: flex;
             align-items: center;
             align-content: center;
@@ -27,12 +33,34 @@
 
             img {
                 width: 100%;
-                // height: 100%;
+                height: 100%;
                 object-fit: cover;
                 background-position: center;
                 background-size: cover;
 
             }
         }
+    }
+}
+
+@media (max-width:900px) {
+    .highlights .heading-div {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .heading {
+            justify-content: flex-start;
+            text-align: left;
+        }
+    }
+
+    .highlights .highlights-container .img-container {
+        height: 200px;
+    }
+}
+
+@media (max-width:450px) {
+    .highlights .highlights-container .img-container {
+        height: 100px;
     }
 }

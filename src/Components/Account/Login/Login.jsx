@@ -118,7 +118,7 @@ export default function Login() {
                         <button type="submit" className="register-btn">Login</button>
                     </form>
                 </div>
-                <p className="login-link">Don't Have an Account? <a href="/register">Register</a></p>
+                <div className="login-link"><p>Don't Have an Account?</p> <a style={{}} href="/user-register"> User Register,</a> <a href="/club-register">Club Register</a></div>
             </div>
         </section>
     )

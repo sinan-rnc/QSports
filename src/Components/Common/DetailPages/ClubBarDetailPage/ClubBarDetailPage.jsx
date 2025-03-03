@@ -191,7 +191,7 @@ export default function ClubBarDetailPage() {
                         <motion.h1 variants={childVariants} className="clubName">{clubData?.name}</motion.h1>
                         <motion.div variants={childVariants} className="book-button-div">
                             <h3 className="clubSlogan">Book Your Games at {clubData?.name}</h3>
-                            <button className="book-button"><a href={`tel:${clubData.phoneNo}`}>Call Now</a></button>
+                            <button className="book-button"><a href={`tel:${clubData?.phoneNo}`}>Call Now</a></button>
                         </motion.div>
                         <motion.h4 variants={childVariants} className="clubSlogan2">{clubData?.slogan}</motion.h4>
                         <motion.div variants={childVariants} className="place-time">
@@ -203,7 +203,7 @@ export default function ClubBarDetailPage() {
                                 </div>
                             </div>
                             <div className="time">
-                                <LuClock9 /> 9:00 PM to 12:00 AM
+                                <LuClock9 /> 9:00 PM to 3:00 AM
                             </div>
                         </motion.div>
                     </motion.div>
@@ -237,7 +237,7 @@ export default function ClubBarDetailPage() {
                         whileInView="animate2"
                         viewport={{ once: false, amount: 0.5 }}
                         className="callout-buttons">
-                        <motion.button variants={childVariants} className="callout-btn hotel-btn"><a href={`tel:${clubData.phoneNo}`}>Book club</a></motion.button>
+                        <motion.button variants={childVariants} className="callout-btn hotel-btn"><a href={`tel:${clubData?.phoneNo}`}>Book club</a></motion.button>
                         <motion.button variants={childVariants} className="callout-btn hotel-btn"><a href="#upcoming-events">Play Tournaments</a></motion.button>
                     </motion.div>
                 </div>
@@ -371,7 +371,7 @@ export default function ClubBarDetailPage() {
                         <motion.h1 variants={childVariants}>BOOK YOUR PARTY</motion.h1>
                         <motion.p variants={childVariants}>Gather your friends, choose your dates and experience Paradise!</motion.p>
                     </div>
-                    <motion.button variants={childVariants}><a href={`tel:${clubData.phoneNo}`}>Book Now</a></motion.button>
+                    <motion.button variants={childVariants}><a href={`tel:${clubData?.phoneNo}`}>Book Now</a></motion.button>
                 </motion.div>
             </section>
         </Fragment>

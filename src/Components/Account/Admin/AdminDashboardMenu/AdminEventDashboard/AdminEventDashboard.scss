@@ -10,6 +10,7 @@
         padding: 30px;
         background: white;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: scroll;
 
         // .dashborad-heading {
         //     // padding: 30px;
@@ -85,7 +86,7 @@
         }
     }
 
-    .add-tournament-section {
+    .edit-event-section {
         padding: 30px;
         background: white;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -109,7 +110,7 @@
             color: #fe6b00;
         }
 
-        .tournament-from {
+        .event-from {
             position: relative;
             // padding: 30px;
             // background: white;
@@ -253,5 +254,11 @@
                 color: black;
             }
         }
+    }
+}
+
+@media (max-width: 600px) {
+    .admin-event-dashboard-container .edit-event-section .event-from .form-table .same-line {
+        flex-direction: column;
     }
 }

@@ -386,7 +386,7 @@ export default function Header() {
                                 Play Bars
                             </li></a>
                             <a href="/events" className={location.pathname==="/events" ? "active" : ""}><li>
-                                Tournaments
+                                Events
                             </li></a>
                             {/* <a href="/account" className={location.pathname==="/account" ? "active" : ""}><li>
                                 Account

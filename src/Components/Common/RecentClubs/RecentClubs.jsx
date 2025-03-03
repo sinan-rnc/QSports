@@ -9,6 +9,7 @@ import { barsAndClubs } from "../../../DataSet/barsAndClubs"
 import "./RecentClubs.scss"
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 export default function RecentBars() {
     const navigate = useNavigate()
@@ -17,6 +18,26 @@ export default function RecentBars() {
         return state?.clubsAndBars?.data
             .filter(ele => !ele?.isDeleted && ele?.clubType === "Club")
     })
+
+    const [screenWidth, setScreenWidth] = useState(0);
+    
+        useEffect(() => {
+          // Function to update screen size
+          const updateScreenSize = () => {
+            setScreenWidth(window.innerWidth);
+          };
+      
+          // Initial size update
+          updateScreenSize();
+      
+          // Add event listener for screen resize
+          window.addEventListener("resize", updateScreenSize);
+      
+          // Cleanup on component unmount
+          return () => {
+            window.removeEventListener("resize", updateScreenSize);
+          };
+        }, []);
 
     return (
         <section className="recentClubs" id="recentClubs">
@@ -47,7 +68,7 @@ export default function RecentBars() {
                     }}
                     pagination={false}
                     spaceBetween={20}
-                    slidesPerView={3}
+                    slidesPerView={screenWidth >= 2000 ? 4 : screenWidth >= 1200 ? 3 : screenWidth >= 800 ? 2 : 1}
                     loop={true}
                     speed={1000}
                     effect={'coverflow'}

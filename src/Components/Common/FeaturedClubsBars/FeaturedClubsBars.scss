@@ -120,3 +120,133 @@
         }
     }
 }
+
+@media (max-width: 1300px) {
+    .featuredClubsBars .featuredClubsBars-section .featuredClubsBars-content .left .featuredClubsBars-details {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 1300px) {
+    .featuredClubsBars .featuredClubsBars-section .featuredClubsBars-content {
+        flex-direction: column;
+
+        .left {
+            width: 100%;
+
+            .featuredClubsBars-details 
+                .details {
+                    // padding: 20px;
+
+                    p {
+                        font-size: 16px;
+                }
+            }
+        }
+
+        .right {
+            width: 100%;
+
+            .featuredClubsBars-content1 {
+                height: 250px;
+            }
+        }
+    }
+}
+
+@media (max-width: 700px) {
+    .featuredClubsBars .featuredClubsBars-section .featuredClubsBars-content .left .featuredClubsBars-details { 
+        margin-right: 20px;
+        margin-top: -100px;
+
+        .btn-style {
+            display: none;
+        }
+        .details {
+            padding: 20px 30px;
+        }
+    }
+
+    .featuredClubsBars .featuredClubsBars-section .featuredClubsBars-content .right {
+        .featuredClubsBars-content1 { 
+            gap: 10px;
+
+            .details {
+                h1 {
+                    font-size: 18px;
+                }
+                
+                p {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .featuredClubsBars .featuredClubsBars-section .featuredClubsBars-content {
+        .left .featuredClubsBars-details {
+            justify-content: center;
+            margin-top: -50px;
+            .details {
+                margin-bottom: 30px;
+                p {
+                    display: none;
+                }
+            }
+        }
+
+        .right {
+            .featuredClubsBars-content1 {
+                height: 200px;
+
+                .featuredClubsBars-image {
+                    width: 100%;
+                }
+
+                .details {
+                    p {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .featuredClubsBars .featuredClubsBars-section .featuredClubsBars-content {
+        .left .featuredClubsBars-details {
+            .details {
+                margin-bottom: 0px;
+                h1 {
+                    font-size: 18px;
+                }
+            }
+        }
+
+        .right {
+            .featuredClubsBars-content1 {
+                flex-direction: column;
+                height: 250px;
+
+
+
+                .featuredClubsBars-image {
+                    width: 100%;
+                    height: 200px;
+                }
+
+                .details {
+                    width: 100%;
+                    justify-content: center;
+                    text-align: center;
+                    h1 {
+                        margin-top: -30px;
+                    }
+                }
+            }
+        }
+    }
+}

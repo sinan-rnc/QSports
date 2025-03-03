@@ -283,3 +283,60 @@
         }
     }
 }
+
+@media (max-width: 1050px) {
+    .tournamentevents .tournamentevents-section .tournamentevents-header .header-top {
+        .heading {  
+            .main-heading {
+                font-size: 25px;
+                letter-spacing: 1px;
+          
+                span {
+                    font-size: 30px;
+                }
+            }
+          
+            .hr-1 {
+                height: 20px;
+            }
+          
+            .hr-2 {
+                width: 20px;
+            }
+          
+            .second-heading {
+                font-size: 15px;
+            }
+          }
+    }
+}
+
+@media (max-width: 970px) {
+    .tournamentevents .tournamentevents-section .tournamentevents-header .header-top {
+        flex-direction: column;
+
+        .heading {
+            margin-right: auto;
+        }
+
+        .arrow-div {
+            margin-left: auto;
+        }
+    }
+}
+
+@media (max-width: 450px) {
+    .tournamentevents .tournamentevents-section .tournamentevents-header .header-top {
+        .arrow-div {
+            h4 {
+                font-size: 12px;
+            }
+        }
+    }
+
+    .tournamentevents .tournamentevents-section .tournamentevents-grid .tournamentevents-card {
+        .tournamentevents-image {
+            height: 250px;
+        }
+    }
+}

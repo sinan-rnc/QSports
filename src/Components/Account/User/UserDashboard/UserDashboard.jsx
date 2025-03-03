@@ -20,17 +20,6 @@ export default function UserDashboard({ setSelectedDashboard }) {
         return url && /\.(jpeg|jpg|gif|png|webp|svg)$/i.test(url);
     };
 
-    const tournamentStatus = [
-        { id: 1, date: "25 JAN 2024", name: "Rack 'Em Up Challenge", ranking: "First", total: "" },
-        { id: 2, date: "30 JAN 2024", name: "The Cue Masters Cup", ranking: "Fifth", total: "" },
-        { id: 3, date: "01 APRIL 2024", name: "Eight-Ball Showdown", ranking: "Seventh", total: "" },
-        { id: 4, date: "10 JUNE 2024", name: "Neon Nights Club", ranking: "Tenth", total: "" },
-        { id: 5, date: "20 SEPT 2024", name: "Neon Cue Fiesta", ranking: "Not Qualified", total: "" },
-        { id: 6, date: "01 DEC 2024", name: "Rack and Roll Championship", ranking: "Not Qualified", total: "" },
-        { id: 6, date: "20 DEC 2024", name: "Midnight Cue Clash", ranking: "Quater-Finalist", total: "" },
-    ];
-    // console.log(user)
-
     const formatDate = (isoDate) => {
         if (!isoDate) return "";  // Handle empty cases
         const date = new Date(isoDate);
@@ -67,13 +56,14 @@ export default function UserDashboard({ setSelectedDashboard }) {
                             <h1>{user.firstName} {user.lastName}</h1>
                             <p style={{marginTop:"5px"}}>{profile.Slogan}</p>
                             <div className="details">
-                                <p style={{marginTop:"20px"}}><b>Email:</b> {user.email}</p>
+                                <p className="email" style={{marginTop:"20px"}}><b>Email:</b> {user.email}</p>
                                 <p style={{marginTop:"10px"}}><b>NickName:</b> {profile.NickName}</p>
                                 <p style={{marginTop:"10px"}}><b>DOB:</b> {formatDate(profile.DOB)}</p>
                                 <p className="about" style={{marginTop:"10px"}}><b>About:</b> {profile.AboutMe}</p>
                             </div>
+                            {user && profile && <button className="delete-profile" onClick={() => {handleDeleteProfile(profile)}}>Delete Profile</button>}
                         </div>
-                        {user && profile && <button className="delete-profile" onClick={() => {handleDeleteProfile(profile)}}>Delete Profile</button>}
+                        {/* {user && profile && <button className="delete-profile" onClick={() => {handleDeleteProfile(profile)}}>Delete Profile</button>} */}
                     </div>
                 )}
             </div>
@@ -143,25 +133,6 @@ export default function UserDashboard({ setSelectedDashboard }) {
                     {/* <h3 className="second-heading">Welcome User</h3> */}
                 </div>
                 <p>No Event Participated, Join a <a href="/events">new Event</a></p>
-                {/* <hr className="dashboard-history-hr"/> */}
-                {/* <table className="recent-orders__table">
-                    <thead>
-                    <tr>
-                        <th>DATE</th>
-                        <th>TOURNAMENT NAME</th>
-                        <th>RANKING</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {tournamentStatus.map((ele, index) => (
-                        <tr key={index}>
-                            <td>{ele.date}</td>
-                            <td>{ele.name}</td>
-                            <td>{ele.ranking}</td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table> */}
             </div>
         </div>
     )

@@ -51,6 +51,10 @@
                     background: #eaeaea;
                     border: 2px solid #eaeaea;
                 }
+
+                textarea {
+                    height: 100px;
+                }
     
                 .form-control:hover {
                     background: #fff;
@@ -107,5 +111,15 @@
                 color: black;
             }
         }
+    }
+}
+
+@media (max-width: 800px) {
+    .user-profile-container .user-profile-section .form-table .same-line {
+        flex-direction: column;
+    }
+
+    .user-profile-container .user-profile-section .form-table .form-group.about-me  {
+        margin-top: 20px;
     }
 }

@@ -138,8 +138,8 @@ export default function AdminQuotesDashboard() {
     }
 
     return (
-        <section className="admin-event-dashboard-container">
-            <div id="event-dashboard" className="admin-event-dashboard">
+        <section className="admin-quotes-dashboard-container">
+            <div id="quotes-dashboard" className="admin-quotes-dashboard">
                 <div className="dashborad-heading-div">
                     <div className="dashborad-heading">
                         <h1 className='dashborad-main-heading'>All Users</h1>
@@ -147,7 +147,7 @@ export default function AdminQuotesDashboard() {
                         
                         {/* <h3 className="dashborad-second-heading">{clubAndBar?.name}</h3> */}
                     </div>
-                    <a href="#add-tournament"><button className="edit-profile" onClick={() => {
+                    <a href="#add-quotes"><button className="edit-profile" onClick={() => {
                         setOpenAddQuoteSection(true)
                         setCurrentQuoteID("")
                         setCurrentQuote("")
@@ -179,7 +179,7 @@ export default function AdminQuotesDashboard() {
                                 <td>{formatDateDDMMYYYY(ele?.createdAt)}</td>
                                 <td>
                                     <div className="action-div">
-                                        <a href="#add-tournament"><button className="edit-profile"
+                                        <a href="#add-quotes"><button className="edit-profile"
                                             onClick={() => {
                                                 handleEditQuote(ele._id)
                                             }}
@@ -198,13 +198,13 @@ export default function AdminQuotesDashboard() {
                 )}
             </div>
             {openAddQuoteSection &&
-                <section id="add-tournament" className="add-tournament-section">
+                <section id="add-quotes" className="add-quotes-section">
                     <div className="dashborad-heading">
                         <h1 className='dashborad-main-heading'>Update Quote</h1>
                         <hr className={`dashborad-hr-1 ${openAddQuoteSection && "rotate"}`}/><hr className="dashborad-hr-2"/>
                         <h3 className="dashborad-second-heading">{currentQuote && currentQuote.userName}</h3>
                     </div>
-                    <div className="tournament-from">
+                    <div className="quotes-from">
                         <form className="form-table" onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label className="form-label" htmlFor="quote">Quote</label>

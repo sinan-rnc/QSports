@@ -17,7 +17,7 @@ export default function AdminEventDashboard() {
 
     // console.log(allEvents)
 
-    const [openAddTournamentSection, setOpenAddTournamentSection] = useState(false)
+    const [openEditEventSection, setOpenEditEventSection] = useState(false)
     const [ currentEventID, setCurrentEventID ] = useState("")
     const [ currentEvent, setCurrentEvent ] = useState("")
     const [ featuredEventID, setFeaturedEventID ] = useState("")
@@ -60,7 +60,7 @@ export default function AdminEventDashboard() {
                 MaxPlayers: currentEvent.MaxPlayers || ""
             });
         } else {
-            setOpenAddTournamentSection(false)
+            setOpenEditEventSection(false)
         }
     }, [currentEvent]);
 
@@ -139,7 +139,7 @@ export default function AdminEventDashboard() {
     };
 
     const handleEditEvent = async (eventId) => {
-        setOpenAddTournamentSection(true)
+        setOpenEditEventSection(true)
         setCurrentEventID(eventId)
         setFormData({
             _id: "",
@@ -254,7 +254,7 @@ export default function AdminEventDashboard() {
                                 <td>{ele?.EnrollmentFee}</td>
                                 <td>
                                     <div className="action-div">
-                                        <a href="#add-tournament"><button className="edit-profile"
+                                        <a href="#edit-event"><button className="edit-profile"
                                             onClick={() => {
                                                 handleEditEvent(ele._id)
                                             }}
@@ -275,14 +275,14 @@ export default function AdminEventDashboard() {
                     <p>No Event Found, Create new Event</p>
                 )}
             </div>
-            {openAddTournamentSection &&
-                <section id="add-tournament" className="add-tournament-section">
-                    <div className="dashborad-heading" onClick={() => {setOpenAddTournamentSection(!openAddTournamentSection)}}>
+            {openEditEventSection &&
+                <section id="edit-event" className="edit-event-section">
+                    <div className="dashborad-heading" onClick={() => {setOpenEditEventSection(!openEditEventSection)}}>
                         <h1 className='dashborad-main-heading'>Update Event</h1>
-                        <hr className={`dashborad-hr-1 ${openAddTournamentSection && "rotate"}`}/><hr className="dashborad-hr-2"/>
+                        <hr className={`dashborad-hr-1 ${openEditEventSection && "rotate"}`}/><hr className="dashborad-hr-2"/>
                         <h3 className="dashborad-second-heading">{currentEvent && currentEvent.EventName}</h3>
                     </div>
-                    <div className="tournament-from">
+                    <div className="event-from">
                         <form className="form-table" onSubmit={handleSubmit}>
                             <div className="same-line">
                                 <div className="form-group">
@@ -374,7 +374,7 @@ export default function AdminEventDashboard() {
                             <div className="btn-div">
                                 <button type="submit" className="save-btn">Save</button>
                             </div>
-                            <a href="#event-dashboard"><button className="close-btn" onClick={() => {setOpenAddTournamentSection(false)}}>Close</button></a>
+                            <a href="#event-dashboard"><button className="close-btn" onClick={() => {setOpenEditEventSection(false)}}>Close</button></a>
                         </form>
                     </div>
                 </section>

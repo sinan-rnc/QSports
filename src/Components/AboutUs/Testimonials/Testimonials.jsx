@@ -4,6 +4,7 @@ import '@splidejs/splide/dist/css/splide.min.css';
 import Quote from '../../../Assets/Common/blockquote.svg';
 
 import "./Testimonials.scss"
+import { useEffect, useState } from 'react';
 
 const reviews = [
     {
@@ -83,6 +84,25 @@ const reviews = [
 
 
 export default function Testimonials() {
+        const [screenWidth, setScreenWidth] = useState(0);
+    
+        useEffect(() => {
+          // Function to update screen size
+          const updateScreenSize = () => {
+            setScreenWidth(window.innerWidth);
+          };
+      
+          // Initial size update
+          updateScreenSize();
+      
+          // Add event listener for screen resize
+          window.addEventListener("resize", updateScreenSize);
+      
+          // Cleanup on component unmount
+          return () => {
+            window.removeEventListener("resize", updateScreenSize);
+          };
+        }, []);
     return (
         <section id="testimonials" className="testimonial-container">
             <div className="heading">
@@ -99,8 +119,8 @@ export default function Testimonials() {
         
                 <Splide
                     options={{
-                    perPage: 2,
-                    gap: 40,
+                    perPage: screenWidth >= 1800 ? 3 : screenWidth >= 1200 ? 2 : 1,
+                    gap: 20,
                     autoplay: true,
                     speed: 5000,
                     rewind: true,

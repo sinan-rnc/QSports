@@ -46,6 +46,7 @@
             // justify-content: space-between;
             // padding-left: 100px;
             // padding-right: 100px;
+            width: 100%;
 
             img {
                 width: 200px;
@@ -54,23 +55,25 @@
             .user-profile-details {
                 display: flex;
                 flex-direction: column;
+                width: 100%;
                 // align-items: center;
                 // flex-direction: column;
                 // justify-content: space-between;
 
                 .details {
                     margin-top: 30px;
+                    padding-right: 20px;
 
-                    .about {
-                        padding-right: 150px;
+                    .email {
+                        padding-right: 10px;
                     }
                 }
             }
             .delete-profile {
-                position: absolute;
+                margin-top: 20px;
+                // position: absolute;
                 display: block;
-                // justify-content: flex-end;
-                height: auto;
+                justify-content: flex-end;
                 width: 150px;
                 padding: 10px 5px 10px;
                 background: #fe6b00;
@@ -81,8 +84,6 @@
                 cursor: pointer;
                 border-radius: 5px;
                 margin-left: auto;
-                bottom: 0px;
-                right: 0px;
                 // margin-right: auto;
             }
 
@@ -200,7 +201,30 @@
             //     }
             //   }
             }
-          }
-          
+        }   
+    }
+}
+
+
+// @media (max-width: 678px) {
+//     .user-dashboard-container .dashboard-profile .user-profile img {
+//         width: 100%;
+//     }
+// }
+
+@media (max-width: 678px) {
+    .user-dashboard-container .dashboard-profile .user-profile img {
+        width: 100%;
+    }
+
+    .user-dashboard-container .dashboard-profile .user-profile {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 500px) {
+    .user-dashboard-container .dashboard-profile .heading-div {
+        flex-direction: column;
+        gap: 20px;
     }
 }

@@ -543,6 +543,7 @@ export default function AdminClubDashboard() {
                 return (
                 <div className="same-line" key={service}>
                     <label className="form-label" htmlFor="poolTables">No. of pool & snooker tables</label>
+                    <div className="service-div">
                     <input type="number" className="form-control" 
                         value={ form.services.find(ele => ele.name === service)?.description || "" }
                         onChange={(e) =>
@@ -550,12 +551,14 @@ export default function AdminClubDashboard() {
                         }
                         id="poolTables" placeholder="No. of pool & snooker tables" />
                     <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
+                    </div>
                 </div>
                 );
             case "Ages allowed in the club":
                 return (
                 <div className="same-line" key={service}>
                     <label className="form-label" htmlFor="agesAllowed">Ages allowed in the club</label>
+                    <div className="service-div">
                     <input type="number" className="form-control"
                         value={ form.services.find(ele => ele.name === service)?.description || "" } 
                         onChange={(e) =>
@@ -563,12 +566,14 @@ export default function AdminClubDashboard() {
                         }
                         id="agesAllowed" placeholder="Ages aloud in the club" />
                     <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
+                    </div>
                 </div>
                 );
             case "Clubs space and seating space":
                 return (
                 <div className="same-line" key={service}>
                     <label className="form-label" htmlFor="clubSpace">Club space and seating space</label>
+                    <div className="service-div">
                     <input type="number" className="form-control"
                         value={ form.services.find(ele => ele.name === service)?.description || "" } 
                         onChange={(e) =>
@@ -576,12 +581,14 @@ export default function AdminClubDashboard() {
                         }
                         id="clubSpace" placeholder="Club space and seating space" />
                     <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
+                    </div>
                 </div>
                 );
             case "Pool Coaching":
                 return (
                 <div className="same-line" key={service}>
                     <label className="form-label" htmlFor="poolCoaching">Pool Coaching</label>
+                    <div className="service-div">
                     <input type="text" className="form-control"
                         value={ form.services.find(ele => ele.name === service)?.description || "" }
                         onChange={(e) =>
@@ -589,12 +596,14 @@ export default function AdminClubDashboard() {
                         }
                         id="poolCoaching" placeholder="Pool Coaching - Yes/No" />
                     <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
+                    </div>
                 </div>
                 );
             case "Pool & Billiard Products":
                 return (
                 <div className="same-line" key={service}>
                     <label className="form-label" htmlFor="poolProducts">Pool & Billiard Products</label>
+                    <div className="service-div">
                     <input type="text" className="form-control"
                         value={ form.services.find(ele => ele.name === service)?.description || "" }
                         onChange={(e) =>
@@ -602,12 +611,14 @@ export default function AdminClubDashboard() {
                         }
                         id="poolProducts" placeholder="Pool & Billiard Products" />
                     <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
+                    </div>
                 </div>
                 );
             case "Table models & sizes":
                 return (
                 <div className="same-line" key={service}>
                     <label className="form-label" htmlFor="tableModels">Table models & sizes</label>
+                    <div className="service-div">
                     <input type="text" className="form-control"
                         value={ form.services.find(ele => ele.name === service)?.description || "" }
                         onChange={(e) =>
@@ -615,12 +626,14 @@ export default function AdminClubDashboard() {
                         }
                         id="tableModels" placeholder="Table models & sizes" />
                     <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
+                    </div>
                 </div>
                 );
             case "Pool Competitions & Events":
                 return (
                 <div className="same-line" key={service}>
                     <label className="form-label" htmlFor="competitions">Pool Competitions & Events</label>
+                    <div className="service-div">
                     <input type="text" className="form-control"
                         value={ form.services.find(ele => ele.name === service)?.description || "" }
                         onChange={(e) =>
@@ -628,12 +641,14 @@ export default function AdminClubDashboard() {
                         }
                         id="competitions" placeholder="Pool Competitions & Events" />
                     <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
+                    </div>
                 </div>
                 );
             case "Billiard Balls and Cloth":
                 return (
                 <div className="same-line" key={service}>
                     <label className="form-label" htmlFor="billiardBalls">Billiard Balls and Cloth</label>
+                    <div className="service-div">
                     <input type="text" className="form-control"
                         value={ form.services.find(ele => ele.name === service)?.description || "" }
                         onChange={(e) =>
@@ -641,6 +656,7 @@ export default function AdminClubDashboard() {
                         }
                         id="billiardBalls" placeholder="Billiard Balls and Cloth" />
                     <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
+                    </div>
                 </div>
                 );
             default:
@@ -654,6 +670,7 @@ export default function AdminClubDashboard() {
                 return (
                 <div className="same-line" key={service}>
                     <label className="form-label" htmlFor="food">Type of Food</label>
+                    <div className="service-div">
                     <input type="text"
                         value={ form.services.find(ele => ele.name === service)?.description || "" }
                         onChange={(e) =>
@@ -661,12 +678,14 @@ export default function AdminClubDashboard() {
                         }
                         className="form-control" id="food" placeholder="Type of Food" />
                     <IoClose className="close-icon" onClick={() => handleRemoveFoodService(service)} />
+                    </div>
                 </div>
                 );
             case "Drinks":
                 return (
                 <div className="same-line" key={service}>
                     <label className="form-label" htmlFor="drinks">Type of Drinks</label>
+                    <div className="service-div">
                     <input type="text"
                         value={ form.services.find(ele => ele.name === service)?.description || "" }
                         onChange={(e) =>
@@ -674,12 +693,14 @@ export default function AdminClubDashboard() {
                         }
                         className="form-control" id="drinks" placeholder="Type of Drinks" />
                     <IoClose className="close-icon" onClick={() => handleRemoveFoodService(service)} />
+                    </div>
                 </div>
                 );
             case "Coffees":
                 return (
                 <div className="same-line" key={service}>
                     <label className="form-label" htmlFor="coffees">Type of Coffees</label>
+                    <div className="service-div">
                     <input type="text"
                         value={ form.services.find(ele => ele.name === service)?.description || "" }
                         onChange={(e) =>
@@ -687,12 +708,14 @@ export default function AdminClubDashboard() {
                         }
                         className="form-control" id="coffees" placeholder="Type of Coffees" />
                     <IoClose className="close-icon" onClick={() => handleRemoveFoodService(service)} />
+                    </div>
                 </div>
                 );
             case "Desserts":
                 return (
                 <div className="same-line" key={service}>
                     <label className="form-label" htmlFor="desserts">Type of Desserts</label>
+                    <div className="service-div">
                     <input type="text"
                         value={ form.services.find(ele => ele.name === service)?.description || "" }
                         onChange={(e) =>
@@ -700,6 +723,7 @@ export default function AdminClubDashboard() {
                         }
                         className="form-control" id="desserts" placeholder="Type of Desserts" />
                     <IoClose className="close-icon" onClick={() => handleRemoveFoodService(service)} />
+                    </div>
                 </div>
                 );
             default:
@@ -1127,7 +1151,7 @@ export default function AdminClubDashboard() {
                         <div className="form-group">
                             <label className="form-label-head" htmlFor="services">Services</label>
                             {selectedServices.map((service) => renderInputField(service))}
-                            <div className="same-line">
+                            <div className="same-line mobile">
                                 <label className="form-label" htmlFor="services">Add a new Service</label>
                                 <select 
                                     className="form-control"
@@ -1147,7 +1171,7 @@ export default function AdminClubDashboard() {
                         <div className="form-group">
                             <label className="form-label-head" htmlFor="services">Food and Drinks Service</label>
                             {selectedFoodServices.map((service) => renderFoodInputField(service))}
-                            <div className="same-line">
+                            <div className="same-line mobile">
                                 <label className="form-label" htmlFor="services">Add a Food Service</label>
                                 <select 
                                     className="form-control"

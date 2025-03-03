@@ -109,3 +109,18 @@
         width: 800px;
     }
 }
+
+@media (max-width: 950px) {
+    .dashboardhome-container {
+        margin-top: 50px;
+        flex-direction: column;
+
+        .navigation-section {
+            width: 100%;
+        }
+
+        .dashboardhome-section {
+            width: 100%;
+        }
+    }
+}

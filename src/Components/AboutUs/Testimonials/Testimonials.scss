@@ -20,18 +20,19 @@
 
         .quote {
             position: absolute;
-            z-index: -1;
+            z-index: 1;
+            width: 80px;
         }
 
         .top-quote {
             position: absolute;
-            top: -3rem;
+            top: -2rem;
             left: -1rem;
         }
 
         .bottom-quote {
             position: absolute;
-            bottom: 0rem;
+            bottom: 1rem;
             right: -1rem;
             transform: rotate(180deg);
         }
@@ -131,22 +132,27 @@
   
   /* Media Query */
   @media (max-width: 900px) {
-    .splide__slide {
+    .testimonial-container .splide__slide {
       display: block;
       text-align: center;
     }
   
-    .splide__arrow {
-      font-size: 1.5rem;
+    .testimonial-container .slider-container .splide__arrow {
+      font-size: 1rem;
     }
 
-    .slider-container {
-      padding-left: 40px;
-      padding-right: 40px;
+    .testimonial-container .slider-container .quote {
+      width: 50px;
     }
 
-    .slider-container .top-quote, .slider-container .bottom-quote {
-      width: 100px;
+    .testimonial-container .slider-container .top-quote {
+      top: -10px;
+      left: -10px;
+    }
+
+    .testimonial-container .slider-container .bottom-quote {
+      bottom: 30px;
+      right: -10px;
     }
 
 
@@ -178,23 +184,13 @@
   @media (max-width: 678px) {
     .testimonial-container {
       margin-top: 0px;
-      padding-left: 20px;
-      padding-right: 20px;
+      padding-left: 50px;
+      padding-right: 50px;
     }
+  }
 
-    .slider-container .content{
-      padding: 0px;
-    }
-
-    .slider-container .top-quote {
-      width: 60px;
-      left: 1rem;
-      top: -1.5rem;
-    }
-
-    .slider-container .bottom-quote {
-      right: 1rem;
-      width: 60px;
-      bottom: -1.5rem;
+  @media (max-width: 400px) {
+    .heading .second-heading {
+      display: none;
     }
   }

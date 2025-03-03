@@ -265,3 +265,17 @@
         }
     }
 }
+
+@media (max-width: 650px) {
+    .recentBars .recentBars-section { 
+        position: relative;
+
+        .recentBars-header .header-top {
+            .arrow-div {
+                position: absolute;
+                bottom: -40px;
+                right: 60px;
+            }
+        }
+    }
+}

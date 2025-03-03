@@ -250,3 +250,37 @@
         }
     }
 }
+
+// Media Query for max-width: 600px
+@media (max-width: 600px) {
+    .club-event-container .add-tournament-section .tournament-from .form-table .same-line {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 500px) {
+    .club-event-dashboard {
+        padding: 15px;
+        gap: 15px;
+        overflow: scroll;
+
+        .recent-orders {
+            padding: 15px;
+            overflow: scroll;
+
+            &__title {
+                font-size: 16px;
+                margin-bottom: 15px;
+            }
+
+            &__table-wrapper {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch; // Smooth scrolling for iOS
+            }
+
+            &__table {
+                min-width: 600px; // Maintain original table layout
+            }
+        }
+    }
+}

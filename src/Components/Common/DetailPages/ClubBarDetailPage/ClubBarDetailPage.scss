@@ -22,15 +22,15 @@
         display: flex;
         align-items: center;
         justify-content: center;
-      }
+    }
     
-      .banner {
+    .banner {
         width: 100%;
         height: 100%;
         object-fit: cover;
         background-position: center;
         background-size: cover;
-      }
+    }
 
     .arrow-left {
         position: absolute;
@@ -629,5 +629,105 @@
     button:hover {
         background: #fe6b00;
         color: #ffffff;
+    }
+}
+
+// club-detailPage
+
+@media (max-width: 1100px) {
+    .club-detailPage .club-details {
+        .clubName {
+            font-size: 30px;
+        }
+
+        .book-button-div {
+            .clubSlogan {
+                font-size: 25px;
+            }
+
+            .book-button {
+                font-size: 25px;
+            }
+        }
+
+        .clubSlogan2 {
+            font-size: 18px;
+        }
+    }
+}
+
+@media (max-width: 900px) {
+    .club-detailPage .club-details.container-section {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .club-detailPage .club-details {
+        align-items: center;
+
+        .clubSlogan2 {
+            text-align: center;
+        }
+
+        .book-button-div {
+            flex-direction: column;
+            text-align: center;
+
+            .book-button {
+                width: 250px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 20px;
+            }
+        }
+    }
+
+    .club-detailPage .arrow-left, .club-detailPage .arrow-right {
+        top: 70%;
+    }
+}
+
+@media (max-width: 768px) {
+    .club-detailPage .arrow-left, .club-detailPage .arrow-right {
+        display: none;
+    }
+}
+
+// callout-box
+
+@media (max-width: 1250px) {
+    .callout-box {
+        padding-left: 100px !important;
+        padding-right: 100px !important;
+    }
+}
+
+@media (max-width: 900px) {
+    .callout-box {
+        padding-left: 50px !important;
+        padding-right: 50px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .callout-box .callout-text {
+        h2 {
+            font-size: 1.2rem;
+        }
+
+        p {
+            font-size: .8rem;
+        }
+    }
+}
+
+@media (max-width: 650px) {
+    .callout-box {
+        flex-direction: column;
+        gap: 20px;
+
+        .callout-text {
+            text-align: center;
+        }
     }
 }

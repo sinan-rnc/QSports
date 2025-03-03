@@ -1,4 +1,4 @@
-import banner from "../../../Assets/Tournaments/1.jpg"
+import banner from "../../../Assets/Banner/1.jpg"
 
 import "./About.scss"
 

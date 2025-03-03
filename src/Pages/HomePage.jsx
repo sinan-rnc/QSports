@@ -19,12 +19,12 @@ export default function HomePage() {
                 <Stats/>
                 <Quotes/>
                 <About/>
-                {/* <FeaturedClubsBars/> */}
+                <FeaturedClubsBars/>
                 <RecentClubs/>
                 <RecentBars/>
                 <FeaturedEvents/>
                 <UpcomingEvents/>
-                {/* <Highlights/> */}
+                <Highlights/>
             </Helmet>
         </Fragment>
     )

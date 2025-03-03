@@ -28,8 +28,8 @@ export default function Hero() {
                 <div className="overlay"></div>
                 <img src={herobanner} alt=""/>
                 <div className="search_container container">
-                    <h1>Master <span>the Game</span><br/> <span>Elevate</span> Your Skills!</h1>
-                    <p>Whether you're a beginner or a pro, better your shots, improve your strategy, and play like a champion!</p>
+                    <h1>An <span>Ultimate Guide</span> to<br/> All Your <span>QSports</span></h1>
+                    <p>An Opportunity to become a part of bigger community</p>
                     <h3>Join us today & level up your game!</h3>
                     {/* <div className="search_bars">
                         <div className="bars">

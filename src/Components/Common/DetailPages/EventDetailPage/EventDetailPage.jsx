@@ -8,15 +8,6 @@ import { LuClock9 } from "react-icons/lu"
 import { RiArrowLeftWideLine, RiArrowRightWideLine } from "react-icons/ri"
 
 import "./EventDetailPage.scss"
-
-import event1 from "../../../../Assets/Events/1.jpg"
-import event2 from "../../../../Assets/Events/2.webp"
-import event3 from "../../../../Assets/Events/3.jpg"
-import event4 from "../../../../Assets/Events/4.jpg"
-import event5 from "../../../../Assets/Events/5.jpg"
-import event6 from "../../../../Assets/Events/6.jpg"
-
-import image from "../../../../Assets/Tournaments/image4.png"
 import { BsCalendarDate } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import axios from "axios";

@@ -21,7 +21,7 @@ export default function AdminUserDashboard() {
 
     console.log(allUsers)
 
-    const [openAddTournamentSection, setOpenAddTournamentSection] = useState(false)
+    const [ openEditUserSection, setOpenEditUserSection ] = useState(false)
     const [ openChangePasswordSection, setOpenChangePasswordSection ] = useState(false)
     const [ currentUserID, setCurrentUserID ] = useState("")
     const [ currentUser, setCurrentUser ] = useState("")
@@ -54,7 +54,7 @@ export default function AdminUserDashboard() {
                 email: currentUser.email,
             });
         } else {
-            // setOpenAddTournamentSection(false)
+            // setOpenEditUserSection(false)
         }
     }, [currentUser]);
 
@@ -107,7 +107,7 @@ export default function AdminUserDashboard() {
     };
 
     const handleEditUser = async (UserID) => {
-        setOpenAddTournamentSection(true)
+        setOpenEditUserSection(true)
         setCurrentUserID(UserID)
         setOpenChangePasswordSection("")
     }
@@ -115,7 +115,7 @@ export default function AdminUserDashboard() {
     const handleChangePassword = async (UserID) => {
         setOpenChangePasswordSection(true)
         setCurrentUserID(UserID)
-        setOpenAddTournamentSection("")
+        setOpenEditUserSection("")
     }
 
 
@@ -141,7 +141,7 @@ export default function AdminUserDashboard() {
             });
             setCurrentUser("")
             setCurrentUserID("")
-            setOpenAddTournamentSection(false)
+            setOpenEditUserSection(false)
         } else {
             setFormErrors(errors);
         }
@@ -190,8 +190,8 @@ export default function AdminUserDashboard() {
     }
 
     return (
-        <section className="admin-event-dashboard-container">
-            <div id="event-dashboard" className="admin-event-dashboard">
+        <section className="admin-user-dashboard-container">
+            <div id="user-dashboard" className="admin-user-dashboard">
                 <div className="dashborad-heading">
                     <h1 className='dashborad-main-heading'>All Users</h1>
                     <hr className="dashborad-hr-1"/><hr className="dashborad-hr-2"/>
@@ -217,7 +217,7 @@ export default function AdminUserDashboard() {
                                 <td>{formatDateDDMMYYYY(ele?.createdAt)}</td>
                                 <td>
                                     <div className="action-div">
-                                        <a href="#add-tournament"><button className="edit-profile"
+                                        <a href="#edit-user"><button className="edit-profile"
                                             onClick={() => {
                                                 handleEditUser(ele._id)
                                             }}
@@ -238,14 +238,14 @@ export default function AdminUserDashboard() {
                     <p>No Event Found, Create new Event</p>
                 )}
             </div>
-            {openAddTournamentSection &&
-                <section id="add-tournament" className="add-tournament-section">
+            {openEditUserSection &&
+                <section id="edit-user" className="edit-user-section">
                     <div className="dashborad-heading">
                         <h1 className='dashborad-main-heading'>Update User</h1>
-                        <hr className={`dashborad-hr-1 ${openAddTournamentSection && "rotate"}`}/><hr className="dashborad-hr-2"/>
+                        <hr className={`dashborad-hr-1 ${openEditUserSection && "rotate"}`}/><hr className="dashborad-hr-2"/>
                         <h3 className="dashborad-second-heading">{currentUser && currentUser.userName}</h3>
                     </div>
-                    <div className="tournament-from">
+                    <div className="user-from">
                         <form className="form-table" onSubmit={handleSubmit}>
                             <div className="same-line">
                                 <div className="form-group">
@@ -282,14 +282,14 @@ export default function AdminUserDashboard() {
                             <div className="btn-div">
                                 <button type="submit" className="save-btn">Save</button>
                             </div>
-                            <a href="#event-dashboard"><button className="close-btn" onClick={() => {setOpenAddTournamentSection(false)}}>Close</button></a>
+                            <a href="#user-dashboard"><button className="close-btn" onClick={() => {setOpenEditUserSection(false)}}>Close</button></a>
                         </form>
                     </div>
                 </section>
             }
 
             {openChangePasswordSection &&
-                <section id="change-password" className="add-tournament-section">
+                <section id="change-password" className="edit-user-section">
                     <div className="dashborad-heading">
                         <h1 className='dashborad-main-heading'>Change Password</h1>
                         <hr className={`dashborad-hr-1 ${openChangePasswordSection && "rotate"}`}/><hr className="dashborad-hr-2"/>

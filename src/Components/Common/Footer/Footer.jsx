@@ -1,12 +1,5 @@
 import logo from "../../../Assets/Logo/logo1.png"
 
-import facebook from "../../../Assets/Social-Links/facebook.svg"
-import instagram from "../../../Assets/Social-Links/instagram.svg"
-import youtube from "../../../Assets/Social-Links/youtube.svg"
-import twitter from "../../../Assets/Social-Links/twitter.svg"
-import linkedin from "../../../Assets/Social-Links/linkedin.svg"
-import stick from "../../../Assets/Common/Billiard-Stick.png"
-
 import { FaFacebook, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
 
 import "./Footer.scss"

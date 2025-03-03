@@ -10,6 +10,7 @@
         padding: 30px;
         background: white;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: scroll;
 
         // .dashborad-heading {
         //     // padding: 30px;
@@ -271,7 +272,9 @@
                 .save-btn {
                     margin-top: 10px;
                     display: block;
-                    // justify-content: flex-end;
+                    justify-content: center;
+                    text-align: center;
+                    align-items: center;
                     width: 100px;
                     padding: 10px 5px 10px;
                     background: #fe6b00;
@@ -313,6 +316,27 @@
                     font-size: 20px;
                 }
             }
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .admin-bar-dashboard-container .edit-bar-section .form-table .same-line {
+        flex-direction: column;
+    }
+
+    .admin-bar-dashboard-container .edit-bar-section .form-table .same-line.mobile {
+        flex-direction: row;
+        
+    }
+
+    .admin-bar-dashboard-container .edit-bar-section .form-table .same-line-openclose {
+        .form-label {
+            width: 100% !important;
+        }
+
+        .form-control {
+            width: 100% !important;
         }
     }
 }

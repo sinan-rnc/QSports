@@ -13,6 +13,7 @@
     .section {
         margin-top: 50px;
         display: flex;
+        flex-direction: row;
         gap: 20px;
         // padding: 20px;
         background: #f9f9f9;
@@ -453,14 +454,57 @@
 }
 
 
-@media (max-width : 2600px) {
+// @media (max-width : 2500px) {
+//     .clubs .section .content .product-grid {
+//         grid-template-columns: repeat(3, 1fr);
+//     }
+// }
+
+@media (max-width : 2000px) {
     .clubs .section .content .product-grid {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
-@media (max-width : 2000px) {
+@media (max-width : 1600px) {
     .clubs .section .content .product-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width : 1100px) {
+    .clubs .section .content .product-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media (max-width : 900px) {
+    .clubs  {
+        padding-top: 100px;
+    }
+}
+
+@media (max-width : 768px) {
+    .clubs .section {
+        flex-direction: column;
+
+        .filters {
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width : 500px) {
+    .clubs .section .content .header-controls .product_filters {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .clubs .section .content .product-grid .product-card .product-image {
+        height: 250px;
+    }
+
+    .clubs .section .content .footer-controls .footer-details {
+        text-align: right;
     }
 }

@@ -11,6 +11,7 @@ import { MdOutlineZoomOutMap } from 'react-icons/md';
 import { tournaments } from '../../../DataSet/tournaments';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 export default function UpcomingEvents() {
     const navigate = useNavigate()
@@ -30,20 +31,41 @@ export default function UpcomingEvents() {
         return `${day}-${month}-${year}`;
     };
 
+    const [screenWidth, setScreenWidth] = useState(0);
+    
+        useEffect(() => {
+          // Function to update screen size
+          const updateScreenSize = () => {
+            setScreenWidth(window.innerWidth);
+          };
+      
+          // Initial size update
+          updateScreenSize();
+      
+          // Add event listener for screen resize
+          window.addEventListener("resize", updateScreenSize);
+      
+          // Cleanup on component unmount
+          return () => {
+            window.removeEventListener("resize", updateScreenSize);
+          };
+        }, []);
+        // console.log(clubsAndBars)
+
     return (
         <section className="tournamentevents">
         <div className="tournamentevents-section container-section">
             <div className="tournamentevents-header">
                 <div className='header-top'>
                     <div className="heading">
-                        <h1 className='main-heading'>Tournament Events</h1>
+                        <h1 className='main-heading'>Upcoming Events</h1>
                         <hr className="hr-1"/><hr className="hr-2"/>
                         <h3 className="second-heading">New</h3>
                     </div>
                     <div className="arrow-div">
                         <h4 className="active">Upcoming Events</h4>
                         <h4>Ongoing Events</h4>
-                        <a href="/tournaments"><h4>Show All</h4></a>
+                        <a href="/events"><h4>Show All</h4></a>
                         <button className="arrow1 prev-arrow2"><span>❮</span></button>
                         <button className="arrow1 next-arrow2"><span>❯</span></button>
                     </div>
@@ -59,7 +81,7 @@ export default function UpcomingEvents() {
                 }}
                 pagination={false}
                 spaceBetween={20}
-                slidesPerView={3}
+                slidesPerView={screenWidth >= 2000 ? 4 : screenWidth >= 1200 ? 3 : screenWidth >= 800 ? 2 : 1}
                 loop={true}
                 speed={1000}
                 effect={'coverflow'}

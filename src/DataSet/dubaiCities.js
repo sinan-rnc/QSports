@@ -1,14 +1,12 @@
 export const dubaiCities = [
   "Al Ain",
-  "Dubai Marina",
-  "Business Bay",
-  "Downtown Dubai",
-  "Silicon Oasis",
-  "Al Karama",
-  "Dubai Festival City",
-  "Palm Jumeirah",
-  "Zabeel",
-  "Dubai Sports City",
+  "Abu Dhabi",
+  "Dubai",
+  "Sharjah",
+  "Ajman",
+  "Umm Al Quwain",
+  "Ras Al Khaimah",
+  "Fujairah",
 ];
 
 

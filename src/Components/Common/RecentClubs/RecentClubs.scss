@@ -267,3 +267,17 @@
         }
     }
 }
+
+@media (max-width: 650px) {
+    .recentClubs .recentClubs-section { 
+        position: relative;
+
+        .recentClubs-header .header-top {
+            .arrow-div {
+                position: absolute;
+                bottom: -40px;
+                right: 60px;
+            }
+        }
+    }
+}
