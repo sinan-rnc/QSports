@@ -15,10 +15,30 @@ import { useEffect, useState } from 'react';
 
 export default function UpcomingEvents() {
     const navigate = useNavigate()
+    const [ filterBy, setFilterBy ] = useState("upcoming")
 
     const events = useSelector((state) => {
         return state.events.data
     })
+
+    const getProcessedEvents = () => {
+        const currentDate = new Date(); // Get the current date
+    
+        let filteredArray = events.filter((ele) => {
+    
+            // Filter based on event type (Upcoming or Outgoing)
+            if (filterBy === "upcoming") {
+                return new Date(ele.StartingDate) > currentDate; // Events that haven't started yet
+            } else if (filterBy === "outgoing") {
+                return new Date(ele.EndingDate) < currentDate; // Events that have already ended
+            }
+    
+            return true; // If no event type is specified, return all events
+        });
+    
+        return filteredArray;
+    };
+    
 
     // console.log(events)
 
@@ -63,9 +83,9 @@ export default function UpcomingEvents() {
                         <h3 className="second-heading">New</h3>
                     </div>
                     <div className="arrow-div">
-                        <h4 className="active">Upcoming Events</h4>
-                        <h4>Ongoing Events</h4>
-                        <a href="/events"><h4>Show All</h4></a>
+                        <h4 className={filterBy === "upcoming" ? "active" : ""} onClick={() => {setFilterBy("upcoming")}}>Upcoming Events</h4>
+                        <h4 className={filterBy === "ongoing" ? "active" : ""} onClick={() => {setFilterBy("ongoing")}}>Ongoing Events</h4>
+                        <a href="/events" ><h4>Show All</h4></a>
                         <button className="arrow1 prev-arrow2"><span>❮</span></button>
                         <button className="arrow1 next-arrow2"><span>❯</span></button>
                     </div>
@@ -96,7 +116,7 @@ export default function UpcomingEvents() {
                   }}
                 className="tournamentevents-grid"
             >
-                {events?.map((ele, index) => (
+                {getProcessedEvents()?.map((ele, index) => (
                     <SwiperSlide key={index}>
                         <div className="tournamentevents-card" onClick={() => {navigate(`/events/${ele.EventName.replace(/\s+/g, '-').toLowerCase()}`)}}>
                             <div className="tournamentevents-image">

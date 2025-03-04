@@ -1,10 +1,11 @@
 import logo from "../../../Assets/Logo/logo1.png"
 
-import { FaFacebook, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaFacebook, FaLinkedin, FaTelegram, FaTelegramPlane, FaTiktok, FaTwitter, FaYoutube } from "react-icons/fa";
 
 import "./Footer.scss"
 import { RiInstagramFill } from "react-icons/ri"
 import { useLocation } from "react-router-dom"
+import { FaXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
     const location = useLocation()
@@ -12,7 +13,7 @@ export default function Footer() {
         <footer>
             {/* <hr className="footer-hr"/> */}
             {/* {location.pathname === "/" && <img src={stick} alt="" className="stick"/> }  */}
-            <div className="footer_row container">
+            <div className="footer_row">
                 {/* <div className="footer_col">
                     <div className="logo_div">
                         <img className="logo" src={logo} alt=""/>
@@ -37,20 +38,20 @@ export default function Footer() {
                         <div className="contact_details">
                             <div className="details">
                                 <h2>Phone Number</h2>
-                                <p><a href="tel:971566246705"></a>971 566246705</p>
+                                <p><a href="tel:971566246705">+971 566246705</a></p>
                             </div>
                             <div className="details">
                                 <h2>Email Address</h2>
-                                <p><a href="mailto:qsportsdxb@gmail.com"></a>qsportsdxb@gmail.com</p>
+                                <p><a href="mailto:qsportsdxb@gmail.com">qsportsdxb@gmail.com</a></p>
                             </div>
-                            <div className="details">
+                            {/* <div className="details">
                                 <h2>Our Location</h2>
                                 <p>Silicon Oasis, Dubai, UAE</p>
                             </div>
                             <div className="details">
                                 <h2>Working Hours</h2>
                                 <p>24x7</p>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
@@ -101,9 +102,9 @@ export default function Footer() {
                         <div className="social_links">
                             <a href="https://www.facebook.com/qsportsdxb/"><FaFacebook /></a>
                             <a href="https://www.instagram.com/qsportsdxb?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><RiInstagramFill /></a>
-                            <a href=""><FaYoutube /></a>
-                            <a href=""><FaTwitter /></a>
-                            <a href=""><FaLinkedin /></a>
+                            <a href="https://www.youtube.com/@qsports4073"><FaYoutube /></a>
+                            <a href="https://x.com/Qsports7"><FaXTwitter /></a>
+                            <a href="https://www.tiktok.com/@qsportsdxb?is_from_webapp=1&sender_device=pc"><FaTiktok /></a>
                         </div>
                     </div>
                 </div>

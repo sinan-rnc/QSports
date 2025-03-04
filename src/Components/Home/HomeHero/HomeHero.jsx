@@ -1,7 +1,7 @@
 import "./HomeHero.scss"
 import { RiBilliardsFill, RiSearch2Fill } from "react-icons/ri";
 import { RiExpandUpDownFill } from "react-icons/ri";
-import herobanner from "../../../Assets/Banner/herobanner.jpg"
+import herobanner from "../../../Assets/Banner/herobanner1.webp"
 import { dubaiCities } from "../../../DataSet/dubaiCities";
 import { barsAndClubsNames } from "../../../DataSet/barsAndClubs";
 import { barClubTournaments } from "../../../DataSet/barClubTournaments";

@@ -1,4 +1,4 @@
-import herobanner from "../../../Assets/Banner/herobanner.jpg"
+import herobanner from "../../../Assets/Banner/herobanner1.webp"
 import logo from "../../../Assets/Logo/logo1.png"
 import "./AboutUsHero.scss"
 
@@ -19,8 +19,7 @@ export default function AboutUsHero() {
                         Our platform is designed to bring together a community of players, fans, and club owners through comprehensive listings, 
                         seamless registration systems, and engaging tournaments hosted at top-tier clubs. <br/><br/>
                         <span>
-                        Whether you’re looking for the perfect venue to unwind or seeking thrilling competitions, Qsports ensures you have access to the best options and opportunities. 
-                        With a commitment to fostering engagement, fun, and camaraderie, Qsports is your go-to destination for elevating your club and bar experiences.</span></p>
+                        Whether you’re looking for the perfect venue to unwind, seeking thrilling competitions, or interested in expert coaching and corporate events, Qsports ensures you have access to the best options and opportunities. With a commitment to fostering engagement, fun, and camaraderie, Qsports is your go-to destination for elevating your club and bar experiences while also offering professional coaching and tailored corporate events to enhance team spirit and skill development.</span></p>
                         <img src={logo} alt=""/>
                     </div>
                     <div className="hero-stats">

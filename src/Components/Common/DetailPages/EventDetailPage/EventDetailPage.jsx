@@ -168,9 +168,6 @@ export default function EventDetailPage() {
                 setAlertMessage("Unable to register for the event")
                 setAlertMessageColor("red")
             }
-            
-
-
         }
 
     }
@@ -216,7 +213,8 @@ export default function EventDetailPage() {
                                     <h1>{eventClub?.name},</h1>
                                     <h1>
                                         {eventClub?.city},<br/>
-                                        {eventClub?.address}</h1>
+                                        {/* {eventClub?.address} */}
+                                        </h1>
                                     <h2></h2>
                                 </div>
                             </div>
@@ -310,7 +308,6 @@ export default function EventDetailPage() {
                                 </div>
                                 <h4 className="enrollment-date">Last Enrollment Date: {formatDate(eventData?.LastEnrollmentDate)}</h4>
                                 <h3 className="max-player">Max Player: {eventData?.MaxPlayers}</h3>
-                                <p>{eventData?.EventName} is an electrifying pool and billiards league that brings together top cue sports enthusiasts for a thrilling competition. Players showcase their precision, strategy, and skill in an intense yet sportsmanlike environment. Whether you're a seasoned pro or a rising star, this league promises high-stakes matches, strategic play, and unforgettable moments on the table.</p>
                             </div>
                         </div>
                     </motion.div>

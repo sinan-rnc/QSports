@@ -345,10 +345,10 @@
     text-align: center;
 
     .video-player {
-        width: 100%;
+        width: 40%;
         height: 600px;
-        align-items: flex-start;
-        text-align: start;
+        // align-items: flex-start;
+        // text-align: start;
 
         iframe {
             width: 100%;
@@ -357,9 +357,14 @@
     }
 
     .why-club-text {
+        width: 60%;
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        justify-items: center;
+        align-items: center;
         gap: 50px;
+        padding: 30px;
 
         .why-club-top {
             .why-club-title {
@@ -379,7 +384,6 @@
         }
 
         .why-club-bottom {
-
             .social-link-head {
                 font-size: 30px;
                 text-transform: uppercase;
@@ -404,8 +408,8 @@
 
                 .social {
                     position: relative;
-                    width: 300px;
-                    height: 120px;
+                    width: 150px;
+                    height: 60px;
                     background: #989898;
                     overflow: hidden;
                     display: flex;
@@ -414,7 +418,7 @@
                     transition: .5s;
 
                     svg {
-                        font-size: 250px;
+                        font-size: 125px;
                         color: #cccccc;
                         transition: .5s;
                     }
@@ -425,7 +429,7 @@
                         right: 10px;
                         color: white;
                         text-transform: uppercase;
-                        font-size: 18px;
+                        font-size: 14px;
                         font-weight: 600;
                     }
                 }
@@ -442,6 +446,16 @@
 
                 .facebook:hover {
                     background: #4267B2;
+                    transition: .5s;
+
+                    svg {
+                        color: white;
+                        transition: .5s;
+                    }
+                }
+
+                .tiktok:hover {
+                    background: black;
                     transition: .5s;
 
                     svg {
@@ -506,6 +520,7 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                text-align: center;
                 font-size: 50px;
                 font-weight: 800;
 
@@ -524,6 +539,7 @@
                 h1 {
                     font-size: 30px;
                     letter-spacing: 2px;
+                    font-weight: 600;
                     text-transform: uppercase;
                 }
 
@@ -665,6 +681,11 @@
     .club-detailPage .club-details {
         align-items: center;
 
+        .clubName {
+            text-align: center;
+        }
+
+
         .clubSlogan2 {
             text-align: center;
         }
@@ -673,12 +694,23 @@
             flex-direction: column;
             text-align: center;
 
+            .clubSlogan {
+                text-align: center;
+                background: none;
+                font-size: 20px;
+                font-weight: 500;
+            }
+
             .book-button {
                 width: 250px;
                 margin-left: auto;
                 margin-right: auto;
                 margin-top: 20px;
             }
+        }
+
+        .place-time {
+            padding-left: 0px;
         }
     }
 
@@ -692,6 +724,21 @@
         display: none;
     }
 }
+
+@media (max-width: 500px) {
+    .club-detailPage .club-details .place-time {
+        .place, .time {
+            h1, h2 {
+                font-size: 14px;
+            }
+
+            svg {
+                font-size: 25px;
+            }
+        }
+    }
+}
+
 
 // callout-box
 
@@ -724,10 +771,233 @@
 @media (max-width: 650px) {
     .callout-box {
         flex-direction: column;
-        gap: 20px;
+        gap: 10px;
 
         .callout-text {
             text-align: center;
         }
+    }
+}
+
+@media (max-width: 500px) {
+    .callout-box .callout-buttons {
+        .callout-btn {
+            font-size: 14px;
+        }
+    }
+}
+
+// why club
+
+@media (max-width: 1300px) {
+    .why-club {
+        flex-direction: column;
+        gap: 30px;
+        padding-top: 50px;
+
+        .video-player {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .why-club-text {
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .why-club {
+        .video-player {
+            height: 300px;    
+
+            iframe {
+                height: 300px;
+            }
+        }
+
+        .why-club-text {
+            .why-club-top {
+                .why-club-title {
+                    font-size: 30px;
+                    margin-top: 20px;
+                }
+                .why-club-desc {
+                    padding: 0px 0px 0px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .why-club {
+        .why-club-text {
+            .why-club-bottom {
+                .social-links {
+                    .social {
+                        width: 100px;
+
+                        svg {
+                            font-size: 100px;
+                            margin-top: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Upcoming Events
+@media (max-width: 850px) {
+    .upcoming-events .events {
+        gap: 50px;
+        
+        .event-info {
+            gap: 50px;
+
+            .left {
+                font-size: 30px;
+            }
+
+            .right {
+                h1 {
+                    font-size: 25px;
+                }
+
+                .time {
+                    gap: 10px;
+                    .arrow {
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .upcoming-events {
+        .events {
+            gap: 30px;
+            
+            .event-info {
+                gap: 30px;
+
+                .left {
+                    font-size: 25px;
+                }
+
+                .right {
+                    h1 {
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+
+        .events-comingsoon {
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+    
+            img {
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .upcoming-events .events {
+        flex-direction: column;
+        
+        .img-div {
+            width: 100%;
+        }
+    }
+}
+
+// About us - gallary
+
+@media (max-width: 800px) {
+    .about-us .history {
+        p {
+            padding: 0px 0px 0px;
+        }
+
+        .gallery {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .about-us .history {
+        .history-title {
+            font-size: 30px;
+        }
+        p {
+            font-size: 14px;
+        }
+    }
+}
+
+// Book now 
+
+@media (max-width: 1200px) {
+    .book-now-box {
+        padding: 50px 100px 50px;
+    }
+}
+
+@media (max-width: 900px) {
+    .book-now-box {
+        padding: 50px 50px 50px;
+
+        button {
+            padding: 10px 30px;
+        }
+    }
+}
+
+@media (max-width: 700px) {
+    .book-now-box {
+        h1 {
+            font-size: 25px;
+        }
+
+        p {
+            font-size: 14px;
+        }
+
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .book-now-box {
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+
+            h1 {
+                text-align: center;
+                font-size: 20px;
+            }
+             
+            p {
+                text-align: center;
+            }
     }
 }

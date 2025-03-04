@@ -131,7 +131,8 @@
                         transition: .5s;
     
                         svg {
-                            font-size: 150px;
+                            margin-top: 10px;
+                            font-size: 120px;
                             color: #cccccc;
                             transition: .5s;
                         }
@@ -163,6 +164,20 @@
     
                     .facebook:hover {
                         background: #4267B2;
+                        transition: .5s;
+    
+                        svg {
+                            color: white;
+                            transition: .5s;
+                        }
+
+                        p {
+                            color: black;
+                        }
+                    }
+
+                    .tiktok:hover {
+                        background: black;
                         transition: .5s;
     
                         svg {

@@ -100,6 +100,7 @@ export default function ClubBarProfile() {
         socialMedialinks: [
             { name: "Facebook", icon: "<FaFacebook />", link: "" },
             { name: "Instagram", icon: "<RiInstagramFill />", link: "" },
+            { name: "Tiktok", icon: "<FaTiktok />", link: "" },
         ],
         services: []
     })

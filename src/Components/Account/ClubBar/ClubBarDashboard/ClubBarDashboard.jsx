@@ -3,7 +3,7 @@ import "./ClubBarDashboard.scss"
 
 import addImage from "../../../../Assets/Common/add-image.jpg"
 import { useDispatch, useSelector } from "react-redux";
-import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa"
+import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa"
 import { CgWebsite } from "react-icons/cg"
 import { startDeleteClub } from "../../../../Actions/clubsAndBarsActions"
 import { serverUrl1, serverUrl2 } from "../../../../Apis/api";
@@ -115,6 +115,10 @@ export default function ClubBarDashboard({ setSelectedDashboard }) {
                                 <div className="social facebook"><a href={clubAndBar.socialMedialinks[1]?.link}>
                                     <FaFacebookF style={{marginTop:"10px"}}/>
                                     <p>Facebook</p>
+                                </a></div>
+                                <div className="social tiktok"><a href={clubAndBar.socialMedialinks[2]?.link}>
+                                    <FaTiktok style={{marginTop:"10px"}}/>
+                                    <p>Tiktok</p>
                                 </a></div>
                                 <div className="social youtube"><a href={clubAndBar.youtubevideo}>
                                     <FaYoutube style={{marginTop:"10px"}}/>

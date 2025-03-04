@@ -88,7 +88,7 @@ export const startCreateClub = (formData, setAlertMessage, setAlertMessageColor)
             })
             setAlertMessage("Club Profile Created Successfully")
             setAlertMessageColor("green")
-            // console.log(response)
+            console.log(response)
             dispatch(createClub(response.data.data))
         } catch(err) {
             // console.log(err)

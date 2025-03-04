@@ -56,7 +56,7 @@ export default function ContactUs() {
     return (
         <section>
             <div className="contact-us">
-                <div className="location">
+                {/* <div className="location">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d924516.786991024!2d55.461785!3d25.156181!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f6b6dca9879d9%3A0x6ff60f5cae0a1791!2sRabbit%20And%20Carrot%20LLC!5e0!3m2!1sen!2sus!4v1739357420741!5m2!1sen!2sus"
                         // width="100%"
@@ -67,7 +67,7 @@ export default function ContactUs() {
                         referrerPolicy="no-referrer-when-downgrade"
                         title="Google Map"
                     ></iframe>
-                </div>
+                </div> */}
                 <div className="contact-form">
                     <div className="left">
                         <div className="dashborad-heading">
@@ -77,9 +77,8 @@ export default function ContactUs() {
                         </div>
                         <div className="address-details">
                             <div className="address">
-                                <p>Address: 123, Street Name, City, Country</p>
-                                <p>Phone: +1234567890</p>
-                                <p>Email: <a href="mailto:info@example.com">info@example.com</a></p>
+                                <p>Phone: <a href="tel:+971566246705">+971 566246705</a></p>
+                                <p>Email: <a href="mailto:qsportsdxb@gmail.com">qsportsdxb@gmail.com</a></p>
                             </div>
                             <div className="opening-hours">
                                 <h3>Opening Hours</h3>

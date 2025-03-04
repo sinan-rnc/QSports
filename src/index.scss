@@ -65,13 +65,13 @@ body {
 // }
 
 .container {
-  padding-left: 100px;
-  padding-right: 100px;
+  padding-left: 200px;
+  padding-right: 200px;
 }
 
 .container-section {
-  padding-left: 50px;
-  padding-right: 50px;
+  padding-left: 200px;
+  padding-right: 200px;
 }
 
 ul li {
@@ -243,6 +243,30 @@ a {
 
 .alert-message.green {
   border-left: 5px solid green;
+}
+
+@media (max-width: 2000px) {
+  .container {
+    padding-left: 150px;
+    padding-right: 150px;
+  }
+
+  .container-section {
+    padding-left: 150px;
+    padding-right: 150px;
+  }
+}
+
+@media (max-width: 1600px) {
+  .container {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+
+  .container-section {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
 }
 
 @media (max-width: 900px) {

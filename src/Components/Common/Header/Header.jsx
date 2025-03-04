@@ -3,7 +3,7 @@ import "./Header.scss"
 import { RiBilliardsFill, RiDeleteBin5Fill, RiMenu2Line, RiSearch2Fill } from "react-icons/ri";
 import { LuUserRound } from "react-icons/lu";
 import { SiAmazongames } from "react-icons/si";
-import { FaSearch, FaSearchLocation } from "react-icons/fa";
+import { FaSearch, FaSearchLocation, FaTiktok } from "react-icons/fa";
 import { GiPoolTriangle } from "react-icons/gi";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
@@ -23,6 +23,7 @@ import axios from "axios";
 import { MdRemoveRedEye } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { backendApi } from "../../../Apis/api";
+import { FaXTwitter } from "react-icons/fa6";
 
 export default function Header() {
 
@@ -287,43 +288,48 @@ export default function Header() {
     const handleSearchSubmit = () => {
         // console.log(searchFilterValues)
         // console.log(searchNearByFiltersValues)
-        if(isSearchingNearBy) {
-            if(!searchNearByFiltersValues.latitude || !searchNearByFiltersValues.longitude) {
-                setIsLoading(true)
-            }
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        const { latitude, longitude } = position.coords;
-                        // console.log(latitude, longitude)
-                        setSearchNearByFiltersValues({ ...searchNearByFiltersValues, latitude: latitude, longitude: longitude })
-                        // console.log("Updated Form:", { latitude: latitude, longitude: longitude });
-                    },
-                    (error) => {
-                        console.error("Error getting location:", error);
-                        alert("Failed to get location. Please enable location services.");
-                    }
-                );
-                handleSearchFilters({
-                    isDeleted: false,
-                    sortBy: "createdAt",
-                    limit: 100,
-                    page: 1
-                })
-                handleSearchNearByFilters(searchNearByFiltersValues)
-            } else {
-                setAlertMessage("Geolocation is not supported by your browser");
-                setAlertMessageColor("red")
-            }
+        if(!searchFilterValues.clubType) {
+            setAlertMessage("Please select a club type")
+            setAlertMessageColor("red")
         } else {
-            handleSearchFilters(searchFilterValues)
-            if(searchFilterValues.clubType === "Club") {
-                navigate("/clubs")
-            } else if(searchFilterValues.clubType === "Bar") {
-                navigate("/bars")
+            if(isSearchingNearBy) {
+                if(!searchNearByFiltersValues.latitude || !searchNearByFiltersValues.longitude) {
+                    setIsLoading(true)
+                }
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            const { latitude, longitude } = position.coords;
+                            // console.log(latitude, longitude)
+                            setSearchNearByFiltersValues({ ...searchNearByFiltersValues, latitude: latitude, longitude: longitude })
+                            // console.log("Updated Form:", { latitude: latitude, longitude: longitude });
+                        },
+                        (error) => {
+                            console.error("Error getting location:", error);
+                            alert("Failed to get location. Please enable location services.");
+                        }
+                    );
+                    handleSearchFilters({
+                        isDeleted: false,
+                        sortBy: "createdAt",
+                        limit: 100,
+                        page: 1
+                    })
+                    handleSearchNearByFilters(searchNearByFiltersValues)
+                } else {
+                    setAlertMessage("Geolocation is not supported by your browser");
+                    setAlertMessageColor("red")
+                }
+            } else {
+                handleSearchFilters(searchFilterValues)
+                if(searchFilterValues.clubType === "Club") {
+                    navigate("/clubs")
+                } else if(searchFilterValues.clubType === "Bar") {
+                    navigate("/bars")
+                }
+                handleSearchNearByFilters({})
+                handleOpenSerachDashboard()
             }
-            handleSearchNearByFilters({})
-            handleOpenSerachDashboard()
         }
     //     if(searchCategory === "Clubs") {
     //         navigate("/clubs")
@@ -341,16 +347,16 @@ export default function Header() {
                 <div className="navbar_top">
                     <div className="left_ul">
                         <ul>
-                            <li className="call-us">Call Us : <span>971 012345678</span></li>
+                            <li className="call-us">Call Us : <a href="tel:+971566246705"><span>+971 566246705</span></a></li>
                             {/* <li className="contact-us">Contact Us</li> */}
                             <div className="social">
                                 <p className="social_head">Follow us On :</p>
                                 <div className="social_links">
-                                    <FaFacebook />
-                                    <RiInstagramFill />
-                                    <FaYoutube />
-                                    <FaTwitter />
-                                    <FaLinkedin />
+                                    <a href="https://www.facebook.com/qsportsdxb/"><FaFacebook /></a>
+                                    <a href="https://www.instagram.com/qsportsdxb?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><RiInstagramFill /></a>
+                                    <a href="https://www.youtube.com/@qsports4073"><FaYoutube /></a>
+                                    <a href="https://x.com/Qsports7"><FaXTwitter /></a>
+                                    <a href="https://www.tiktok.com/@qsportsdxb?is_from_webapp=1&sender_device=pc"><FaTiktok /></a>
                                 </div>
                             </div>
                         </ul>
@@ -414,11 +420,11 @@ export default function Header() {
                                     <div className="social">
                                         <p className="social_head">Follow us On :</p>
                                         <div className="social_links">
-                                            <FaFacebook />
-                                            <RiInstagramFill />
-                                            <FaYoutube />
-                                            <FaTwitter />
-                                            <FaLinkedin />
+                                            <a href="https://www.facebook.com/qsportsdxb/"><FaFacebook /></a>
+                                            <a href="https://www.instagram.com/qsportsdxb?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><RiInstagramFill /></a>
+                                            <a href="https://www.youtube.com/@qsports4073"><FaYoutube /></a>
+                                            <a href="https://x.com/Qsports7"><FaXTwitter /></a>
+                                            <a href="https://www.tiktok.com/@qsportsdxb?is_from_webapp=1&sender_device=pc"><FaTiktok /></a>
                                         </div>
                                     </div>
                                     <div className="register-login">
@@ -594,7 +600,7 @@ export default function Header() {
                             />
                             <span class="custom-radio"></span>
                             <select id="location-select" value={searchFilterValues.city} onChange={(e) => handleCityChange(e)}>
-                                <option value="">Select City</option>
+                                <option value="">Select Emirates</option>
                                 {dubaiCities.map((city, index) => (
                                     <option key={index} value={city}>
                                         {city}

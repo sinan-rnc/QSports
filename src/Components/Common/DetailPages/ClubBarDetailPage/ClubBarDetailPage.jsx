@@ -16,7 +16,7 @@ import comimgSoon from "../../../../Assets/Common/coming-soon.avif"
 // import herobanner4 from "../../../../Assets/Bars&Clubs/12.jpg"
 // import herobanner5 from "../../../../Assets/Bars&Clubs/4.jpg"
 // import herobanner6 from "../../../../Assets/Bars&Clubs/7.jpg"
-import { FaFacebookF, FaInstagram } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom"
 import { barsAndClubs } from "../../../../DataSet/barsAndClubs"
 import { tournaments } from "../../../../DataSet/tournaments"
@@ -32,10 +32,10 @@ export default function ClubBarDetailPage() {
                                 .join(' ')
     const clubData = useSelector((state) => {
         return state?.clubsAndBars?.data
-            .find(ele => !ele?.isDeleted && ele?.name === clubNameNew)
+            .find(ele => !ele?.isDeleted && ele?.name.toLowerCase() === clubNameNew.toLowerCase())
     })
     // const clubData = barsAndClubs.find(ele => ele.name === clubNameNew)
-    // console.log(clubData)
+    console.log(clubData)
 
     const clubEvents = useSelector((state) => {
         return state.events.data
@@ -269,6 +269,10 @@ export default function ClubBarDetailPage() {
                                 <a href={clubData?.socialMedialinks[1]?.link}><div className="social instagram">
                                     <FaInstagram />
                                     <p>Instagram</p>
+                                </div></a>
+                                <a href={clubData?.socialMedialinks[1]?.link}><div className="social tiktok">
+                                    <FaTiktok />
+                                    <p>Tiktok</p>
                                 </div></a>
                             </motion.div>
                         </div>
