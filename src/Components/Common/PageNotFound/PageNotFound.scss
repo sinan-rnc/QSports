@@ -1,0 +1,24 @@
+.page-not-found {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 70vh;
+
+    img {
+        width: 400px;
+    }
+
+    p {
+        margin-top: 20px;
+
+        a {
+            text-decoration: underline;
+        }
+
+        a:hover {
+            color: #fe6b00;
+        }
+    }
+}

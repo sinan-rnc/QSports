@@ -28,6 +28,7 @@ import UnAuthorized from "./Components/Common/UnAuthorized/UnAuthorized";
 import { startGetAllQuotes } from "./Actions/quotesAction";
 import AdminAccountPage from "./Pages/AdminAccountPage";
 import { startGetAllUsers } from "./Actions/usersAction";
+import PageNotFound from "./Components/Common/PageNotFound/PageNotFound";
 
 export default function App() {
     const {user, handleLogin, searchFilters, searchNearByFilters} = useAuth()
@@ -69,6 +70,7 @@ export default function App() {
             <Header myTournamentButton={myTournamentButton} handleMyTournamentClick={handleMyTournamentClick}/>
             <Routes>
                 <Route path="/" element={<HomePage/>} />
+                <Route path="*" element={<PageNotFound/>} />
                 <Route path="/about-us" element={<AboutUsPage/>} />
                 <Route path="/clubs" element={<ClubsPage/>} />
                 <Route path="/bars" element={<BarsPage/>} />
