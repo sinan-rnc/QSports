@@ -10,7 +10,7 @@ export default function FeaturedEvents() {
     })
 
     const featuredEvents = events.filter(ele => ele.isFeatured).slice(0, 2)
-    console.log(featuredEvents)
+    // console.log(featuredEvents)
 
 
     const eventClub1 = useSelector((state) => {

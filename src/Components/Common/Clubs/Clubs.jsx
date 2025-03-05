@@ -170,6 +170,7 @@ export default function Bars() {
 
     useEffect(() => {
         if(searchFilterValues.city) {
+            console.log("city")
             handleSearchFilters(searchFilterValues)
         } else if(searchNearByFilters) {
             if(searchNearByFilters.lattitude || searchNearByFilters.longitude)  {

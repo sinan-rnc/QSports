@@ -10,7 +10,7 @@ export const startGetAllClubsAndBars = (searchFilters) => {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
                 }
             })
-            console.log(response.data.data.results)
+            // console.log(response.data.data.results)
             // console.log(searchFilters)
             dispatch(setClubsAndBars(response.data.data.results))
         } catch(err) {
@@ -88,7 +88,7 @@ export const startCreateClub = (formData, setAlertMessage, setAlertMessageColor)
             })
             setAlertMessage("Club Profile Created Successfully")
             setAlertMessageColor("green")
-            console.log(response)
+            // console.log(response)
             dispatch(createClub(response.data.data))
         } catch(err) {
             // console.log(err)

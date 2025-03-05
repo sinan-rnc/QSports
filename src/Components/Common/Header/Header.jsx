@@ -214,6 +214,7 @@ export default function Header() {
     }
     validateErrors()
 
+    console.log(searchNearByFiltersValues)
 
     const handleFormSubmit = async (e) => {
         e.preventDefault()
@@ -327,7 +328,7 @@ export default function Header() {
                 } else if(searchFilterValues.clubType === "Bar") {
                     navigate("/bars")
                 }
-                handleSearchNearByFilters({})
+                // handleSearchNearByFilters({})
                 handleOpenSerachDashboard()
             }
         }

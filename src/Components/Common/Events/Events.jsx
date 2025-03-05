@@ -50,13 +50,15 @@ export default function Events({searchOption}) {
 
     const [sortBy, setSortBy] = useState("")
     const [showNo, setShowNo] = useState(6)
-    const [cityFilterOpen, setCityFilterOpen] = useState(true)
-    const [categoryFilter, setCategoryFilter] = useState("")
-    const [categoryFilterOpen, setCategoryFilterOpen] = useState(true)
-    const [priceFilter, setPriceFilter] = useState("")
-    const [priceFilterOpen, setPriceFilterOpen] = useState(true)
+    // const [cityFilterOpen, setCityFilterOpen] = useState(true)
+    // const [categoryFilter, setCategoryFilter] = useState("")
+    // const [categoryFilterOpen, setCategoryFilterOpen] = useState(true)
+    // const [priceFilter, setPriceFilter] = useState("")
+    // const [priceFilterOpen, setPriceFilterOpen] = useState(true)
     const [eventTypeFilter, setEventTypeFilter] = useState([])
     const [eventTypeFilterOpen, setEventTypeFilterOpen] = useState(true)
+    const [eventDateFilter, setEventDateFilter] = useState("")
+    const [eventDateFilterOpen, setEventDateFilterOpen] = useState(true)
     const [currentPage, setCurrentPage] = useState(1);
     const [gridDisplay, setGridDisplay] = useState("style1")
     const [clubId, setClubId] = useState("")
@@ -75,13 +77,13 @@ export default function Events({searchOption}) {
     // Filtered and sorted array based on selected filters and sort option
     const getProcessedEvents = () => {
         // Find the highest EnrollmentFee in the dataset
-        const maxPrice = Math.max(...events.map(ele => ele.EnrollmentFee));
-        const priceSegment = maxPrice / 3; // Divide into three segments
+        // const maxPrice = Math.max(...events.map(ele => ele.EnrollmentFee));
+        // const priceSegment = maxPrice / 3; // Divide into three segments
 
-        const lowThreshold = priceSegment;
-        const mediumThreshold = priceSegment * 2;
+        // const lowThreshold = priceSegment;
+        // const mediumThreshold = priceSegment * 2;
 
-        console.log(maxPrice)
+        const currentDate = new Date();
 
         // Apply category filter
         let filteredArray = events.filter((ele) => {
@@ -96,10 +98,16 @@ export default function Events({searchOption}) {
             if (eventTypeFilter && !ele?.EventType?.includes(eventTypeFilter)) {
                 return false;
             }
+
+            if (eventDateFilter === "upcoming") {
+                return new Date(ele.StartingDate) > currentDate; // Events that haven't started yet
+            } else if (eventDateFilter === "outgoing") {
+                return new Date(ele.EndingDate) < currentDate; // Events that have already ended
+            }
             // Apply additional filters here (like priceFilter, eventTypeFilter, etc.)
-            if (priceFilter === "high" && ele.EnrollmentFee <= mediumThreshold) return false;
-            if (priceFilter === "medium" && (ele.EnrollmentFee <= lowThreshold || ele.EnrollmentFee > mediumThreshold)) return false;
-            if (priceFilter === "low" && ele.EnrollmentFee > lowThreshold) return false;
+            // if (priceFilter === "high" && ele.EnrollmentFee <= mediumThreshold) return false;
+            // if (priceFilter === "medium" && (ele.EnrollmentFee <= lowThreshold || ele.EnrollmentFee > mediumThreshold)) return false;
+            // if (priceFilter === "low" && ele.EnrollmentFee > lowThreshold) return false;
 
             return true; // Include the item if it passes the filters
         });
@@ -124,11 +132,11 @@ export default function Events({searchOption}) {
 
     const totalFilteredItems = events.filter((ele) => {
         // Find the highest EnrollmentFee in the dataset
-        const maxPrice = Math.max(...events.map(ele => ele.EnrollmentFee));
-        const priceSegment = maxPrice / 3; // Divide into three segments
+        // const maxPrice = Math.max(...events.map(ele => ele.EnrollmentFee));
+        // const priceSegment = maxPrice / 3; // Divide into three segments
 
-        const lowThreshold = priceSegment;
-        const mediumThreshold = priceSegment * 2;
+        // const lowThreshold = priceSegment;
+        // const mediumThreshold = priceSegment * 2;
 
         // if (categoryFilter && !ele.category.includes(categoryFilter)) {
         //     return false; // If category filter does not match, exclude this item
@@ -143,9 +151,9 @@ export default function Events({searchOption}) {
         }
 
         // Apply additional filters here (like priceFilter, eventTypeFilter, etc.)
-        if (priceFilter === "high" && ele.EnrollmentFee <= mediumThreshold) return false;
-            if (priceFilter === "medium" && (ele.EnrollmentFee <= lowThreshold || ele.EnrollmentFee > mediumThreshold)) return false;
-            if (priceFilter === "low" && ele.EnrollmentFee > lowThreshold) return false;
+        // if (priceFilter === "high" && ele.EnrollmentFee <= mediumThreshold) return false;
+        // if (priceFilter === "medium" && (ele.EnrollmentFee <= lowThreshold || ele.EnrollmentFee > mediumThreshold)) return false;
+        // if (priceFilter === "low" && ele.EnrollmentFee > lowThreshold) return false;
 
         return true; // Include the item if it passes the filters
     }).length;
@@ -177,8 +185,9 @@ export default function Events({searchOption}) {
     };
 
     const handleReset = () => {
-        setPriceFilter("");
+        // setPriceFilter("");
         setEventTypeFilter("")
+        setEventDateFilter("")
     }
 
     // console.log(pageNumbers)
@@ -317,6 +326,38 @@ export default function Events({searchOption}) {
                         </motion.ul>
                     </div>
                     <div className="filter-category">
+                        <div className="filter-header" onClick={() => setEventDateFilterOpen(!eventDateFilterOpen)}>
+                            <span>Date Filter</span>
+                            {!eventDateFilterOpen ? <FaCaretDown /> : <FaCaretUp/>}
+                        </div>
+                        <motion.ul
+                            id="categories"
+                            initial={false}
+                            animate={{ height: eventDateFilterOpen ? "auto" : 0 }}
+                            transition={{ duration: 0.5, ease: "easeInOut" }}
+                            className="filter-content"
+                            style={{ overflow: "hidden" }}
+                            >
+                            <li>
+                                <input 
+                                    type="checkbox" 
+                                    value="upcoming" 
+                                    checked={eventDateFilter === "upcoming"}
+                                    onChange={(e) => setEventDateFilter(e.target.value)}
+                                />
+                                <span>Upcoming Events</span>
+                            </li>
+                            <li>
+                                <input 
+                                    type="checkbox" 
+                                    value="ongoing" 
+                                    checked={eventDateFilter === "ongoing"}
+                                    onChange={(e) => setEventDateFilter(e.target.value)}
+                                />
+                                <span>Ongoing Events</span></li>
+                        </motion.ul>
+                    </div>
+                    {/* <div className="filter-category">
                         <div className="filter-header" onClick={() => setPriceFilterOpen(!priceFilterOpen)}>
                             <span>Price</span>
                             {!priceFilterOpen ? <FaCaretDown /> : <FaCaretUp/>}
@@ -348,7 +389,7 @@ export default function Events({searchOption}) {
                                 onChange={(e) => setPriceFilter(e.target.value)} 
                             /><span>Low</span></li>
                         </motion.ul>
-                    </div>
+                    </div> */}
                     <button 
                         className="reset-btn"
                         onClick={handleReset}>Reset</button>
