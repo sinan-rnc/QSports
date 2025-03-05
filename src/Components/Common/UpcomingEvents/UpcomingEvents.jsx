@@ -116,30 +116,38 @@ export default function UpcomingEvents() {
                   }}
                 className="tournamentevents-grid"
             >
-                {getProcessedEvents()?.map((ele, index) => (
-                    <SwiperSlide key={index}>
-                        <div className="tournamentevents-card" onClick={() => {navigate(`/events/${ele.EventName.replace(/\s+/g, '-').toLowerCase()}`)}}>
-                            <div className="tournamentevents-image">
-                                {/* <MdOutlineZoomOutMap /> */}
-                                <img src={ele.EventImage} alt="" />
-                            </div>
-                            <div className="tournamentevents-details">
-                                <div className="top">
-                                    <div className="left">
-                                        <h3>{ele?.EventName}</h3>
-                                        <p>{ele.EventType}</p>
-                                        {/* <p>At {ele.ClubID}</p> */}
-                                    </div>
-                                    <div className="right">
-                                        <p className="price">AED {ele.EnrollmentFee}</p>
-                                        <p className="dateNTime">{formatDate(ele.StartingDate)}</p>
-                                        <button>Register Now</button>
+
+                {getProcessedEvents().length >= 1 ? (
+                    getProcessedEvents()?.map((ele, index) => (
+                        <SwiperSlide key={index}>
+                            <div className="tournamentevents-card" onClick={() => {navigate(`/events/${ele.EventName.replace(/\s+/g, '-').toLowerCase()}`)}}>
+                                <div className="tournamentevents-image">
+                                    {/* <MdOutlineZoomOutMap /> */}
+                                    <img src={ele.EventImage} alt="" />
+                                </div>
+                                <div className="tournamentevents-details">
+                                    <div className="top">
+                                        <div className="left">
+                                            <h3>{ele?.EventName}</h3>
+                                            <p>{ele.EventType}</p>
+                                            {/* <p>At {ele.ClubID}</p> */}
+                                        </div>
+                                        <div className="right">
+                                            <p className="price">AED {ele.EnrollmentFee}</p>
+                                            <p className="dateNTime">{formatDate(ele.StartingDate)}</p>
+                                            <button>Register Now</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </SwiperSlide>
-                ))}
+                        </SwiperSlide>
+                    ))
+                ) : (
+                    <div className="no-events">
+                        <h2>No {filterBy} Events Found</h2>
+                    </div>
+                )}
+                
             </Swiper>
         </div>
         </section>
