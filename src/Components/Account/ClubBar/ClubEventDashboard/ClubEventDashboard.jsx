@@ -15,7 +15,6 @@ export default function ClubEventDashboard() {
         return state.clubsAndBars.data.find(ele => !ele.isDeleted && ele?.createdBy === user?._id)
     });
 
-    // console.log(clubAndBar)
 
     const clubEvents = useSelector((state) => {
         return state.events.data

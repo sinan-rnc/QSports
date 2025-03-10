@@ -39,35 +39,43 @@ export default function ContactUs() {
     };
 
     const handleFormSubmit = async (e) => {
-        e.preventDefault()
-
-        if(Object.keys(errors).length === 0) {
+        e.preventDefault();
+        validateErrors();
+    
+        if (Object.keys(errors).length === 0) {
             try {
-                // console.log(form)
-            } catch(err) {
-                // console.log(err)
-                // alert(err.response.data.message)
+                const response = await fetch("http://localhost:5000/send", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(form)
+                });
+    
+                const result = await response.json();
+                if (response.ok) {
+                    alert(result.message);
+                    setForm({
+                        name: "",
+                        email: "",
+                        phoneNo: "",
+                        subject: "",
+                        description: "",
+                    });
+                } else {
+                    alert(result.message);
+                }
+            } catch (err) {
+                alert("Something went wrong. Please try again later.");
+                console.error(err);
             }
         } else {
-            setFormErrors(errors)
+            setFormErrors(errors);
         }
-    }
+    };
+    
 
     return (
         <section>
             <div className="contact-us">
-                {/* <div className="location">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d924516.786991024!2d55.461785!3d25.156181!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f6b6dca9879d9%3A0x6ff60f5cae0a1791!2sRabbit%20And%20Carrot%20LLC!5e0!3m2!1sen!2sus!4v1739357420741!5m2!1sen!2sus"
-                        // width="100%"
-                        // height="300"
-                        style={{ border: 0 }}
-                        allowFullScreen=""
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                        title="Google Map"
-                    ></iframe>
-                </div> */}
                 <div className="contact-form">
                     <div className="left">
                         <div className="dashborad-heading">

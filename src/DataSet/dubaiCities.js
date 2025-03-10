@@ -1,12 +1,12 @@
 export const dubaiCities = [
-  "Al Ain",
   "Abu Dhabi",
   "Dubai",
   "Sharjah",
   "Ajman",
-  "Umm Al Quwain",
-  "Ras Al Khaimah",
   "Fujairah",
+  "Ras Al Khaimah",
+  "Umm Al Quwain",
+  "Al Ain",
 ];
 
 

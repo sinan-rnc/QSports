@@ -295,7 +295,7 @@ export default function AdminUserDashboard() {
                         <hr className={`dashborad-hr-1 ${openChangePasswordSection && "rotate"}`}/><hr className="dashborad-hr-2"/>
                         <h3 className="dashborad-second-heading">{currentUser && currentUser.userName}</h3>
                     </div>
-                    <div className="tournament-from">
+                    <div className="user-from">
                         <form className="form-table" onSubmit={handlePasswordSubmit}>
                             <div className="same-line">
                                 <div className="form-group">

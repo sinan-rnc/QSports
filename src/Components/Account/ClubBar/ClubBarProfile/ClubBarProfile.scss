@@ -127,7 +127,7 @@
                 flex-direction: column;
                 gap: 10px;
                 text-align: start;
-                overflow: hidden;
+                // overflow: hidden;
 
                 h1 {
                     font-size: 25px;
@@ -145,7 +145,7 @@
                     // width: 300px;
                     background: #eaeaea;
                     border: 2px solid #eaeaea;
-                    overflow: hidden;
+                    // overflow: hidden;
                 }
     
                 .form-control:hover {

@@ -15,7 +15,7 @@ export default function ClubBarDashboard({ setSelectedDashboard }) {
         return state.clubsAndBars.data.find(ele => !ele?.isDeleted && ele?.createdBy === user?._id)
     });
 
-    // console.log(clubAndBar.image.replace(serverUrl2, serverUrl1))
+    console.log(clubAndBar)
 
     const dispatch = useDispatch()
 

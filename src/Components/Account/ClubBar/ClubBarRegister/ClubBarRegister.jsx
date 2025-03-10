@@ -71,7 +71,7 @@ export default function ClubBarRegister() {
         if(Object.keys(errors).length === 0) {
             try {
                 const response = await axios.post(`${backendApi}/users/create-user`, formData)
-                // console.log(response.data)
+                console.log(response.data)
                 // const token = response.data.tokens.access
                 // const user = response.data.data
                 // localStorage.setItem("token", token)

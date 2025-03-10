@@ -58,6 +58,7 @@ export default function ClubBarProfile() {
         image: clubAndBar.image,
         emailAddress: clubAndBar.emailAddress,
         phoneNo: clubAndBar.phoneNo,
+        landline: clubAndBar.landline,
         webSite: clubAndBar.webSite,
         experience: clubAndBar.experience,
         address: clubAndBar.address,
@@ -68,6 +69,8 @@ export default function ClubBarProfile() {
         closeTime: convertTo24HourFormat(clubAndBar.closeTime),
         happyHrRates: clubAndBar.happyHrRates,
         normalHrRates: clubAndBar.normalHrRates,
+        // happyHrFrom: convertTo24HourFormat(clubAndBar.happyHrFrom),
+        // happyHrTo: convertTo24HourFormat(clubAndBar.happyHrTo),
         description: clubAndBar.description,
         history: clubAndBar.history,
         youtubevideo: clubAndBar.youtubevideo,
@@ -83,6 +86,7 @@ export default function ClubBarProfile() {
         image: "",
         emailAddress: "",
         phoneNo: "",
+        landline: "",
         webSite: "",
         experience: "",
         address: "",
@@ -93,6 +97,8 @@ export default function ClubBarProfile() {
         closeTime: "",
         happyHrRates: "",
         normalHrRates: "",
+        happyHrFrom: "",
+        happyHrTo: "",
         description: "",
         history: "",
         youtubevideo: "",
@@ -105,7 +111,7 @@ export default function ClubBarProfile() {
         services: []
     })
 
-    // console.log(form)
+    console.log(form)
 
     const [locationType, setlocationType] = useState()
 
@@ -147,85 +153,28 @@ export default function ClubBarProfile() {
         if(form?.clubType?.trim()?.length === 0){
             errors.clubType = "clubType is Required"
         }
-        if(form?.slogan?.trim()?.length === 0){
-            errors.slogan = `${form.clubType ? form.clubType : "Club/Bar"} Slogan is Required`
-        }
-        if(!form?.image){
-            errors.image = "Image is Required"
-        }
         if(form?.emailAddress?.trim()?.length === 0){
             errors.emailAddress = "Email Address is Required"
         }
         if(form?.phoneNo?.trim()?.length === 0){
             errors.phoneNo = "Phone Number is Required"
         }
-        if(form?.webSite?.trim()?.length === 0){
-            errors.webSite = "Web Site is Required"
-        }
-        if(String(form?.experience)?.trim()?.length === 0){
-            errors.experience = "Experience is Required"
-        }
-        if(form?.address?.trim()?.length === 0){
-            errors.address = "Address is Required"
-        }
-        if(locationType?.trim()?.length === 0){
-            errors.locationType = "Select Geo Location Type"
-        }
-        if((String(form?.latitude)?.trim()?.length === 0) || (String(form?.latitude)?.trim()?.length === 0)){
-            errors.geoLocation = "Latitude and Longitude value is Required"
-        }
-        if(form?.introductionObjtv?.trim()?.length === 0){
-            errors.introductionObjtv = "Introduction & Objectives are Required"
-        }
-        if(form?.openTime?.trim()?.length === 0){
-            errors.openTime = "Opening Time is Required"
-        }
-        if(form?.closeTime?.trim()?.length === 0){
-            errors.closeTime = "Closing Time is Required"
-        }
-        if(String(form?.happyHrRates)?.trim()?.length === 0){
-            errors.happyHrRates = "Happy Hour Rates are Required"
-        }
-        if(String(form?.normalHrRates)?.trim()?.length === 0){
-            errors.normalHrRates = "Normal Hour Rates are Required"
-        }
-        if(form?.description?.trim()?.length === 0){
-            errors.description = "Description is Required"
-        }
-        if(form?.history?.trim()?.length === 0){
-            errors.history = "History is Required"
-        }
-        if(form?.youtubevideo?.trim()?.length === 0){
-            errors.youtubevideo = "YouTube Video Link is Required"
-        }
-        if(form?.pictureGallery?.length < 3){
-            if(form?.pictureGallery?.length === 0){
-                errors.pictureGallery = "Picture Gallery is Required"
-            } else {
-                errors.pictureGallery = "Minimum 3 Picture for Gallery is Required"
-            }
-        }
-        if(form?.socialMedialinks && form?.socialMedialinks[0]?.link?.trim()?.length === 0){
-            errors.facebook = "Facebook Link is Required"
-        }
-        if(form?.socialMedialinks && form?.socialMedialinks[1]?.link?.trim()?.length === 0){
-            errors.instagram = "instagram Link is Required"
-        }
-        if(form?.services?.length === 0){
-            errors.services = "Services are Required"
+        if(form?.socialMedialinks.length === 0){
+            errors.socialMedialinks = "Phone Number is Required"
         }
     }
     validateErrors()
 
     const [availableServices, setAvailableServices] = useState([
-        "No. of pool & snooker tables",
+        "No. of Pool Tables",
+        "No. of Snooker Tables",
         "Ages allowed in the club",
         "Clubs space and seating space",
         "Pool Coaching",
         "Pool & Billiard Products",
         "Table models & sizes",
         "Pool Competitions & Events",
-        "Billiard Balls and Cloth",
+        "Billiard Balls and Club Size",
     ]);
 
     const [availableFoodServices, setAvailableFoodServices] = useState([
@@ -273,14 +222,15 @@ export default function ClubBarProfile() {
     const [selectedFoodServices, setSelectedFoodServices] = useState(clubAndBar?.services ? clubFoodServices : form.services);
 
     const iconsMap = {
-        "No. of pool & snooker tables": "<GiPoolTableCorner />",
+        "No. of Pool Tables": "<GiPoolTableCorner />",
+        "No. of Snooker Tables": "<GiPoolTableCorner />",
         "Ages allowed in the club": "<GiAges />",
         "Clubs space and seating space": "<PiSeatFill />",
         "Pool Coaching": "<GiTeacher />",
         "Pool & Billiard Products": "<GiPoolTriangle />",
         "Table models & sizes": "<FaMoneyBill />",
         "Pool Competitions & Events": "<MdEmojiEvents />",
-        "Billiard Balls and Cloth": "<RiBilliardsFill />",
+        "Billiard Balls and Club Size": "<RiBilliardsFill />",
         "Food": "<IoFastFood />",
         "Drinks": "<BiSolidDrink />",
         "Coffees": "<RiDrinksFill />",
@@ -415,6 +365,16 @@ export default function ClubBarProfile() {
             ),
         }));
     };
+    const handleServiceDescriptionWordChange = (serviceName, value) => {
+        setForm((prevForm) => ({
+            ...prevForm,
+            services: prevForm.services.map((service) =>
+                service.name === serviceName
+                    ? { ...service, descriptionWord: value }
+                    : service
+            ),
+        }));
+    };
 
     const handleSelectFoodServiceChange = (e) => {
         const selectedValue = e.target.value;
@@ -480,17 +440,32 @@ export default function ClubBarProfile() {
 
     const renderInputField = (service) => {
         switch (service) {
-            case "No. of pool & snooker tables":
+            case "No. of Pool Tables":
                 return (
                 <div className="same-line mobile" key={service}>
-                    <label className="form-label" htmlFor="poolTables">No. of pool & snooker tables</label>
+                    <label className="form-label" htmlFor="P">No. of Pool Tables</label>
                     <div className="service-div">
                     <input type="number" className="form-control" 
                         value={ form.services.find(ele => ele.name === service)?.description || "" }
                         onChange={(e) =>
                             handleServiceDescriptionChange(service, e.target.value)
                         }
-                        id="poolTables" placeholder="No. of pool & snooker tables" />
+                        id="poolTables" placeholder="No. of Pool Tables" />
+                    <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
+                    </div>
+                </div>
+                );
+            case "No. of Snooker Tables":
+                return (
+                <div className="same-line mobile" key={service}>
+                    <label className="form-label" htmlFor="tables">No. of Snooker Tables</label>
+                    <div className="service-div">
+                    <input type="number" className="form-control" 
+                        value={ form.services.find(ele => ele.name === service)?.description || "" }
+                        onChange={(e) =>
+                            handleServiceDescriptionChange(service, e.target.value)
+                        }
+                        id="poolTables" placeholder="No. of Snooker Tables" />
                     <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
                     </div>
                 </div>
@@ -500,13 +475,21 @@ export default function ClubBarProfile() {
                 <div className="same-line mobile" key={service}>
                     <label className="form-label" htmlFor="agesAllowed">Ages allowed in the club</label>
                     <div className="service-div">
-                    <input type="number" className="form-control"
-                        value={ form.services.find(ele => ele.name === service)?.description || "" } 
-                        onChange={(e) =>
-                            handleServiceDescriptionChange(service, e.target.value)
-                        }
-                        id="agesAllowed" placeholder="Ages aloud in the club" />
-                    <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
+                        <div className="same-line">
+                            <input type="text" className="form-control"
+                                value={ form.services.find(ele => ele.name === service)?.description || "" } 
+                                onChange={(e) =>
+                                    handleServiceDescriptionChange(service, e.target.value)
+                                }
+                                id="agesAllowed" placeholder="Number" />
+                            <input type="text" className="form-control"
+                                value={ form.services.find(ele => ele.name === service)?.descriptionWord || "" } 
+                                onChange={(e) =>
+                                    handleServiceDescriptionWordChange(service, e.target.value)
+                                }
+                                id="agesAllowed" placeholder="In Words" />
+                        </div>
+                        <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
                         </div>
                 </div>
                 );
@@ -515,14 +498,22 @@ export default function ClubBarProfile() {
                 <div className="same-line mobile" key={service}>
                     <label className="form-label" htmlFor="clubSpace">Club space and seating space</label>
                     <div className="service-div">
-                    <input type="number" className="form-control"
-                        value={ form.services.find(ele => ele.name === service)?.description || "" } 
-                        onChange={(e) =>
-                            handleServiceDescriptionChange(service, e.target.value)
-                        }
-                        id="clubSpace" placeholder="Club space and seating space" />
-                    <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
+                        <div className="same-line">
+                            <input type="text" className="form-control"
+                                value={ form.services.find(ele => ele.name === service)?.description || "" } 
+                                onChange={(e) =>
+                                    handleServiceDescriptionChange(service, e.target.value)
+                                }
+                                id="agesAllowed" placeholder="Number" />
+                            <input type="text" className="form-control"
+                                value={ form.services.find(ele => ele.name === service)?.descriptionWord || "" } 
+                                onChange={(e) =>
+                                    handleServiceDescriptionWordChange(service, e.target.value)
+                                }
+                                id="agesAllowed" placeholder="In Words" />
                         </div>
+                        <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
+                    </div>
                 </div>
                 );
             case "Pool Coaching":
@@ -585,17 +576,17 @@ export default function ClubBarProfile() {
                         </div>
                 </div>
                 );
-            case "Billiard Balls and Cloth":
+            case "Billiard Balls and Club Size":
                 return (
                 <div className="same-line mobile" key={service}>
-                    <label className="form-label" htmlFor="billiardBalls">Billiard Balls and Cloth</label>
+                    <label className="form-label" htmlFor="billiardBalls">Billiard Balls and Club Size</label>
                     <div className="service-div">
                     <input type="text" className="form-control"
                         value={ form.services.find(ele => ele.name === service)?.description || "" }
                         onChange={(e) =>
                             handleServiceDescriptionChange(service, e.target.value)
                         }
-                        id="billiardBalls" placeholder="Billiard Balls and Cloth" />
+                        id="billiardBalls" placeholder="Billiard Balls and Club Size" />
                     <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
                         </div>
                 </div>
@@ -682,6 +673,7 @@ export default function ClubBarProfile() {
             image: "",
             emailAddress: "",
             phoneNo: "",
+            landline: "",
             webSite: "",
             experience: "",
             address: "",
@@ -692,6 +684,8 @@ export default function ClubBarProfile() {
             closeTime: "",
             happyHrRates: "",
             normalHrRates: "",
+            happyHrFrom: "",
+            happyHrTo: "",
             description: "",
             history: "",
             youtubevideo: "",
@@ -699,6 +693,7 @@ export default function ClubBarProfile() {
             socialMedialinks: [
                 { name: "Facebook", icon: "<FaFacebook />", link: "" },
                 { name: "Instagram", icon: "<RiInstagramFill />", link: "" },
+                { name: "Tiktok", icon: "<FaTiktok />", link: "" },
             ],
             services: []
         })
@@ -706,7 +701,7 @@ export default function ClubBarProfile() {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault()
-        // console.log(form)
+        console.log(form)
         // const formData = { ...form }
 
         const formData = new FormData();
@@ -764,44 +759,46 @@ export default function ClubBarProfile() {
                 // console.log("for update, formData", form);
                 // const updatedForm = { ...form, _id: clubAndBar._id }
                 // console.log("for update, formData", formData);
-                dispatch(startUpdateClub(formData, setAlertMessage, setAlertMessageColor));
+                dispatch(startUpdateClub(formData, setAlertMessage, setAlertMessageColor, setSelectedDashboard));
             } else {
                 // console.log("for create, formData", formData);
-                dispatch(startCreateClub(formData, setAlertMessage, setAlertMessageColor));
+                dispatch(startCreateClub(formData, setAlertMessage, setAlertMessageColor, setSelectedDashboard));
             }
-            setSelectedDashboard("dashboard")
             setFormErrors("")
             // console.log(formErrors)
-            setForm({
-                name: "",
-                clubType: "",
-                city: "",
-                contactPerson: "",
-                slogan: "",
-                image: "",
-                emailAddress: "",
-                phoneNo: "",
-                webSite: "",
-                experience: "",
-                address: "",
-                location: "",
-                city: "",
-                introductionObjtv: "",
-                openTime: "",
-                closeTime: "",
-                happyHrRates: "",
-                normalHrRates: "",
-                description: "",
-                history: "",
-                youtubevideo: "",
-                experience: 0,
-                pictureGallery: [],
-                socialMedialinks: [
-                    { name: "Facebook", icon: "<FaFacebook />", link: "" },
-                    { name: "Instagram", icon: "<RiInstagramFill />", link: "" },
-                ],
-                services: []
-            })
+            // setForm({
+            //     name: "",
+            //     contactPerson: "",
+            //     clubType: "",
+            //     city: "",
+            //     slogan: "",
+            //     image: "",
+            //     emailAddress: "",
+            //     phoneNo: "",
+            //     landline: "",
+            //     webSite: "",
+            //     experience: "",
+            //     address: "",
+            //     latitude: "",
+            //     longitude: "",
+            //     introductionObjtv: "",
+            //     openTime: "",
+            //     closeTime: "",
+            //     happyHrRates: "",
+            //     normalHrRates: "",
+            //     happyHrFrom: "",
+            //     happyHrTo: "",
+            //     description: "",
+            //     history: "",
+            //     youtubevideo: "",
+            //     pictureGallery: [],
+            //     socialMedialinks: [
+            //         { name: "Facebook", icon: "<FaFacebook />", link: "" },
+            //         { name: "Instagram", icon: "<RiInstagramFill />", link: "" },
+            //         { name: "Tiktok", icon: "<FaTiktok />", link: "" },
+            //     ],
+            //     services: []
+            // })
         } else {
             setAlertMessage("Fill All the Field Values")
             setAlertMessageColor("red")
@@ -899,8 +896,8 @@ export default function ClubBarProfile() {
                     )}
                     <div className="same-line">
                         <div className="form-group">
-                            <label className="form-label" htmlFor="emailAddress">Email Address</label>
-                            <input type="text" className="form-control" id="emailAddress" name="emailAddress" value={form.emailAddress} onChange={handleChange} placeholder="Enter the Email Address"/>
+                            <label className="form-label" htmlFor="emailAddress">Email</label>
+                            <input type="text" className="form-control" id="emailAddress" name="emailAddress" value={form.emailAddress} onChange={handleChange} placeholder="Enter the Email"/>
                         </div>
                         <div className="form-group">
                             <label className="form-label" htmlFor="phoneNo">Phone Number</label>
@@ -929,12 +926,22 @@ export default function ClubBarProfile() {
                     )}
                     <div className="same-line">
                         <div className="form-group">
+                            <label className="form-label" htmlFor="landline">Landline Number</label>
+                            <input type="text" className="form-control" id="landline" name="landline" value={form.landline} onChange={handleChange} placeholder="Enter the Landline Number"/>
+                        </div>
+                        <div className="form-group">
+                            <label className="form-label" htmlFor="address">Address</label>
+                            <input type="text" className="form-control" id="address" name="address" value={form.address} onChange={handleChange} placeholder="Enter the Address"/>
+                        </div>
+                    </div>
+                    <div className="same-line">
+                        <div className="form-group">
                             <label className="form-label" htmlFor="webSite">Website Link</label>
                             <input type="text" className="form-control" id="webSite" name="webSite" value={form.webSite} onChange={handleChange} placeholder="Enter the Website Link"/>
                         </div>
                         <div className="form-group">
-                            <label className="form-label" htmlFor="experience">Experience Years</label>
-                            <input type="text" className="form-control" id="experience" name="experience" value={form.experience} onChange={handleChange} placeholder="Enter the No.of years of experience"/>
+                            <label className="form-label" htmlFor="experience">Open Since</label>
+                            <input type="text" className="form-control" id="experience" name="experience" value={form.experience} onChange={handleChange} placeholder="Enter the year of opening"/>
                         </div>
                     </div>
                     {(formErrors.webSite || formErrors.experience) && (
@@ -991,20 +998,14 @@ export default function ClubBarProfile() {
                             {formErrors.geoLocation && <div className="alert">{formErrors.geoLocation}</div>}
                         </div>
                     )}
-                    <div className="same-line">
-                        <div className="form-group">
-                            <label className="form-label" htmlFor="address">Address</label>
-                            <input type="text" className="form-control" id="address" name="address" value={form.address} onChange={handleChange} placeholder="Enter the Address"/>
-                        </div>
-                    </div>
                     {formErrors.address && (
                         <div className="same-line">
                             {formErrors.address && <div className="alert alert-danger">{formErrors.address}</div>}
                         </div>
                     )}
                     <div className="form-group">
-                        <label className="form-label" htmlFor="introductionObjtv">{form.clubType ? form.clubType : "Club/Bar"} Introduction</label>
-                        <textarea type="text" className="form-control" id="introductionObjtv" name="introductionObjtv" value={form.introductionObjtv} onChange={handleChange} placeholder="Description about the Club"/>
+                        <label className="form-label" htmlFor="introductionObjtv">{form.clubType ? form.clubType : "Club/Bar"} Introduction and Objectives</label>
+                        <textarea type="text" className="form-control" id="introductionObjtv" name="introductionObjtv" value={form.introductionObjtv} onChange={handleChange} placeholder="Introduce your club and Objectives and what you are about? Brief about services. No. of staff catering. About the ambiance. "/>
                     </div>
                     {formErrors.introductionObjtv &&
                         <div className="same-line">
@@ -1021,7 +1022,7 @@ export default function ClubBarProfile() {
                                 id={selectedServices}
                                 // value={selectedServices}
                                 onChange={handleSelectServiceChange}
-                                placeholder="No. of pool & snooker tables">
+                                placeholder="Select a Service">
                                 {availableServices.length === 0 ? <option value="">All Selected</option> : <option value="">Select a Service</option>}
                                 {availableServices.map((service) => (
                                     <option key={service} value={service}>
@@ -1092,6 +1093,16 @@ export default function ClubBarProfile() {
                                 {formErrors.normalHrRates && <div className="alert">{formErrors.normalHrRates}</div>}
                             </div>
                         )}
+                        <div className="same-line-openclose">
+                            <div className="same-line">
+                                <label className="form-label" htmlFor="happyHrFrom">Happy hour From</label>
+                                <input type="time" className="form-control" id="happyHrFrom" name="happyHrFrom" value={form.happyHrFrom} onChange={handleChange} placeholder="Open"/>
+                            </div>
+                            <div className="same-line">
+                                <label className="form-label" htmlFor="happyHrTo">Happy hour UpTo</label>
+                                <input type="time" className="form-control" id="happyHrTo" name="happyHrTo" value={form.happyHrTo} onChange={handleChange} placeholder="Close"/>
+                            </div>
+                        </div>
                     </div>
                     <div className="form-group">
                         <label className="form-label" htmlFor="description">Why "Your Club name here"</label>
@@ -1136,9 +1147,9 @@ export default function ClubBarProfile() {
                             </div>
                         ))}
                     </div>
-                    {(formErrors.facebook || formErrors.instagram) && (
+                    {(formErrors.socialMedialinks) && (
                         <div className="same-line">
-                            {formErrors.facebook && <div className="alert">{formErrors.facebook}</div>}
+                            {formErrors.socialMedialinks && <div className="alert">{formErrors.socialMedialinks}</div>}
                             {formErrors.instagram && <div className="alert">{formErrors.instagram}</div>}
                         </div>
                     )}
