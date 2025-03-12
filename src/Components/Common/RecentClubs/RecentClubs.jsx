@@ -7,6 +7,7 @@ import 'swiper/css/pagination';
 import { barsAndClubs } from "../../../DataSet/barsAndClubs"
 
 import "./RecentClubs.scss"
+import addImage from "../../../Assets/Common/add-image.jpg"
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
@@ -89,7 +90,7 @@ export default function RecentBars() {
                                 <div className="recentClubs-card" onClick={() => {navigate(`/clubs/${ele.name.replace(/\s+/g, '-').toLowerCase()}`)}}>
                                     <div className="recentClubs-image">
                                         {/* <MdOutlineZoomOutMap /> */}
-                                        <img src={ele.image} alt="" />
+                                        {ele.image ? <img src={ele.image} alt=""/> : <img src={addImage} alt=""/>}
                                     </div>
                                     <div className="recentClubs-details">
                                     <div className="left">

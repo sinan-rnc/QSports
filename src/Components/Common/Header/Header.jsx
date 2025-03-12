@@ -214,7 +214,7 @@ export default function Header() {
     }
     validateErrors()
 
-    console.log(searchNearByFiltersValues)
+    // console.log(searchNearByFiltersValues)
 
     const handleFormSubmit = async (e) => {
         e.preventDefault()

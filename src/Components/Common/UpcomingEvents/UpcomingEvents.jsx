@@ -12,6 +12,7 @@ import { tournaments } from '../../../DataSet/tournaments';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import addImage from "../../../Assets/Common/add-image.jpg"
 
 export default function UpcomingEvents() {
     const navigate = useNavigate()
@@ -123,7 +124,8 @@ export default function UpcomingEvents() {
                             <div className="tournamentevents-card" onClick={() => {navigate(`/events/${ele.EventName.replace(/\s+/g, '-').toLowerCase()}`)}}>
                                 <div className="tournamentevents-image">
                                     {/* <MdOutlineZoomOutMap /> */}
-                                    <img src={ele.EventImage} alt="" />
+                                    {/* <img src={ele.EventImage} alt="" /> */}
+                                    {ele.EventImage ? <img src={ele.EventImage} alt=""/> : <img src={addImage} alt=""/>}
                                 </div>
                                 <div className="tournamentevents-details">
                                     <div className="top">

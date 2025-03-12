@@ -59,7 +59,9 @@ export default function UserDashboard({ setSelectedDashboard }) {
                                 <p className="email" style={{marginTop:"20px"}}><b>Email:</b> {user.email}</p>
                                 <p style={{marginTop:"10px"}}><b>NickName:</b> {profile.NickName}</p>
                                 <p style={{marginTop:"10px"}}><b>DOB:</b> {formatDate(profile.DOB)}</p>
+                                {profile.AboutMe && (
                                 <p className="about" style={{marginTop:"10px"}}><b>About:</b> {profile.AboutMe}</p>
+                                )}
                             </div>
                             {user && profile && <button className="delete-profile" onClick={() => {handleDeleteProfile(profile)}}>Delete Profile</button>}
                         </div>

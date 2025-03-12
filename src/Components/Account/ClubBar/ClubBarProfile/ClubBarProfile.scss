@@ -221,9 +221,17 @@
 
         .upload-gallery{
             display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            gap: 5px;
+            flex-wrap: wrap;  /* Ensures wrapping */
+            justify-content: flex-start; /* Centers the cards */
+            gap: 20px; /* Fixed gap between cards */
+
+
+            .gallery-item {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 5px;
+            }
 
             p {
                 display: flex;

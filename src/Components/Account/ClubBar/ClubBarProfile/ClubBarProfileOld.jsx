@@ -23,8 +23,6 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaMagnifyingGlassLocation } from "react-icons/fa6";
 import { FaSearchLocation } from "react-icons/fa";
 import { RiDeleteBin5Fill } from "react-icons/ri";
-import { CgRemove } from "react-icons/cg";
-import { MdRemoveCircle } from "react-icons/md";
 
 export default function ClubBarProfile() {
     const { user, setSelectedDashboard } = useAuth()
@@ -51,38 +49,31 @@ export default function ClubBarProfile() {
 
     // console.log("ClubandBar", clubAndBar.geoLocation)
 
-    const [form, setForm] = useState(clubAndBar ? {
-        name: clubAndBar.name || "",
-        contactPerson: clubAndBar.contactPerson || "",
-        clubType: clubAndBar.clubType || "",
-        city: clubAndBar.city || "",
-        slogan: clubAndBar.slogan || "",
-        image: clubAndBar.image || "",
-        emailAddress: clubAndBar.emailAddress || "",
-        phoneNo: clubAndBar.phoneNo || "",
-        landLineNo: clubAndBar.landLineNo || "",
-        webSite: clubAndBar.webSite || "",
-        experience: clubAndBar.experience || "",
-        address: clubAndBar.address || "",
-        latitude: clubAndBar.geoLocation?.coordinates[1] || "",
-        longitude: clubAndBar.geoLocation?.coordinates[0] || "",
-        introductionObjtv: clubAndBar.introductionObjtv || "",
-        openTime: clubAndBar?.openTime || "",
-        closeTime: clubAndBar?.closeTime || "",
-        happyHrRates: clubAndBar.happyHrRates || "",
-        normalHrRates: clubAndBar.normalHrRates || "",
-        startTime: clubAndBar.startTime || "",
-        endTime: clubAndBar.endTime || "",
-        description: clubAndBar.description || "",
-        history: clubAndBar.history || "",
-        youtubevideo: clubAndBar.youtubevideo || "",
-        pictureGallery: clubAndBar.pictureGallery || [],
-        socialMedialinks: clubAndBar.socialMedialinks || [
-            { name: "Facebook", link: "" },
-            { name: "Instagram", link: "" },
-            { name: "Tiktok", link: "" },
-        ],
-        services: clubAndBar.services || []
+    const [ form, setForm ] = useState(clubAndBar ? {
+        name: clubAndBar.name,
+        contactPerson: clubAndBar.contactPerson,
+        clubType: clubAndBar.clubType,
+        city: clubAndBar.city,
+        slogan: clubAndBar.slogan,
+        image: clubAndBar.image,
+        emailAddress: clubAndBar.emailAddress,
+        phoneNo: clubAndBar.phoneNo,
+        webSite: clubAndBar.webSite,
+        experience: clubAndBar.experience,
+        address: clubAndBar.address,
+        latitude: clubAndBar.geoLocation?.coordinates[1],
+        longitude: clubAndBar.geoLocation?.coordinates[0],
+        introductionObjtv: clubAndBar.introductionObjtv,
+        openTime: convertTo24HourFormat(clubAndBar.openTime),
+        closeTime: convertTo24HourFormat(clubAndBar.closeTime),
+        happyHrRates: clubAndBar.happyHrRates,
+        normalHrRates: clubAndBar.normalHrRates,
+        description: clubAndBar.description,
+        history: clubAndBar.history,
+        youtubevideo: clubAndBar.youtubevideo,
+        pictureGallery: clubAndBar.pictureGallery,
+        socialMedialinks: clubAndBar.socialMedialinks,
+        services: clubAndBar.services,
     } : { 
         name: "",
         contactPerson: "",
@@ -92,7 +83,6 @@ export default function ClubBarProfile() {
         image: "",
         emailAddress: "",
         phoneNo: "",
-        landLineNo: "",
         webSite: "",
         experience: "",
         address: "",
@@ -103,22 +93,19 @@ export default function ClubBarProfile() {
         closeTime: "",
         happyHrRates: "",
         normalHrRates: "",
-        startTime: "",
-        endTime: "",
         description: "",
         history: "",
         youtubevideo: "",
         pictureGallery: [],
         socialMedialinks: [
-            { name: "Facebook", link: "" },
-            { name: "Instagram", link: "" },
-            { name: "Tiktok", link: "" },
+            { name: "Facebook", icon: "<FaFacebook />", link: "" },
+            { name: "Instagram", icon: "<RiInstagramFill />", link: "" },
+            { name: "Tiktok", icon: "<FaTiktok />", link: "" },
         ],
         services: []
-    });
-    
+    })
 
-    console.log(form)
+    // console.log(form)
 
     const [locationType, setlocationType] = useState()
 
@@ -160,24 +147,78 @@ export default function ClubBarProfile() {
         if(form?.clubType?.trim()?.length === 0){
             errors.clubType = "clubType is Required"
         }
+        if(form?.slogan?.trim()?.length === 0){
+            errors.slogan = `${form.clubType ? form.clubType : "Club/Bar"} Slogan is Required`
+        }
+        if(!form?.image){
+            errors.image = "Image is Required"
+        }
         if(form?.emailAddress?.trim()?.length === 0){
             errors.emailAddress = "Email Address is Required"
         }
         if(form?.phoneNo?.trim()?.length === 0){
             errors.phoneNo = "Phone Number is Required"
         }
-        // if(form?.socialMedialinks.length === 0){
-        //     errors.socialMedialinks = "Phone Number is Required"
-        // }
-        if(!form?.longitude || !form?.latitude){
-            errors.location = "Latitude and Longitude is Required"
+        if(form?.webSite?.trim()?.length === 0){
+            errors.webSite = "Web Site is Required"
+        }
+        if(String(form?.experience)?.trim()?.length === 0){
+            errors.experience = "Experience is Required"
+        }
+        if(form?.address?.trim()?.length === 0){
+            errors.address = "Address is Required"
+        }
+        if(locationType?.trim()?.length === 0){
+            errors.locationType = "Select Geo Location Type"
+        }
+        if((String(form?.latitude)?.trim()?.length === 0) || (String(form?.latitude)?.trim()?.length === 0)){
+            errors.geoLocation = "Latitude and Longitude value is Required"
+        }
+        if(form?.introductionObjtv?.trim()?.length === 0){
+            errors.introductionObjtv = "Introduction & Objectives are Required"
+        }
+        if(form?.openTime?.trim()?.length === 0){
+            errors.openTime = "Opening Time is Required"
+        }
+        if(form?.closeTime?.trim()?.length === 0){
+            errors.closeTime = "Closing Time is Required"
+        }
+        if(String(form?.happyHrRates)?.trim()?.length === 0){
+            errors.happyHrRates = "Happy Hour Rates are Required"
+        }
+        if(String(form?.normalHrRates)?.trim()?.length === 0){
+            errors.normalHrRates = "Normal Hour Rates are Required"
+        }
+        if(form?.description?.trim()?.length === 0){
+            errors.description = "Description is Required"
+        }
+        if(form?.history?.trim()?.length === 0){
+            errors.history = "History is Required"
+        }
+        if(form?.youtubevideo?.trim()?.length === 0){
+            errors.youtubevideo = "YouTube Video Link is Required"
+        }
+        if(form?.pictureGallery?.length < 3){
+            if(form?.pictureGallery?.length === 0){
+                errors.pictureGallery = "Picture Gallery is Required"
+            } else {
+                errors.pictureGallery = "Minimum 3 Picture for Gallery is Required"
+            }
+        }
+        if(form?.socialMedialinks && form?.socialMedialinks[0]?.link?.trim()?.length === 0){
+            errors.facebook = "Facebook Link is Required"
+        }
+        if(form?.socialMedialinks && form?.socialMedialinks[1]?.link?.trim()?.length === 0){
+            errors.instagram = "instagram Link is Required"
+        }
+        if(form?.services?.length === 0){
+            errors.services = "Services are Required"
         }
     }
     validateErrors()
 
     const [availableServices, setAvailableServices] = useState([
-        "No. of Pool Tables",
-        "No. of Snooker Tables",
+        "No. of pool & snooker tables",
         "Ages allowed in the club",
         "Clubs space and seating space",
         "Pool Coaching",
@@ -224,12 +265,6 @@ export default function ClubBarProfile() {
         }
     }, [form.latitude, form.longitude])
 
-    useEffect(() => {
-        if (form.latitude && form.longitude) {
-            setlocationType("LatAndLong")
-        }
-    }, [form.latitude, form.longitude])
-
     // console.log("availableServices", availableServices)
 
     // console.log("clubServices", clubServices, "clubFoodServices",clubFoodServices)
@@ -238,8 +273,7 @@ export default function ClubBarProfile() {
     const [selectedFoodServices, setSelectedFoodServices] = useState(clubAndBar?.services ? clubFoodServices : form.services);
 
     const iconsMap = {
-        "No. of Pool Tables": "<GiPoolTableCorner />",
-        "No. of Snooker Tables": "<GiPoolTableCorner />",
+        "No. of pool & snooker tables": "<GiPoolTableCorner />",
         "Ages allowed in the club": "<GiAges />",
         "Clubs space and seating space": "<PiSeatFill />",
         "Pool Coaching": "<GiTeacher />",
@@ -264,29 +298,14 @@ export default function ClubBarProfile() {
         // console.log("Updated phone number:", value);
     };
 
-    // Update the state handling function
-    const handleSocialMediaChange = (platform, value) => {
+    const handleSocialMediaChange = (platformName, value) => {
         setForm((prevForm) => {
-            const updatedLinks = [...(prevForm.socialMedialinks || [])];
-            
-            // Find the index of the platform if it already exists
-            const index = updatedLinks.findIndex(link => link.name === platform);
-    
-            if (value === "") {
-                // Remove the entry if the input is cleared
-                if (index !== -1) updatedLinks.splice(index, 1);
-            } else if (index !== -1) {
-                // Update the existing entry
-                updatedLinks[index].link = value;
-            } else {
-                // Add a new entry if it doesn't exist
-                updatedLinks.push({ name: platform, icon: "", link: value });
-            }
-    
+            const updatedLinks = prevForm.socialMedialinks.map((platform) =>
+                platform.name === platformName ? { ...platform, link: value } : platform
+            );
             return { ...prevForm, socialMedialinks: updatedLinks };
         });
     };
-    
 
     const handleImageChange = (e) => {
         // const file = e.target.files[0];
@@ -312,91 +331,31 @@ export default function ClubBarProfile() {
     //     }
     // };
     
-    // const handleGalleryChange = (e) => {
-    //     const files = Array.from(e.target.files);
-    
-    //     setForm((prevForm) => {
-    //         // Get existing images from previous state and concatenate new ones
-    //         const updatedGallery = [...prevForm.pictureGallery, ...files];
-    
-    //         return {
-    //             ...prevForm,
-    //             pictureGallery: updatedGallery.filter(
-    //                 (file, index, self) => self.findIndex(img => img.name === file.name) === index
-    //             ), // Remove duplicates
-    //         };
-    //     });
-    //     // form.updatedGallery
-    
-    //     e.target.value = ""; // Reset input
-    // };
-
-    // const handleGalleryChange = (e) => {
-    //     const files = Array.from(e.target.files); // Get the selected files
-    
-    //     if (files.length > 0) {
-    //         setForm((prevForm) => {
-    //             // Combine existing images with new ones, while ensuring no duplicates
-    //             const updatedGallery = [
-    //                 ...prevForm.pictureGallery,
-    //                 ...files.filter(file => 
-    //                     !prevForm.pictureGallery.some(existingFile => existingFile.name === file.name)
-    //                 ),
-    //             ];
-    
-    //             // Ensure the gallery doesn't exceed 5 images
-    //             const limitedGallery = updatedGallery.slice(0, 5);
-    
-    //             return {
-    //                 ...prevForm,
-    //                 pictureGallery: limitedGallery,
-    //             };
-    //         });
-    //     }
-    
-    //     e.target.value = ""; // Reset input
-    // };
-    
-    
     const handleGalleryChange = (e) => {
-        const files = Array.from(e.target.files); // Get the selected files
+        const files = Array.from(e.target.files);
     
-        if (files.length > 0) {
-            setForm((prevForm) => {
-                // Combine existing images with new ones, while ensuring no duplicates
-                const updatedGallery = [
-                    ...prevForm.pictureGallery,
-                    ...files.filter(file => 
-                        !prevForm.pictureGallery.some(existingFile => existingFile.name === file.name)
-                    ),
-                ];
+        setForm((prevForm) => {
+            // Get existing images from previous state and concatenate new ones
+            const updatedGallery = [...prevForm.pictureGallery, ...files];
     
-                // Ensure the gallery doesn't exceed 5 images
-                const limitedGallery = updatedGallery.slice(0, 5);
-    
-                return {
-                    ...prevForm,
-                    pictureGallery: limitedGallery,
-                };
-            });
-        }
+            return {
+                ...prevForm,
+                pictureGallery: updatedGallery.filter(
+                    (file, index, self) => self.findIndex(img => img.name === file.name) === index
+                ), // Remove duplicates
+            };
+        });
+        // form.updatedGallery
     
         e.target.value = ""; // Reset input
     };
-    
+       
 
-    // const handleRemoveGalleryImage = () => {
-    //     setForm({...form, pictureGallery: []});
-    //     // console.log(form.pictureGallery)
-    // };
+    const handleRemoveGalleryImage = () => {
+        setForm({...form, pictureGallery: []});
 
-    const handleRemoveGalleryImage = (imageName) => {
-        setForm((prevForm) => ({
-            ...prevForm,
-            pictureGallery: prevForm.pictureGallery.filter(image => image.name !== imageName),
-        }));
-    };    
-    
+        // console.log(form.pictureGallery)
+    };
 
     const handleGeoLocationChange = () => {
         if (navigator.geolocation) {
@@ -430,22 +389,21 @@ export default function ClubBarProfile() {
                 prevServices.filter((service) => service !== selectedValue)
             );
         }
-    
+
         setForm((prevForm) => ({
             ...prevForm,
             services: [
                 ...prevForm.services,
                 {
                     name: selectedValue,
-                    icon: iconsMap[selectedValue] || "", 
-                    description: "", 
-                    descriptionWord: "" // Ensure descriptionWord is initialized
+                    icon: iconsMap[selectedValue] || "", // Default empty, can be updated later
+                    description: "", // Default empty, can be updated later
                 },
             ],
         }));
-    
-        e.target.value = ""; 
-    };    
+
+        e.target.value = ""; // Reset dropdown to default option
+    };
     
     const handleServiceDescriptionChange = (serviceName, value) => {
         setForm((prevForm) => ({
@@ -453,16 +411,6 @@ export default function ClubBarProfile() {
             services: prevForm.services.map((service) =>
                 service.name === serviceName
                     ? { ...service, description: value }
-                    : service
-            ),
-        }));
-    };
-    const handleServiceDescriptionWordChange = (serviceName, value) => {
-        setForm((prevForm) => ({
-            ...prevForm,
-            services: prevForm.services.map((service) =>
-                service.name === serviceName
-                    ? { ...service, descriptionWord: value }
                     : service
             ),
         }));
@@ -532,32 +480,17 @@ export default function ClubBarProfile() {
 
     const renderInputField = (service) => {
         switch (service) {
-            case "No. of Pool Tables":
+            case "No. of pool & snooker tables":
                 return (
                 <div className="same-line mobile" key={service}>
-                    <label className="form-label" htmlFor="P">No. of Pool Tables</label>
+                    <label className="form-label" htmlFor="poolTables">No. of pool & snooker tables</label>
                     <div className="service-div">
                     <input type="number" className="form-control" 
                         value={ form.services.find(ele => ele.name === service)?.description || "" }
                         onChange={(e) =>
                             handleServiceDescriptionChange(service, e.target.value)
                         }
-                        id="poolTables" placeholder="No. of Pool Tables" />
-                    <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
-                    </div>
-                </div>
-                );
-            case "No. of Snooker Tables":
-                return (
-                <div className="same-line mobile" key={service}>
-                    <label className="form-label" htmlFor="tables">No. of Snooker Tables</label>
-                    <div className="service-div">
-                    <input type="number" className="form-control" 
-                        value={ form.services.find(ele => ele.name === service)?.description || "" }
-                        onChange={(e) =>
-                            handleServiceDescriptionChange(service, e.target.value)
-                        }
-                        id="poolTables" placeholder="No. of Snooker Tables" />
+                        id="poolTables" placeholder="No. of pool & snooker tables" />
                     <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
                     </div>
                 </div>
@@ -567,22 +500,14 @@ export default function ClubBarProfile() {
                 <div className="same-line mobile" key={service}>
                     <label className="form-label" htmlFor="agesAllowed">Ages allowed in the club</label>
                     <div className="service-div">
-                        <div className="same-line">
-                            <input type="text" className="form-control"
-                                value={ form.services.find(ele => ele.name === service)?.description || "" } 
-                                onChange={(e) =>
-                                    handleServiceDescriptionChange(service, e.target.value)
-                                }
-                                id="agesAllowed" placeholder="Number" />
-                            <input type="text" className="form-control"
-                                value={ form.services.find(ele => ele.name === service)?.descriptionWord || "" } 
-                                onChange={(e) =>
-                                    handleServiceDescriptionWordChange(service, e.target.value)
-                                }
-                                id="agesAllowed" placeholder="In Words" />
+                    <input type="number" className="form-control"
+                        value={ form.services.find(ele => ele.name === service)?.description || "" } 
+                        onChange={(e) =>
+                            handleServiceDescriptionChange(service, e.target.value)
+                        }
+                        id="agesAllowed" placeholder="Ages allowed in the club" />
+                    <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
                         </div>
-                        <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
-                    </div>
                 </div>
                 );
             case "Clubs space and seating space":
@@ -590,22 +515,14 @@ export default function ClubBarProfile() {
                 <div className="same-line mobile" key={service}>
                     <label className="form-label" htmlFor="clubSpace">Club space and seating space</label>
                     <div className="service-div">
-                        <div className="same-line">
-                            <input type="text" className="form-control"
-                                value={ form.services.find(ele => ele.name === service)?.description || "" } 
-                                onChange={(e) =>
-                                    handleServiceDescriptionChange(service, e.target.value)
-                                }
-                                id="agesAllowed" placeholder="Number" />
-                            <input type="text" className="form-control"
-                                value={ form.services.find(ele => ele.name === service)?.descriptionWord || "" } 
-                                onChange={(e) =>
-                                    handleServiceDescriptionWordChange(service, e.target.value)
-                                }
-                                id="agesAllowed" placeholder="In Words" />
+                    <input type="number" className="form-control"
+                        value={ form.services.find(ele => ele.name === service)?.description || "" } 
+                        onChange={(e) =>
+                            handleServiceDescriptionChange(service, e.target.value)
+                        }
+                        id="clubSpace" placeholder="Club space and seating space" />
+                    <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
                         </div>
-                        <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
-                    </div>
                 </div>
                 );
             case "Pool Coaching":
@@ -765,7 +682,6 @@ export default function ClubBarProfile() {
             image: "",
             emailAddress: "",
             phoneNo: "",
-            landLineNo: "",
             webSite: "",
             experience: "",
             address: "",
@@ -776,16 +692,14 @@ export default function ClubBarProfile() {
             closeTime: "",
             happyHrRates: "",
             normalHrRates: "",
-            startTime: "",
-            endTime: "",
             description: "",
             history: "",
             youtubevideo: "",
             pictureGallery: [],
             socialMedialinks: [
-                { name: "Facebook", link: "" },
-            { name: "Instagram", link: "" },
-            { name: "Tiktok", link: "" },
+                { name: "Facebook", icon: "<FaFacebook />", link: "" },
+                { name: "Instagram", icon: "<RiInstagramFill />", link: "" },
+                { name: "Tiktok", icon: "<FaTiktok />", link: "" },
             ],
             services: []
         })
@@ -818,7 +732,7 @@ export default function ClubBarProfile() {
             formData.append("image", form.image);
         }
     
-        // Append pictureGallery files if the array is not empty
+        // Append pictureGallery files
         if (Array.isArray(form.pictureGallery) && form.pictureGallery.length > 0) {
             form.pictureGallery.forEach((file) => {
                 if (file instanceof File) {
@@ -827,33 +741,32 @@ export default function ClubBarProfile() {
             });
         }
     
-        // Append socialMedialinks if the array is not empty
-        if (Array.isArray(form.socialMedialinks) && form.socialMedialinks.length > 0) {
+        // Append socialMedialinks
+        if (Array.isArray(form.socialMedialinks)) {
             form.socialMedialinks.forEach((item, index) => {
                 if (item.link) { // Only append if there's a valid link
                     formData.append(`socialMedialinks[${index}][name]`, item.name || "");
                     formData.append(`socialMedialinks[${index}][icon]`, item.icon || "");
-                    formData.append(`socialMedialinks[${index}][link]`, item.link || "");
+                    formData.append(`socialMedialinks[${index}][link]`, item.link);
                 }
             });
         }
     
-        // Append services if the array is not empty
-        if (Array.isArray(form.services) && form.services.length > 0) {
+        // Append services
+        if (Array.isArray(form.services)) {
             form.services.forEach((item, index) => {
                 if (item.name || item.icon || item.description || item.descriptionWord) { // Only append if any of the fields are present
                     formData.append(`services[${index}][name]`, item.name || "");
                     formData.append(`services[${index}][icon]`, item.icon || "");
                     formData.append(`services[${index}][description]`, item.description || "");
-                    // formData.append(`services[${index}][descriptionWord]`, item.descriptionWord || "");
                 }
             });
         }
     
         // Check appended data
-        // for (let [key, value] of formData.entries()) {
-        //     console.log(`${key}: ${value}`);
-        // }
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
     
         if (Object.keys(errors).length === 0) {
             if (clubAndBar) {
@@ -872,7 +785,7 @@ export default function ClubBarProfile() {
         }
     };
     
-     
+    
     return (
         <div className="clubBar-profile-container">
             <div className="clubBar-profile-section">
@@ -884,11 +797,11 @@ export default function ClubBarProfile() {
                 <form className="form-table" onSubmit={handleFormSubmit}>
                     <div className="same-line">
                         <div className="form-group">
-                            <label className="form-label" htmlFor="name">{form.clubType ? form.clubType : "Club/Bar"} Name*</label>
+                            <label className="form-label" htmlFor="name">{form.clubType ? form.clubType : "Club/Bar"} Name</label>
                             <input type="text" className="form-control" id="name" name="name" value={form.name} onChange={handleChange} placeholder={`Enter the ${form.clubType ? form.clubType : "Club/Bar"} Name`}/>
                         </div>
                         <div className="form-group">
-                            <label className="form-label" htmlFor="contactPerson">Contact Person Name*</label>
+                            <label className="form-label" htmlFor="contactPerson">Contact Person Name</label>
                             <input type="text" className="form-control" id="contactPerson" name="contactPerson" value={form.contactPerson} onChange={handleChange} placeholder="Enter Contact Person Name"/>
                         </div>
                     </div>
@@ -962,8 +875,8 @@ export default function ClubBarProfile() {
                     )}
                     <div className="same-line">
                         <div className="form-group">
-                            <label className="form-label" htmlFor="emailAddress">Email</label>
-                            <input type="text" className="form-control" id="emailAddress" name="emailAddress" value={form.emailAddress} onChange={handleChange} placeholder="Enter the Email"/>
+                            <label className="form-label" htmlFor="emailAddress">Email Address</label>
+                            <input type="text" className="form-control" id="emailAddress" name="emailAddress" value={form.emailAddress} onChange={handleChange} placeholder="Enter the Email Address"/>
                         </div>
                         <div className="form-group">
                             <label className="form-label" htmlFor="phoneNo">Phone Number</label>
@@ -992,22 +905,12 @@ export default function ClubBarProfile() {
                     )}
                     <div className="same-line">
                         <div className="form-group">
-                            <label className="form-label" htmlFor="landLineNo">LandLine Number</label>
-                            <input type="text" className="form-control" id="landLineNo" name="landLineNo" value={form.landLineNo} onChange={handleChange} placeholder="Enter the LandLine Number"/>
-                        </div>
-                        <div className="form-group">
-                            <label className="form-label" htmlFor="address">Address</label>
-                            <input type="text" className="form-control" id="address" name="address" value={form.address} onChange={handleChange} placeholder="Enter the Address"/>
-                        </div>
-                    </div>
-                    <div className="same-line">
-                        <div className="form-group">
                             <label className="form-label" htmlFor="webSite">Website Link</label>
                             <input type="text" className="form-control" id="webSite" name="webSite" value={form.webSite} onChange={handleChange} placeholder="Enter the Website Link"/>
                         </div>
                         <div className="form-group">
                             <label className="form-label" htmlFor="experience">Open Since</label>
-                            <input type="text" className="form-control" id="experience" name="experience" value={form.experience} onChange={handleChange} placeholder="Enter the year of opening"/>
+                            <input type="text" className="form-control" id="experience" name="experience" value={form.experience} onChange={handleChange} placeholder="Enter the years of opening"/>
                         </div>
                     </div>
                     {(formErrors.webSite || formErrors.experience) && (
@@ -1058,12 +961,18 @@ export default function ClubBarProfile() {
                             )
                         }
                     </div>
-                    {(formErrors.locationType || formErrors.location) && (
+                    {(formErrors.locationType || formErrors.geoLocation) && (
                         <div className="same-line">
                             {formErrors.locationType && <div className="alert">{formErrors.locationType}</div>}
-                            {formErrors.location && <div className="alert">{formErrors.location}</div>}
+                            {formErrors.geoLocation && <div className="alert">{formErrors.geoLocation}</div>}
                         </div>
                     )}
+                    <div className="same-line">
+                        <div className="form-group">
+                            <label className="form-label" htmlFor="address">Address</label>
+                            <input type="text" className="form-control" id="address" name="address" value={form.address} onChange={handleChange} placeholder="Enter the Address"/>
+                        </div>
+                    </div>
                     {formErrors.address && (
                         <div className="same-line">
                             {formErrors.address && <div className="alert alert-danger">{formErrors.address}</div>}
@@ -1088,7 +997,7 @@ export default function ClubBarProfile() {
                                 id={selectedServices}
                                 // value={selectedServices}
                                 onChange={handleSelectServiceChange}
-                                placeholder="Select a Service">
+                                placeholder="No. of pool & snooker tables">
                                 {availableServices.length === 0 ? <option value="">All Selected</option> : <option value="">Select a Service</option>}
                                 {availableServices.map((service) => (
                                     <option key={service} value={service}>
@@ -1159,16 +1068,6 @@ export default function ClubBarProfile() {
                                 {formErrors.normalHrRates && <div className="alert">{formErrors.normalHrRates}</div>}
                             </div>
                         )}
-                        <div className="same-line-openclose">
-                            <div className="same-line">
-                                <label className="form-label" htmlFor="startTime">Happy hour From</label>
-                                <input type="time" className="form-control" id="startTime" name="startTime" value={form.startTime} onChange={handleChange} placeholder="Open"/>
-                            </div>
-                            <div className="same-line">
-                                <label className="form-label" htmlFor="endTime">Happy hour UpTo</label>
-                                <input type="time" className="form-control" id="endTime" name="endTime" value={form.endTime} onChange={handleChange} placeholder="Close"/>
-                            </div>
-                        </div>
                     </div>
                     <div className="form-group">
                         <label className="form-label" htmlFor="description">Why "Your Club name here"</label>
@@ -1197,24 +1096,7 @@ export default function ClubBarProfile() {
                             {formErrors.youtubevideo && <div className="alert">{formErrors.youtubevideo}</div>}
                         </div>
                     )}
-                    <label className="form-label-head" htmlFor="socialMediaLinks">Social Media Links</label>
-                    {/* <div className="same-line">
-                        {["Instagram", "Facebook", "TikTok"].map((platform) => (
-                            <div className="form-group" key={platform}>
-                                <label className="form-label" htmlFor={platform.toLowerCase()}>{platform}</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id={platform.toLowerCase()}
-                                    value={
-                                        form.socialMedialinks.find(link => link.name === platform)?.link || ""
-                                    }
-                                    onChange={(e) => handleSocialMediaChange(platform, e.target.value)}
-                                    placeholder={`Enter the ${platform} Profile link`}
-                                />
-                            </div>
-                        ))}
-                    </div> */}
+                    <label className="form-label-head" htmlFor="clubBarNumber">Social Media Links</label>
                     <div className="same-line">
                         {form?.socialMedialinks?.map((platform) => (
                             <div className="form-group" key={platform.name}>
@@ -1230,10 +1112,14 @@ export default function ClubBarProfile() {
                             </div>
                         ))}
                     </div>
+                    {(formErrors.facebook || formErrors.instagram) && (
+                        <div className="same-line">
+                            {formErrors.facebook && <div className="alert">{formErrors.facebook}</div>}
+                            {formErrors.instagram && <div className="alert">{formErrors.instagram}</div>}
+                        </div>
+                    )}
                     <div className="form-group">
-                        <label className="form-label" htmlFor="clubBarGallery">
-                            {form.clubType ? form.clubType : "Club/Bar"} Gallery (Upload at least 3 images)
-                        </label>
+                        <label className="form-label" htmlFor="clubBarGallery">{form.clubType ? form.clubType : "Club/Bar"} Gallary(Upload atleast 3 images)</label>
                         <input 
                             type="file"
                             id="clubBarGallery" 
@@ -1241,28 +1127,20 @@ export default function ClubBarProfile() {
                             multiple
                             accept="image/*"
                             onChange={handleGalleryChange}
-                            className="form-control"
-                        />
+                            className="form-control"/>
                     </div>
-
-                    {form.pictureGallery.length > 0 && (
-                        <div className="upload-gallery">
-                            {form.pictureGallery.map((image, index) => (
-                                <div key={index} className="gallery-item">
-                                    {/* <img src={URL.createObjectURL(image)} alt={image.name} /> */}
-                                    <p>{image.title ? image.title : image.name}</p>
-                                    <MdRemoveCircle  onClick={() => handleRemoveGalleryImage(image.name)} />
-                                </div>
-                            ))}
-                        </div>
-                    )}
-
-                    {formErrors.pictureGallery && (
+                    {(formErrors.pictureGallery) && (
                         <div className="same-line">
-                            <div className="alert">{formErrors.pictureGallery}</div>
+                            {formErrors.pictureGallery && <div className="alert">{formErrors.pictureGallery}</div>}
                         </div>
                     )}
 
+                    {form.pictureGallery && (
+                        <div className="upload-gallery">
+                            {form?.pictureGallery.length > 0 && <p onClick={() => handleRemoveGalleryImage()}>Remove All<IoClose className="close-icon"/></p>}
+                        </div>
+                    )}
+                    
                     <div className="btn-div">
                         <button className="save-btn" type="submit">{clubAndBar ? "Save" : "Register"}</button>
                         <div onClick={handleClearForm} className="save-btn clear">Clear</div>

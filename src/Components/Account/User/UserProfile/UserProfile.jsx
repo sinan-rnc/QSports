@@ -30,11 +30,11 @@ export default function UserProfile({setSelectedDashboard}) {
     };
 
     const [form, setForm] = useState(profile ? {
-        NickName: profile.NickName,
-        Slogan: profile.Slogan,
-        DOB: formatDate(profile.DOB),
-        ProfilePic: profile.ProfilePic,
-        AboutMe: profile.AboutMe,
+        NickName: profile.NickName || "",
+        Slogan: profile.Slogan || "",
+        DOB: formatDate(profile.DOB) || "",
+        ProfilePic: profile.ProfilePic || "",
+        AboutMe: profile.AboutMe || "",
     } : {
         NickName: "",
         Slogan: "",
@@ -51,18 +51,18 @@ export default function UserProfile({setSelectedDashboard}) {
         if(form.NickName.trim().length === 0) {
             errors.NickName = "Nickname is required"
         }
-        if(form.Slogan.trim().length === 0) {
-            errors.Slogan = "Slogan is required"
-        }
+        // if(form.Slogan.trim().length === 0) {
+        //     errors.Slogan = "Slogan is required"
+        // }
         if(form.DOB.trim().length === 0) {
             errors.DOB = "Date of Birth is required"
         }
-        if(!form.ProfilePic) {
-            errors.ProfilePic = "Profile Picture is required"
-        }
-        if(form.AboutMe.trim().length === 0) {
-            errors.AboutMe = "About Me is required"
-        }
+        // if(!form.ProfilePic) {
+        //     errors.ProfilePic = "Profile Picture is required"
+        // }
+        // if(form.AboutMe.trim().length === 0) {
+        //     errors.AboutMe = "About Me is required"
+        // }
     }
 
     validateErrors()
@@ -91,47 +91,96 @@ export default function UserProfile({setSelectedDashboard}) {
         setForm({ ...form, ProfilePic: ""});
     }
 
+    // const handleFormSubmit = async (e) => {
+    //     e.preventDefault();
+    //     // console.log(form);
+    
+    //     if (Object.keys(errors).length === 0) {
+    //         const formData = new FormData();
+    //         formData.append("UserID", user._id);
+    //         formData.append("NickName", form.NickName);
+    //         formData.append("Slogan", form.Slogan);
+    //         formData.append("DOB", form.DOB);
+    //         formData.append("AboutMe", form.AboutMe);
+    
+    //         // Append the image file only if it exists
+    //         if (form.ProfilePic) {
+    //             formData.append("ProfilePic", form.ProfilePic);
+    //         }
+    
+    //         // console.log("FormData contents:");
+    //         // formData.forEach((value, key) => {
+    //         //     console.log(key, value);
+    //         // });
+
+    //         // console.log("Creating formData", formData)
+
+    //         // const formData = { ...form , UserID: user._id };
+    
+    //         if (!profile) {
+    //             dispatch(startCreateProfile(formData, setAlertMessage, setAlertMessageColor));
+    //         } else {
+    //             formData.append("_id", profile._id);
+    //             // const updatedFormData = { ...form , _id: profile._id }
+    //             // console.log("Updating formData",formData)
+    //             dispatch(startUpdateProfile(formData, setAlertMessage, setAlertMessageColor));
+    //         }
+    //         setSelectedDashboard("dashboard")
+    //         setFormErrors("");
+    //     } else {
+    //         setFormErrors(errors);
+    //     }
+    // };
+    
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        // console.log(form);
-    
+        
         if (Object.keys(errors).length === 0) {
             const formData = new FormData();
-            formData.append("UserID", user._id);
-            formData.append("NickName", form.NickName);
-            formData.append("Slogan", form.Slogan);
-            formData.append("DOB", form.DOB);
-            formData.append("AboutMe", form.AboutMe);
+            formData.append("UserID", user._id);  // Always append UserID
     
-            // Append the image file only if it exists
+            // Conditionally append form fields if they have values
+            if (form.NickName) {
+                formData.append("NickName", form.NickName);
+            }
+            if (form.Slogan) {
+                formData.append("Slogan", form.Slogan);
+            }
+            if (form.DOB) {
+                formData.append("DOB", form.DOB);
+            }
+            if (form.AboutMe) {
+                formData.append("AboutMe", form.AboutMe);
+            }
+    
+            // Append the ProfilePic only if it exists
             if (form.ProfilePic) {
                 formData.append("ProfilePic", form.ProfilePic);
             }
     
-            // console.log("FormData contents:");
-            // formData.forEach((value, key) => {
-            //     console.log(key, value);
-            // });
-
-            // console.log("Creating formData", formData)
-
-            // const formData = { ...form , UserID: user._id };
+            // Similarly, append gallery images (if any)
+            if (form.pictureGallery && form.pictureGallery.length > 0) {
+                form.pictureGallery.forEach((image, index) => {
+                    // For each image, append it to the formData
+                    formData.append(`pictureGallery[${index}]`, image);
+                });
+            }
     
+            // Check if the profile already exists to decide whether to create or update
             if (!profile) {
                 dispatch(startCreateProfile(formData, setAlertMessage, setAlertMessageColor));
             } else {
                 formData.append("_id", profile._id);
-                // const updatedFormData = { ...form , _id: profile._id }
-                // console.log("Updating formData",formData)
                 dispatch(startUpdateProfile(formData, setAlertMessage, setAlertMessageColor));
             }
-            setSelectedDashboard("dashboard")
+            
+            // Reset selected dashboard and form errors after submission
+            setSelectedDashboard("dashboard");
             setFormErrors("");
         } else {
-            setFormErrors(errors);
+            setFormErrors(errors);  // Set errors if validation fails
         }
     };
-    
 
     return (
         <div className="user-profile-container">
@@ -144,7 +193,7 @@ export default function UserProfile({setSelectedDashboard}) {
             <form className="form-table" onSubmit={handleFormSubmit}>
                 <div className="same-line">
                     <div className="form-group">
-                        <label className="form-label" htmlFor="NickName">Nick Name</label>
+                        <label className="form-label" htmlFor="NickName">Nick Name*</label>
                         <input type="text" className="form-control" id="NickName" name="NickName" value={form.NickName} onChange={handleChange} placeholder="Enter your Nick Name"/>
                     </div>
                     <div className="form-group">
@@ -170,7 +219,7 @@ export default function UserProfile({setSelectedDashboard}) {
                 </div> */}
                 <div className="same-line">
                     <div className="form-group">
-                            <label className="form-label" htmlFor="DOB">Date of Birth</label>
+                            <label className="form-label" htmlFor="DOB">Date of Birth*</label>
                             <input type="date" className="form-control" id="DOB" name="DOB" value={form.DOB} onChange={handleChange}  placeholder="Enter your Date of Birth"/>
                         </div>
                     <div className="form-group gallery">

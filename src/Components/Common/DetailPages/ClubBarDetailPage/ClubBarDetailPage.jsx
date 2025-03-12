@@ -8,6 +8,7 @@ import { MdOutlinePlace } from "react-icons/md"
 import { LuClock9, LuMoveRight } from "react-icons/lu"
 import { RiArrowLeftWideLine, RiArrowRightWideLine } from "react-icons/ri"
 import "./ClubBarDetailPage.scss"
+import addImage from "../../../../Assets/Common/add-image.jpg"
 
 import comimgSoon from "../../../../Assets/Common/coming-soon.avif"
 // import herobanner1 from "../../../../Assets/Bars&Clubs/8.jpg"
@@ -176,7 +177,7 @@ export default function ClubBarDetailPage() {
                         initial="enter"
                         animate="center"
                         >
-                        {images && <img src={images[currentIndex]?.path} alt="Club Banner" className="banner" />}
+                        {images.length > 1 ? <img src={images[currentIndex]?.path} alt="Club Banner" className="banner" /> : <img src={addImage} alt="Club Banner" className="banner" /> }
                     </motion.div>
                     <div className="overlay"></div>
                     <RiArrowLeftWideLine className="arrow-left" onClick={handlePrev}/>
@@ -244,20 +245,25 @@ export default function ClubBarDetailPage() {
             </section>
             <section>
                 <div className="why-club">
-                    <div className="video-player">
-                        <ReactPlayer url={clubData?.youtubevideo} className="video" playing={false} muted={true} controls/>
-                    </div>
+                    {clubData?.youtubevideo && (
+                        <div className="video-player">
+                            <ReactPlayer url={clubData?.youtubevideo} className="video" playing={false} muted={true} controls/>
+                        </div>
+                    )}
                     <motion.div 
                         variants={textVariants}
                         initial="initial"
                         whileInView="animate"
                         viewport={{ once: false, amount: 0.25 }}
                         className="why-club-text">
-                        <div className="why-club-top">
-                            <motion.h1 variants={childVariants} className="why-club-title">Why Choose {clubData?.name}?</motion.h1>
-                            <motion.p variants={childVariants} className="why-club-desc">{clubData?.description}  
-                            </motion.p>
-                        </div>
+                        {clubData.description && (
+                            <div className="why-club-top">
+                                <motion.h1 variants={childVariants} className="why-club-title">Why Choose {clubData?.name}?</motion.h1>
+                                <motion.p variants={childVariants} className="why-club-desc">{clubData?.description}  
+                                </motion.p>
+                            </div>
+                    )}
+                    {clubData.socialMedialinks.length > 1 && (
                         <div className="why-club-bottom">
                             <motion.h1 variants={childVariants} className="social-link-head">Social Links</motion.h1>
                             <motion.p variants={childVariants}>Get featured in out instagram by tagging us @{clubData?.name.replace(/\s+/g, "").toLowerCase()}.</motion.p>
@@ -276,6 +282,7 @@ export default function ClubBarDetailPage() {
                                 </div></a>
                             </motion.div>
                         </div>
+                    )}
                     </motion.div>
                 </div>
             </section>

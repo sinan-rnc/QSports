@@ -38,7 +38,7 @@ export const startCreateProfile = (formData, setAlertMessage, setAlertMessageCol
             setAlertMessageColor("green")
         } catch(err) {
             // console.log("error hii")
-            // console.log(err)
+            console.log(err)
             // alert(err.message)
             setAlertMessage("Failed to Create Profile")
             setAlertMessageColor("red")

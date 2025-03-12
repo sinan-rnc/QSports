@@ -2,6 +2,7 @@ import "./FeaturedEvents.scss"
 
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import addImage from "../../../Assets/Common/add-image.jpg"
 
 export default function FeaturedEvents() {
     const navigate = useNavigate()
@@ -50,7 +51,8 @@ export default function FeaturedEvents() {
                             return ( */}
                                 <div className="event" key={featuredEvents[0]?._id}>
                                     <div className="event-left">
-                                        <img src={featuredEvents[0]?.EventImage} alt="" />
+                                        {featuredEvents[0]?.EventImage ? <img src={featuredEvents[0]?.EventImage} alt=""/> : <img src={addImage} alt=""/>}
+                                        {/* <img src={featuredEvents[0]?.EventImage} alt="" /> */}
                                     </div>
                                     <div className="event-right">
                                         <h1>{featuredEvents[0]?.EventName}</h1>
@@ -72,6 +74,7 @@ export default function FeaturedEvents() {
                                 {featuredEvents.length > 1 && (
                                     <div className="event" key={featuredEvents[1]?._id}>
                                         <div className="event-left">
+                                            {featuredEvents[1]?.EventImage ? <img src={featuredEvents[1]?.EventImage} alt=""/> : <img src={addImage} alt=""/>}
                                             <img src={featuredEvents[1]?.EventImage} alt="" />
                                         </div>
                                         <div className="event-right">

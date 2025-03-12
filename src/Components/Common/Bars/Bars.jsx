@@ -14,6 +14,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { startSearchClubsAndBars } from "../../../Actions/clubsAndBarsActions";
 
+import addImage from "../../../Assets/Common/add-image.jpg"
+
 export default function Bars() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -360,7 +362,7 @@ export default function Bars() {
                                     </div> */}
                                     <div className="product-image">
                                         {/* <MdOutlineZoomOutMap /> */}
-                                        <img src={ele.image} alt=""/>
+                                        {ele.image ? <img src={ele.image} alt=""/> : <img src={addImage} alt=""/>}
                                     </div>
                                     <div className="product-details">
                                         <div className="left">

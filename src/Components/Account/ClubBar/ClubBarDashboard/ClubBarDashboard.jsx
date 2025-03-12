@@ -43,6 +43,19 @@ export default function ClubBarDashboard({ setSelectedDashboard }) {
         return `${day}-${month}-${year}`;
     };
 
+    function convertTo12HourFormat(time24h) {
+        if (!time24h) return ""; // Handle empty or undefined values
+    
+        let [hours, minutes] = time24h.split(":").map(Number);
+        const modifier = hours >= 12 ? "PM" : "AM";
+    
+        // Convert hours to 12-hour format
+        hours = hours % 12 || 12;
+    
+        return `${hours}:${String(minutes).padStart(2, '0')} ${modifier}`;
+    }
+    
+
     const handleDeleteClub = (clubID) => {
         const confirmation = window.confirm("Are you sure you want to delete your profile?")
         if (confirmation) {
@@ -78,68 +91,107 @@ export default function ClubBarDashboard({ setSelectedDashboard }) {
                             </div>
                         </div>
                         <div className="about-club">
-                            <h1>About {clubAndBar.category}</h1>
-                            <p style={{marginTop:"10px"}}>{clubAndBar.description}</p>
+                            {clubAndBar.description && (
+                                <div>
+                                <h1>About {clubAndBar.category}</h1>
+                                <p style={{marginTop:"10px"}}>{clubAndBar.description}</p>
+                                </div>
+                            )}
                             
-                            <p style={{marginTop:"10px"}}><b>Timings:</b> {clubAndBar.openTime}PM - {clubAndBar.openTime}AM</p>
-                            <p style={{marginTop:"10px"}}><b>Years of Experience:</b> {clubAndBar.experience}</p>
-                            <p style={{marginTop:"10px"}} className="history-head">History</p>
-                            <p style={{marginTop:"10px"}}>{clubAndBar.history}</p>
+                            
+                            {(clubAndBar.openTime || clubAndBar.closeTime) && <p style={{marginTop:"10px"}}><b>Timings:</b> {convertTo12HourFormat(clubAndBar.openTime)} - {convertTo12HourFormat(clubAndBar?.closeTime)}</p>}
+                            {clubAndBar.normalHrRates && <p style={{marginTop:"10px"}}>Normal Hour Rate - AED {clubAndBar.normalHrRates}</p>}
+                            {   (clubAndBar.startTime || clubAndBar.endTime) && (
+                                <div className="happy-hour">
+                                <h1 className="happy-hour-head">Happy Hours</h1>
+                                <p>Start - {convertTo12HourFormat(clubAndBar.startTime)}</p>
+                                <p>End - {convertTo12HourFormat(clubAndBar.endTime)}</p>
+                                <p>Happy Hour Rate - AED {clubAndBar.happyHrRates}</p>
+                                </div>
+                            )}
+                                
+                            {clubAndBar.experience && <p style={{marginTop:"10px"}}><b>Open Since:</b> {clubAndBar.experience}</p>}
+                            {clubAndBar.history && (
+                                <div>
+                                <p style={{marginTop:"10px"}} className="history-head">History</p>
+                                <p style={{marginTop:"10px"}}>{clubAndBar.history}</p>
+                                </div>
+                            )}
                         </div>
-                        <div className="club-gallery">
-                            <h1>Club Gallery</h1>
-                            <div className="gallery-grid">
-                                {clubAndBar.pictureGallery.map((image, index) => (
-                                    <div className="gallery" key={image._id || index}>
-                                        {/* <img src={addImage} alt=""/> */}
-                                        <img src={image.path} alt={image.title} />
-                                    </div>
-                                ))}
+
+                        {clubAndBar.pictureGallery.length >= 1 && (
+                            <div className="club-gallery">
+                                <h1>Club Gallery</h1>
+                                <div className="gallery-grid">
+                                    {clubAndBar.pictureGallery.map((image, index) => (
+                                        <div className="gallery" key={image._id || index}>
+                                            {/* <img src={addImage} alt=""/> */}
+                                            <img src={image.path} alt={image.title} />
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
+                        )}
+                        
                         <div className="contact-person-details">
                             <h1>Contact Person Details</h1>
                             <div className="details-div">
                                 <p><b>Name:</b> {clubAndBar.contactPerson}</p>
                                 <p><b>Phone:</b> {clubAndBar.phoneNo}</p>
+                                <p><b>LandLine:</b> {clubAndBar.landLineNo}</p>
                                 <p><b>Email:</b> {clubAndBar.emailAddress}</p>
                             </div>
                         </div>
-                        <div className="social-media-details">
-                            <h1>Social Media Links</h1>
-                            <div className="social-links">
-                                <div className="social instagram"><a href={clubAndBar.socialMedialinks[0]?.link}>
-                                    <FaInstagram />
-                                    <p>Instagram</p>
-                                </a></div>
-                                <div className="social facebook"><a href={clubAndBar.socialMedialinks[1]?.link}>
-                                    <FaFacebookF style={{marginTop:"10px"}}/>
-                                    <p>Facebook</p>
-                                </a></div>
-                                <div className="social tiktok"><a href={clubAndBar.socialMedialinks[2]?.link}>
-                                    <FaTiktok style={{marginTop:"10px"}}/>
-                                    <p>Tiktok</p>
-                                </a></div>
-                                <div className="social youtube"><a href={clubAndBar.youtubevideo}>
-                                    <FaYoutube style={{marginTop:"10px"}}/>
-                                    <p>Youtube</p>
-                                </a></div>
-                                <div className="social website"><a href={clubAndBar.webSite}>
-                                    <CgWebsite style={{marginTop:"10px"}}/>
-                                    <p>Website</p>
-                                </a></div>
+                        {(clubAndBar.socialMedialinks.length >= 1 || clubAndBar.youtubevideo ||  clubAndBar.webSite) && (
+                            <div className="social-media-details">
+                                <h1>Social Media Links</h1>
+                                <div className="social-links">
+                                    {clubAndBar.socialMedialinks[0]?.link && (
+                                        <div className="social instagram"><a href={clubAndBar.socialMedialinks[0]?.link}>
+                                            <FaInstagram />
+                                            <p>Instagram</p>
+                                        </a></div>
+                                    )}
+                                    {clubAndBar.socialMedialinks[1]?.link && (
+                                    <div className="social facebook"><a href={clubAndBar.socialMedialinks[1]?.link}>
+                                        <FaFacebookF style={{marginTop:"10px"}}/>
+                                        <p>Facebook</p>
+                                    </a></div>
+                                    )}
+                                    {clubAndBar.socialMedialinks[2]?.link && (
+                                    <div className="social tiktok"><a href={clubAndBar.socialMedialinks[2]?.link}>
+                                        <FaTiktok style={{marginTop:"10px"}}/>
+                                        <p>Tiktok</p>
+                                    </a></div>
+                                    )}
+                                    {clubAndBar.youtubevideo && (
+                                    <div className="social youtube"><a href={clubAndBar.youtubevideo}>
+                                        <FaYoutube style={{marginTop:"10px"}}/>
+                                        <p>Youtube</p>
+                                    </a></div>
+                                    )}
+                                    {clubAndBar.webSite && (
+                                    <div className="social website"><a href={clubAndBar.webSite}>
+                                        <CgWebsite style={{marginTop:"10px"}}/>
+                                        <p>Website</p>
+                                    </a></div>
+                                    )}
+                                </div>
+                             </div>
+                        )}
+                        {clubAndBar.services.length >= 1 && (
+                            <div className="services-details">
+                                <h1>Services</h1>
+                                <div className="services-div">
+                                    {clubAndBar.services.map((ele) => {
+                                        return (
+                                            <p key={ele._id}><b>{ele.name}:</b> {ele.description}</p>
+                                        )
+                                    })}
+                                </div>
                             </div>
-                        </div>
-                        <div className="services-details">
-                            <h1>Services</h1>
-                            <div className="services-div">
-                                {clubAndBar.services.map((ele) => {
-                                    return (
-                                        <p key={ele._id}><b>{ele.name}:</b> {ele.description}</p>
-                                    )
-                                })}
-                            </div>
-                        </div>
+                        )}
+                        
                         <button className="delete-profile" onClick={() => {handleDeleteClub(clubAndBar._id)}}>Delete Club Profile</button>
                     </div>
                 ): (

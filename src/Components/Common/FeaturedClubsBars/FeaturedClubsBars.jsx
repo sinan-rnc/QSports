@@ -3,6 +3,7 @@ import "./FeaturedClubsBars.scss"
 import { barsAndClubs } from "../../../DataSet/barsAndClubs"
 import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
+import addImage from "../../../Assets/Common/add-image.jpg"
 
 export default function FeaturedClubsBars() {
     const navigate = useNavigate()
@@ -36,7 +37,7 @@ export default function FeaturedClubsBars() {
                                     <div className={`left ${featuredClubsBars.length === 1 ? "single" : ""}`}>
                                         <div className="featuredClubsBars-image" onClick={() => {navigate(`/clubs/${ele?.name.replace(/\s+/g, '-').toLowerCase()}`)}}>
                                             {/* <img src={clubsAndBars[0]?.pictureGallery[0]?.path} alt={clubsAndBars[0]?.pictureGallery[0]?.title}/> */}
-                                            <img src={ele?.image} alt=""/>
+                                            {ele.image ? <img src={ele.image} alt=""/> : <img src={addImage} alt=""/>}
                                         </div>
                                         <div className="featuredClubsBars-details">
                                             <a href="/bars"><button className="btn-style">
@@ -55,7 +56,8 @@ export default function FeaturedClubsBars() {
                         <div className={`right ${featuredClubsBars.length <= 2 ? "none" : ""}`}>
                             <div className="featuredClubsBars-content1" onClick={() => {navigate(`/clubs/${featuredClubsBars[1]?.name.replace(/\s+/g, '-').toLowerCase()}`)}}>
                                 <div className="featuredClubsBars-image">
-                                    <img src={featuredClubsBars[1]?.image} alt=""/>
+                                {featuredClubsBars[1]?.image ? <img src={featuredClubsBars[1]?.image} alt=""/> : <img src={addImage} alt=""/>}
+                                    {/* <img src={featuredClubsBars[1]?.image} alt=""/> */}
                                 </div>
                                 <div className="details">
                                     <h1>{featuredClubsBars[1]?.name}</h1>
@@ -64,7 +66,8 @@ export default function FeaturedClubsBars() {
                             </div>
                             <div className={`featuredClubsBars-content1 ${featuredClubsBars.length === 2 ? "none" : ""}`} onClick={() => {navigate(`/clubs/${featuredClubsBars[2]?.name.replace(/\s+/g, '-').toLowerCase()}`)}}>
                                 <div className="featuredClubsBars-image">
-                                    <img src={featuredClubsBars[2]?.image} alt=""/>
+                                {featuredClubsBars[2]?.image ? <img src={featuredClubsBars[2]?.image} alt=""/> : <img src={addImage} alt=""/>}
+                                    {/* <img src={featuredClubsBars[2]?.image} alt=""/> */}
                                 </div>
                                 <div className="details">
                                     <h1>{featuredClubsBars[2]?.name}</h1>
