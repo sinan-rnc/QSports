@@ -11,11 +11,12 @@ import { backendApi } from "../../../../../Apis/api"
 import { BiSolidHide } from "react-icons/bi"
 import { MdRemoveRedEye } from "react-icons/md"
 
-export default function AdminUserDashboard() {
+export default function AdminUserDashboard({ userRole }) {
     const dispatch = useDispatch()
     const { setAlertMessage, setAlertMessageColor } = useAuth()
     const allUsers = useSelector((state) => {
         return state.users.data
+            .filter(ele => ele.userType.includes(userRole))
             // .filter((ele => !ele.isDeleted))
     })
 

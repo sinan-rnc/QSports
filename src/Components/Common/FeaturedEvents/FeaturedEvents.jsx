@@ -75,7 +75,7 @@ export default function FeaturedEvents() {
                                     <div className="event" key={featuredEvents[1]?._id}>
                                         <div className="event-left">
                                             {featuredEvents[1]?.EventImage ? <img src={featuredEvents[1]?.EventImage} alt=""/> : <img src={addImage} alt=""/>}
-                                            <img src={featuredEvents[1]?.EventImage} alt="" />
+                                            {/* <img src={featuredEvents[1]?.EventImage} alt="" /> */}
                                         </div>
                                         <div className="event-right">
                                             <h1>{featuredEvents[1]?.EventName}</h1>

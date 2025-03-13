@@ -186,6 +186,21 @@
                 }
             }
 
+            .checkbox-div {
+                display: flex;
+                align-items: flex-start;
+                gap: 5px;
+
+                input {
+                    margin-top: 1.5px;
+                }
+
+                p {
+                    font-size: 14px;
+                    text-align: left;
+                }
+            }
+
             .btn-div {
                 display: flex;
                 flex-direction: row;

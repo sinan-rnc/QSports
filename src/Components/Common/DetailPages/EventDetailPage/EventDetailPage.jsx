@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { backendApi } from "../../../../Apis/api";
 import { useAuth } from "../../../../Context/AuthContext";
+import addImage from "../../../../Assets/Common/add-image.jpg"
 
 const variants = {
     enter: (direction) => ({
@@ -146,27 +147,31 @@ export default function EventDetailPage() {
     }, []);
 
     const handleRegsiterEvent = async () => {
-        if(!user) {
-            setAlertMessage("Login to register for the event")
-            setAlertMessageColor("red")
-        } else {
-            const formData = {
-                EventID: eventData._id,
-                UserID: user._id,
-                Fee: eventData.EnrollmentFee,
-                FeePaid: true
-            }
-            try {
-                await axios.post(`${backendApi}/enrollment/create-enrollment`, formData, {
-                    headers: {
-                        "Authorization": `Bearer ${localStorage.getItem("token")}`
-                    }
-                })
-                setAlertMessage("Successfully registered for the event")
-                setAlertMessageColor("green")
-            } catch(err) {
-                setAlertMessage("Unable to register for the event")
+        const confirmation = await window.confirm('Are you sure you want to register for this event?')
+        if (confirmation) {
+            if(!user) {
+                setAlertMessage("Login to register for the event")
                 setAlertMessageColor("red")
+            } else {
+                const formData = {
+                    EventID: eventData._id,
+                    UserID: user._id,
+                    Fee: eventData.EnrollmentFee,
+                    FeePaid: true
+                }
+                try {
+                    await axios.post(`${backendApi}/enrollment/create-enrollment`, formData, {
+                        headers: {
+                            "Authorization": `Bearer ${localStorage.getItem("token")}`
+                        }
+                    })
+                    setAlertMessage("Successfully registered for the event")
+                    setAlertMessageColor("green")
+                } catch(err) {
+                    // console.log(err)
+                    setAlertMessage(err.response.data.message)
+                    setAlertMessageColor("red")
+                }
             }
         }
 
@@ -184,7 +189,8 @@ export default function EventDetailPage() {
                         initial="enter"
                         animate="center"
                         >
-                        {images && <img src={images[currentIndex]?.path} alt="Club Banner" className="banner" />}
+                        {/* {images && <img src={images[currentIndex]?.path} alt="Club Banner" className="banner" />} */}
+                        {images.length >= 1 ? <img src={images[currentIndex]?.path} alt="Club Banner" className="banner" /> : <img src={addImage} alt="Club Banner" className="banner" /> }
                     </motion.div>
                     <div className="overlay"></div>
                     <RiArrowLeftWideLine className="arrow-left" onClick={handlePrev}/>
@@ -207,6 +213,7 @@ export default function EventDetailPage() {
                         </motion.div>
                         <motion.h4 variants={childVariants} className="clubSlogan2">Unleash the Champion in You – The Premier Tournament Awaits!</motion.h4>
                         <motion.div variants={childVariants} className="place-time">
+                            {eventClub?.name || eventClub?.city && (
                             <div className="place">
                                 <MdOutlinePlace />
                                 <div>
@@ -218,16 +225,23 @@ export default function EventDetailPage() {
                                     <h2></h2>
                                 </div>
                             </div>
+                            )}
+
+                            {eventData?.EventType && (
                             <div className="type">
                                 <MdOutlineEmojiEvents /> {eventData?.EventType}
                             </div>
+                            )}
                             
+                            {eventData?.StartingDate && (
                             <div className="date">
                                 <BsCalendarDate /> {formatDate(eventData?.StartingDate)}
                             </div>
-                            <div className="time">
+                            )}
+                            
+                            {/* <div className="time">
                                 <LuClock9 /> 9:00 PM to 12:00 AM
-                            </div>
+                            </div> */}
                         </motion.div>
                     </motion.div>
                     <div className="pagination-dots">
@@ -249,7 +263,7 @@ export default function EventDetailPage() {
                         whileInView="animate2"
                         viewport={{ once: false, amount: 0.5 }}
                         className="callout-text">
-                        <motion.h2 variants={childVariants}>VOTED #{eventData?.id} <span>BEST TOURNAMENT</span> IN THE WORLD</motion.h2>
+                        <motion.h2 variants={childVariants}>VOTED AS <span>BEST TOURNAMENT</span> IN THE WORLD</motion.h2>
                         <motion.p variants={childVariants}>
                         Join thousands of fans in Dubai for an unforgettable experience at one of the most prestigious events in the heart of this iconic city.
                         </motion.p>
@@ -273,8 +287,8 @@ export default function EventDetailPage() {
                         whileInView="animate"
                         viewport={{ once: false, amount: 0.25 }}
                         className="history">
-                        <motion.h2 variants={childVariants} className="history-title">Legacy of Champions</motion.h2>
-                        <motion.p className="history-description" variants={childVariants}>{eventClub?.name} has been a premier hub for tournaments and competitive events since 2010. Known for hosting iconic tournaments like The Cue Masters Cup and Dubai Championship League, the club has brought together top players and fans from around the world. Partnering with renowned venues like BreakPoint Arena, it has set new standards for thrilling matchups and elite competitions. With a rich legacy of past tournaments and a commitment to excellence, Eight Ball Showdown continues to shape the future of cue sports in Dubai.</motion.p>
+                        {/* <motion.h2 variants={childVariants} className="history-title">Legacy of Champions</motion.h2>
+                        <motion.p className="history-description" variants={childVariants}>{eventClub?.name} has been a premier hub for tournaments and competitive events since 2010. Known for hosting iconic tournaments like The Cue Masters Cup and Dubai Championship League, the club has brought together top players and fans from around the world. Partnering with renowned venues like BreakPoint Arena, it has set new standards for thrilling matchups and elite competitions. With a rich legacy of past tournaments and a commitment to excellence, Eight Ball Showdown continues to shape the future of cue sports in Dubai.</motion.p> */}
                         {/* <motion.div 
                             variants={textVariants}
                             initial="initial"
@@ -289,8 +303,8 @@ export default function EventDetailPage() {
                         </motion.div> */}
                         <div className="event-details">
                             <div className="left">
-                                {/* <img src={eventData?.EventImage} alt=""/> */}
-                                <img src={eventData?.EventImage} alt="" />
+                                {/* <img src={eventData?.EventImage} alt="" /> */}
+                                {eventData.EventImage ? <img src={eventData.EventImage} alt=""/> : <img src={addImage} alt=""/>}
                             </div>
                             <div className="right">
                                 <h1 className="event-name">{eventData?.EventName}</h1>

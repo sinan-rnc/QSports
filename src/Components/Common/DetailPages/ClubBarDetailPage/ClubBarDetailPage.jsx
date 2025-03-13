@@ -177,7 +177,7 @@ export default function ClubBarDetailPage() {
                         initial="enter"
                         animate="center"
                         >
-                        {images.length > 1 ? <img src={images[currentIndex]?.path} alt="Club Banner" className="banner" /> : <img src={addImage} alt="Club Banner" className="banner" /> }
+                        {images.length >= 1 ? <img src={images[currentIndex]?.path} alt="Club Banner" className="banner" /> : <img src={addImage} alt="Club Banner" className="banner" /> }
                     </motion.div>
                     <div className="overlay"></div>
                     <RiArrowLeftWideLine className="arrow-left" onClick={handlePrev}/>
@@ -250,19 +250,19 @@ export default function ClubBarDetailPage() {
                             <ReactPlayer url={clubData?.youtubevideo} className="video" playing={false} muted={true} controls/>
                         </div>
                     )}
+                    {clubData.description && (
                     <motion.div 
                         variants={textVariants}
                         initial="initial"
                         whileInView="animate"
                         viewport={{ once: false, amount: 0.25 }}
                         className="why-club-text">
-                        {clubData.description && (
+                        
                             <div className="why-club-top">
                                 <motion.h1 variants={childVariants} className="why-club-title">Why Choose {clubData?.name}?</motion.h1>
                                 <motion.p variants={childVariants} className="why-club-desc">{clubData?.description}  
                                 </motion.p>
                             </div>
-                    )}
                     {clubData.socialMedialinks.length > 1 && (
                         <div className="why-club-bottom">
                             <motion.h1 variants={childVariants} className="social-link-head">Social Links</motion.h1>
@@ -284,6 +284,7 @@ export default function ClubBarDetailPage() {
                         </div>
                     )}
                     </motion.div>
+                    )}
                 </div>
             </section>
             <section id="upcoming-events">

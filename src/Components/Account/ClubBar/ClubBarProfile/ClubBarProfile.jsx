@@ -29,19 +29,25 @@ import { MdRemoveCircle } from "react-icons/md";
 export default function ClubBarProfile() {
     const { user, setSelectedDashboard } = useAuth()
     const dispatch = useDispatch()
-    const { setAlertMessage, setAlertMessageColor } = useAuth()
+    const { alertMessage, setAlertMessage, setAlertMessageColor } = useAuth()
     const [ isLoading, setIsLoading ] = useState(false)
+    const [isPolicyChecked, setIsPolicyChecked] = useState(false);
 
     const clubAndBar = useSelector((state) => {
         return state.clubsAndBars.data.find(ele =>!ele?.isDeleted && ele?.createdBy === user?._id)
     });
+
+    useEffect(() => {
+        if(clubAndBar) {
+            setIsPolicyChecked(true)
+        }
+    }, [clubAndBar])
 
     // useEffect(() => {
     //     (async () => {
     //         try {
     //             const response = await axios.post(`${backendApi}/club/read-club`, { _id: eventData?.ClubID })
     //             console.log(response.data.data)
-    //             setEventClub(response.data.data)
     //         } catch(err) {
     //             console.log(err);
     //             alert(err.response.data.message)
@@ -49,7 +55,8 @@ export default function ClubBarProfile() {
     //     }) ()
     // }, [eventData])
 
-    // console.log("ClubandBar", clubAndBar.geoLocation)
+    // console.log("user", user)
+    // console.log("ClubandBar", clubAndBar)
 
     const [form, setForm] = useState(clubAndBar ? {
         name: clubAndBar.name || "",
@@ -78,9 +85,9 @@ export default function ClubBarProfile() {
         youtubevideo: clubAndBar.youtubevideo || "",
         pictureGallery: clubAndBar.pictureGallery || [],
         socialMedialinks: clubAndBar.socialMedialinks || [
-            { name: "Facebook", link: "" },
-            { name: "Instagram", link: "" },
-            { name: "Tiktok", link: "" },
+            { name: "Facebook", link: "", icon: "<FaFacebook />" },
+            { name: "Instagram", link: "", icon: "<AiFillInstagram />" },
+            { name: "Tiktok", link: "", icon: "<FaTiktok />" },
         ],
         services: clubAndBar.services || []
     } : { 
@@ -110,15 +117,15 @@ export default function ClubBarProfile() {
         youtubevideo: "",
         pictureGallery: [],
         socialMedialinks: [
-            { name: "Facebook", link: "" },
-            { name: "Instagram", link: "" },
-            { name: "Tiktok", link: "" },
+            { name: "Facebook", link: "", icon: "<FaFacebook />" },
+            { name: "Instagram", link: "", icon: "<AiFillInstagram />" },
+            { name: "Tiktok", link: "", icon: "<FaTiktok />" },
         ],
         services: []
     });
     
 
-    console.log(form)
+    // console.log(form)
 
     const [locationType, setlocationType] = useState()
 
@@ -280,7 +287,7 @@ export default function ClubBarProfile() {
                 updatedLinks[index].link = value;
             } else {
                 // Add a new entry if it doesn't exist
-                updatedLinks.push({ name: platform, icon: "", link: value });
+                updatedLinks.push({ name: platform, icon: "icon", link: value });
             }
     
             return { ...prevForm, socialMedialinks: updatedLinks };
@@ -755,6 +762,12 @@ export default function ClubBarProfile() {
         }
     };
 
+    useEffect(() => {
+        if(alertMessage === "Fill the required Field") {
+            window.scrollTo(0, 0); // Scroll to the top-left corner of the page
+        }
+    }, [alertMessage]);
+
     const handleClearForm = () => {
         setForm({ 
             name: "",
@@ -783,9 +796,9 @@ export default function ClubBarProfile() {
             youtubevideo: "",
             pictureGallery: [],
             socialMedialinks: [
-                { name: "Facebook", link: "" },
-            { name: "Instagram", link: "" },
-            { name: "Tiktok", link: "" },
+                { name: "Facebook", link: "", icon: "<FaFacebook />" },
+                { name: "Instagram", link: "", icon: "<AiFillInstagram />" },
+                { name: "Tiktok", link: "", icon: "<FaTiktok />" },
             ],
             services: []
         })
@@ -794,83 +807,158 @@ export default function ClubBarProfile() {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         console.log(form);
+            const formData = new FormData();
     
-        const formData = new FormData();
-    
-        for (let key in form) {
-            const value = form[key];
-    
-            if (
-                !["image", "pictureGallery", "socialMedialinks", "services"].includes(key) &&
-                value !== undefined &&
-                value !== "" // Skip keys with empty string or undefined
-            ) {
-                if (typeof value === "string") {
-                    formData.append(key, value);
+            for (let key in form) {
+                const value = form[key];
+        
+                if (
+                    !["image", "pictureGallery", "socialMedialinks", "services"].includes(key) &&
+                    value !== undefined &&
+                    value !== "" // Skip keys with empty string or undefined
+                ) {
+                    if (typeof value === "string") {
+                        formData.append(key, value);
+                    } else {
+                        formData.append(key, JSON.stringify(value));
+                    }
+                }
+            }
+        
+            // Append image file if it exists
+            if (form.image instanceof File) {
+                formData.append("image", form.image);
+            }
+        
+            // Append pictureGallery files if the array is not empty
+            if (Array.isArray(form.pictureGallery) && form.pictureGallery.length > 0) {
+                form.pictureGallery.forEach((file) => {
+                    if (file instanceof File) {
+                        formData.append("pictureGallery", file);
+                    }
+                });
+            }
+        
+            // Append socialMedialinks if the array is not empty
+            if (Array.isArray(form.socialMedialinks) && form.socialMedialinks.length > 0) {
+                form.socialMedialinks.forEach((item, index) => {
+                    if (item.link) { // Only append if there's a valid link
+                        formData.append(`socialMedialinks[${index}][name]`, item.name || "");
+                        formData.append(`socialMedialinks[${index}][icon]`, item.icon || "");
+                        formData.append(`socialMedialinks[${index}][link]`, item.link || "");
+                    }
+                });
+            }
+        
+            // Append services if the array is not empty
+            if (Array.isArray(form.services) && form.services.length > 0) {
+                form.services.forEach((item, index) => {
+                    if (item.name || item.icon || item.description || item.descriptionWord) { // Only append if any of the fields are present
+                        formData.append(`services[${index}][name]`, item.name || "");
+                        formData.append(`services[${index}][icon]`, item.icon || "");
+                        formData.append(`services[${index}][description]`, item.description || "");
+                        // formData.append(`services[${index}][descriptionWord]`, item.descriptionWord || "");
+                    }
+                });
+            }
+        
+            // Check appended data
+            // for (let [key, value] of formData.entries()) {
+            //     console.log(`${key}: ${value}`);
+            // }
+        
+            if (Object.keys(errors).length === 0) {
+                if(isPolicyChecked) {
+                    if (clubAndBar) {
+                        formData.append("_id", clubAndBar._id);
+                        console.log("for update, formData", formData);
+                        dispatch(startUpdateClub(formData, setAlertMessage, setAlertMessageColor, setSelectedDashboard));
+                    } else {
+                        console.log("for create, formData", formData);
+                        dispatch(startCreateClub(formData, setAlertMessage, setAlertMessageColor, setSelectedDashboard));
+                    }
+                    setFormErrors("");
                 } else {
-                    formData.append(key, JSON.stringify(value));
+                    setAlertMessage("Please Check and terms and conditions");
+                    setAlertMessageColor("red");
                 }
-            }
-        }
-    
-        // Append image file if it exists
-        if (form.image instanceof File) {
-            formData.append("image", form.image);
-        }
-    
-        // Append pictureGallery files if the array is not empty
-        if (Array.isArray(form.pictureGallery) && form.pictureGallery.length > 0) {
-            form.pictureGallery.forEach((file) => {
-                if (file instanceof File) {
-                    formData.append("pictureGallery", file);
-                }
-            });
-        }
-    
-        // Append socialMedialinks if the array is not empty
-        if (Array.isArray(form.socialMedialinks) && form.socialMedialinks.length > 0) {
-            form.socialMedialinks.forEach((item, index) => {
-                if (item.link) { // Only append if there's a valid link
-                    formData.append(`socialMedialinks[${index}][name]`, item.name || "");
-                    formData.append(`socialMedialinks[${index}][icon]`, item.icon || "");
-                    formData.append(`socialMedialinks[${index}][link]`, item.link || "");
-                }
-            });
-        }
-    
-        // Append services if the array is not empty
-        if (Array.isArray(form.services) && form.services.length > 0) {
-            form.services.forEach((item, index) => {
-                if (item.name || item.icon || item.description || item.descriptionWord) { // Only append if any of the fields are present
-                    formData.append(`services[${index}][name]`, item.name || "");
-                    formData.append(`services[${index}][icon]`, item.icon || "");
-                    formData.append(`services[${index}][description]`, item.description || "");
-                    // formData.append(`services[${index}][descriptionWord]`, item.descriptionWord || "");
-                }
-            });
-        }
-    
-        // Check appended data
-        // for (let [key, value] of formData.entries()) {
-        //     console.log(`${key}: ${value}`);
-        // }
-    
-        if (Object.keys(errors).length === 0) {
-            if (clubAndBar) {
-                formData.append("_id", clubAndBar._id);
-                console.log("for update, formData", formData);
-                dispatch(startUpdateClub(formData, setAlertMessage, setAlertMessageColor, setSelectedDashboard));
             } else {
-                console.log("for create, formData", formData);
-                dispatch(startCreateClub(formData, setAlertMessage, setAlertMessageColor, setSelectedDashboard));
-            }
-            setFormErrors("");
-        } else {
-            setAlertMessage("Fill All the Field Values");
-            setAlertMessageColor("red");
-            setFormErrors(errors);
+                setAlertMessage("Fill the required Field");
+                setAlertMessageColor("red");
+                setFormErrors(errors);
         }
     };
+    
+    // const handleFormSubmit = async (e) => {
+    //     e.preventDefault();
+    //     console.log(form);
+    
+    //     const formData = new FormData();
+    
+    //     for (let key in form) {
+    //         const value = form[key];
+    
+    //         if (!["image", "pictureGallery", "socialMedialinks", "services"].includes(key)) {
+    //             if (typeof value === "string") {
+    //                 formData.append(key, value.trim() === "" ? "__REMOVE__" : value);
+    //             } else if (value !== undefined && value !== null) {
+    //                 formData.append(key, JSON.stringify(value));
+    //             }
+    //         }
+    //     }
+    
+    //     // Handle Image Upload
+    //     if (form.image instanceof File) {
+    //         formData.append("image", form.image);
+    //     }
+    
+    //     // Handle Picture Gallery
+    //     if (Array.isArray(form.pictureGallery) && form.pictureGallery.length > 0) {
+    //         form.pictureGallery.forEach((file) => {
+    //             if (file instanceof File) {
+    //                 formData.append("pictureGallery", file);
+    //             }
+    //         });
+    //     } else {
+    //         formData.append("pictureGallery", JSON.stringify([])); // Sending empty array if removed
+    //     }
+    
+    //     // Handle Social Media Links
+    //     if (Array.isArray(form.socialMedialinks) && form.socialMedialinks.length > 0) {
+    //         form.socialMedialinks.forEach((item, index) => {
+    //             formData.append(`socialMedialinks[${index}][name]`, item.name || "__REMOVE__");
+    //             formData.append(`socialMedialinks[${index}][icon]`, item.icon || "__REMOVE__");
+    //             formData.append(`socialMedialinks[${index}][link]`, item.link || "__REMOVE__");
+    //         });
+    //     } else {
+    //         formData.append("socialMedialinks", JSON.stringify([])); // Sending empty array if removed
+    //     }
+    
+    //     // Handle Services
+    //     if (Array.isArray(form.services) && form.services.length > 0) {
+    //         form.services.forEach((item, index) => {
+    //             formData.append(`services[${index}][name]`, item.name || "__REMOVE__");
+    //             formData.append(`services[${index}][icon]`, item.icon || "__REMOVE__");
+    //             formData.append(`services[${index}][description]`, item.description || "__REMOVE__");
+    //         });
+    //     } else {
+    //         formData.append("services", JSON.stringify([])); // Sending empty array if removed
+    //     }
+    
+    //     if (Object.keys(errors).length === 0) {
+    //         if (clubAndBar) {
+    //             formData.append("_id", clubAndBar._id);
+    //             dispatch(startUpdateClub(formData, setAlertMessage, setAlertMessageColor, setSelectedDashboard));
+    //         } else {
+    //             dispatch(startCreateClub(formData, setAlertMessage, setAlertMessageColor, setSelectedDashboard));
+    //         }
+    //         setFormErrors("");
+    //     } else {
+    //         setAlertMessage("Fill All the Field Values");
+    //         setAlertMessageColor("red");
+    //         setFormErrors(errors);
+    //     }
+    // };
     
      
     return (
@@ -900,7 +988,7 @@ export default function ClubBarProfile() {
                     )}
                     <div className="same-line">
                         <div className="form-group">
-                            <label className="form-label" htmlFor="city">{form.clubType ? form.clubType : "Club/Bar"} City</label>
+                            <label className="form-label" htmlFor="city">{form.clubType ? form.clubType : "Club/Bar"} City*</label>
                             <select 
                                 className="form-control"
                                 id="city"
@@ -918,7 +1006,7 @@ export default function ClubBarProfile() {
                             </select>
                         </div>
                         <div className="form-group">
-                            <label className="form-label" htmlFor="clubType">Club Type</label>
+                            <label className="form-label" htmlFor="clubType">Club Type*</label>
                             <select 
                                 className="form-control"
                                 id="clubType"
@@ -962,11 +1050,11 @@ export default function ClubBarProfile() {
                     )}
                     <div className="same-line">
                         <div className="form-group">
-                            <label className="form-label" htmlFor="emailAddress">Email</label>
+                            <label className="form-label" htmlFor="emailAddress">Email*</label>
                             <input type="text" className="form-control" id="emailAddress" name="emailAddress" value={form.emailAddress} onChange={handleChange} placeholder="Enter the Email"/>
                         </div>
                         <div className="form-group">
-                            <label className="form-label" htmlFor="phoneNo">Phone Number</label>
+                            <label className="form-label" htmlFor="phoneNo">Phone Number*</label>
                             {/* <input type="text" className="form-control" id="phoneNumber" placeholder="Enter the Phone Number"/> */}
                             <PhoneInput
                                 inputStyle={{ border: "none", outline: "none", height: "16px", marginLeft: "30px" }}
@@ -1018,7 +1106,7 @@ export default function ClubBarProfile() {
                     )}
                      <div className="same-line">
                         <div className="form-group">
-                            <label className="form-label" htmlFor="location">Geo Location Type</label>
+                            <label className="form-label" htmlFor="location">Geo Location Type*</label>
                             <div className="same-line">
                                 <select 
                                     className="form-control"
@@ -1198,7 +1286,7 @@ export default function ClubBarProfile() {
                         </div>
                     )}
                     <label className="form-label-head" htmlFor="socialMediaLinks">Social Media Links</label>
-                    {/* <div className="same-line">
+                    <div className="same-line">
                         {["Instagram", "Facebook", "TikTok"].map((platform) => (
                             <div className="form-group" key={platform}>
                                 <label className="form-label" htmlFor={platform.toLowerCase()}>{platform}</label>
@@ -1214,8 +1302,8 @@ export default function ClubBarProfile() {
                                 />
                             </div>
                         ))}
-                    </div> */}
-                    <div className="same-line">
+                    </div>
+                    {/* <div className="same-line">
                         {form?.socialMedialinks?.map((platform) => (
                             <div className="form-group" key={platform.name}>
                                 <label className="form-label" htmlFor={platform.name.toLowerCase()}>{platform.name}</label>
@@ -1229,7 +1317,7 @@ export default function ClubBarProfile() {
                                 />
                             </div>
                         ))}
-                    </div>
+                    </div> */}
                     <div className="form-group">
                         <label className="form-label" htmlFor="clubBarGallery">
                             {form.clubType ? form.clubType : "Club/Bar"} Gallery (Upload at least 3 images)
@@ -1262,7 +1350,10 @@ export default function ClubBarProfile() {
                             <div className="alert">{formErrors.pictureGallery}</div>
                         </div>
                     )}
-
+                    {!clubAndBar && <div className="checkbox-div">
+                        <input type="checkbox" name="checkOut" onChange={() => setIsPolicyChecked(!isPolicyChecked)}/>
+                        <p>I agree to the use of my data for advertising, product marketing, and other marketing-related services.</p>
+                    </div>}
                     <div className="btn-div">
                         <button className="save-btn" type="submit">{clubAndBar ? "Save" : "Register"}</button>
                         <div onClick={handleClearForm} className="save-btn clear">Clear</div>

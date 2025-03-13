@@ -38,7 +38,7 @@ export const startCreateEvent = (formData, setAlertMessage, setAlertMessageColor
             setAlertMessage("Event Created Succcessfully")
             setAlertMessageColor("green")
         } catch(err) {
-            // console.log(err)
+            console.log(err)
             // alert(err.message)
             setAlertMessage("Failed to Create Event")
             setAlertMessageColor("red")
