@@ -21,6 +21,7 @@ export const AuthProvider = ({ children }) => {
     const [ alertMessageColor, setAlertMessageColor ] = useState("")
     const [ selectedDashboard, setSelectedDashboard ] = useState("dashboard")
     const [ selectedAdminDashboard, setSelectedAdminDashboard ] = useState("users")
+    const [ searchCity, setSearchCity ] = useState("")
 
     const handleLogin = (user) => {
         setUser(user)
@@ -62,6 +63,8 @@ export const AuthProvider = ({ children }) => {
                 searchNearByFilters,
                 setSearchNearByFilters,
                 handleSearchNearByFilters,
+                searchCity,
+                setSearchCity,
                 openUserDashboard, 
                 setOpenUserDashboard, 
                 handleOpenUserDashboard, 

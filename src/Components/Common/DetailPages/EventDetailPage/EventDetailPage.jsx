@@ -190,7 +190,7 @@ export default function EventDetailPage() {
                         animate="center"
                         >
                         {/* {images && <img src={images[currentIndex]?.path} alt="Club Banner" className="banner" />} */}
-                        {images.length >= 1 ? <img src={images[currentIndex]?.path} alt="Club Banner" className="banner" /> : <img src={addImage} alt="Club Banner" className="banner" /> }
+                        {images?.length >= 1 ? <img src={images[currentIndex]?.path} alt="Club Banner" className="banner" /> : <img src={addImage} alt="Club Banner" className="banner" /> }
                     </motion.div>
                     <div className="overlay"></div>
                     <RiArrowLeftWideLine className="arrow-left" onClick={handlePrev}/>

@@ -13,13 +13,12 @@ import { useAuth } from "../../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { startSearchClubsAndBars } from "../../../Actions/clubsAndBarsActions";
-
 import addImage from "../../../Assets/Common/add-image.jpg"
 
 export default function Bars() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { handleSearchFilters, searchNearByFilters, setSearchNearByFilters } = useAuth()
+    const { handleSearchFilters, searchNearByFilters, setSearchNearByFilters, searchCity, setSearchCity } = useAuth()
 
     // console.log(searchNearByFilters)
 
@@ -223,11 +222,12 @@ export default function Bars() {
                                 <li key={city}>
                                     <input
                                         type="checkbox"
-                                        value={city}
-                                        checked={searchFilterValues.city === city}
+                                        value={searchCity}
+                                        checked={searchCity === city}
                                         onChange={() => {
                                             setSearchFiltersValues({...searchFilterValues, city: city})
                                             handleSearchFilters(searchFilterValues)
+                                            setSearchCity(city)
                                         }}
                                     />
                                     <span>{city}</span>

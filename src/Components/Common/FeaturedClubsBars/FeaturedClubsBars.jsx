@@ -34,7 +34,7 @@ export default function FeaturedClubsBars() {
                     <div className="featuredClubsBars-content">
                             {featuredClubsBars.slice(0, featuredClubsBars.length === 2 ? 2 : 1).map(ele => {
                                 return (
-                                    <div className={`left ${featuredClubsBars.length === 1 ? "single" : ""}`}>
+                                    <div className={`left ${featuredClubsBars.length === 1 ? "single" : ""}`} key={ele?._id}>
                                         <div className="featuredClubsBars-image" onClick={() => {navigate(`/clubs/${ele?.name.replace(/\s+/g, '-').toLowerCase()}`)}}>
                                             {/* <img src={clubsAndBars[0]?.pictureGallery[0]?.path} alt={clubsAndBars[0]?.pictureGallery[0]?.title}/> */}
                                             {ele.image ? <img src={ele.image} alt=""/> : <img src={addImage} alt=""/>}

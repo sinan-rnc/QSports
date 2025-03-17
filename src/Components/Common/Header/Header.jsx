@@ -34,6 +34,8 @@ export default function Header() {
         handleLogout,
         handleSearchFilters,
         handleSearchNearByFilters,
+        searchCity,
+        setSearchCity,
         openUserDashboard, 
         setOpenUserDashboard, 
         handleOpenUserDashboard, 
@@ -153,29 +155,29 @@ export default function Header() {
     const userDashboardRef = useRef(null);
     const searchDashboardRef = useRef(null);
 
-    const handleClickOutside = (event) => {
-        if (
-            userDashboardRef.current &&
-            !userDashboardRef.current.contains(event.target)
-        ) {
-            handleOpenUserDashboard();
-        }
+    // const handleClickOutside = (event) => {
+    //     if (
+    //         userDashboardRef.current &&
+    //         !userDashboardRef.current.contains(event.target)
+    //     ) {
+    //         handleOpenUserDashboard();
+    //     }
     
-        if (
-            searchDashboardRef.current &&
-            !searchDashboardRef.current.contains(event.target)
-        ) {
-            handleOpenSerachDashboard();
-        }
-    };
+    //     if (
+    //         searchDashboardRef.current &&
+    //         !searchDashboardRef.current.contains(event.target)
+    //     ) {
+    //         handleOpenSerachDashboard();
+    //     }
+    // };
 
 
-    useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside);
-            return () => {
-                document.removeEventListener("mousedown", handleClickOutside);
-            };
-    }, [handleClickOutside]);
+    // useEffect(() => {
+    //     document.addEventListener("mousedown", handleClickOutside);
+    //         return () => {
+    //             document.removeEventListener("mousedown", handleClickOutside);
+    //         };
+    // }, [handleClickOutside]);
 
     useEffect(() => {
         // Automatically close the alert after 5 seconds
@@ -275,7 +277,10 @@ export default function Header() {
     const handleCityChange = (e) => {
         setSearchFiltersValues({...searchFilterValues, city: e.target.value})
         setIsSearchingNearBy(false)
+        setSearchCity(e.target.value)
     }
+
+    console.log(searchCity)
 
     const handleSearchNearBy = () => {
         setIsSearchingNearBy(true);
@@ -399,44 +404,53 @@ export default function Header() {
                                 Account
                             </li></a> */}
                         </ul>
-                        {mobileMenu && (
-                            <div className="mobile-menu">
-                                {/* <div className="serach_game">
-                                    <i class="ri-search-fill"/>
-                                    <div className="icon-div">
-                                        <div className="icon-left" onClick={handleOpenSerachDashboard}>
-                                            <RiBilliardsFill size={22}/>
+                        <AnimatePresence>
+                            {mobileMenu && (
+                                    <motion.div 
+                                        className={`mobile-menu ${mobileMenu ? "" : "hide-mobile-menu"}`}
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ duration: 2, ease: "easeInOut" }}
+                                    >
+                                {/* <div className={`mobile-menu ${mobileMenu ? "" : "hide-mobile-menu"}`}> */}
+                                    {/* <div className="serach_game">
+                                        <i class="ri-search-fill"/>
+                                        <div className="icon-div">
+                                            <div className="icon-left" onClick={handleOpenSerachDashboard}>
+                                                <RiBilliardsFill size={22}/>
+                                            </div>
+                                            <hr className="hr-left"/>
                                         </div>
-                                        <hr className="hr-left"/>
-                                    </div>
-                                    <input type="text" placeholder="Search For Clubs" value={searchFilterValues.name} onChange={(e) => setSearchFiltersValues({...searchFilterValues, name: e.target.value})} />
-                                    <div className="icon-div">
-                                        <hr className="hr-right"/>
-                                        <div className="icon-right" onClick={handleSearchSubmit}>
-                                            <ImSearch size={20}/>
+                                        <input type="text" placeholder="Search For Clubs" value={searchFilterValues.name} onChange={(e) => setSearchFiltersValues({...searchFilterValues, name: e.target.value})} />
+                                        <div className="icon-div">
+                                            <hr className="hr-right"/>
+                                            <div className="icon-right" onClick={handleSearchSubmit}>
+                                                <ImSearch size={20}/>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div> */}
-                                <div className="mobile-menu-footer">
-                                    <div className="social">
-                                        <p className="social_head">Follow us On :</p>
-                                        <div className="social_links">
-                                            <a href="https://www.facebook.com/qsportsdxb/"><FaFacebook /></a>
-                                            <a href="https://www.instagram.com/qsportsdxb?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><RiInstagramFill /></a>
-                                            <a href="https://www.youtube.com/@qsports4073"><FaYoutube /></a>
-                                            <a href="https://x.com/Qsports7"><FaXTwitter /></a>
-                                            <a href="https://www.tiktok.com/@qsportsdxb?is_from_webapp=1&sender_device=pc"><FaTiktok /></a>
+                                    </div> */}
+                                    <div className="mobile-menu-footer">
+                                        <div className="social">
+                                            <p className="social_head">Follow us On :</p>
+                                            <div className="social_links">
+                                                <a href="https://www.facebook.com/qsportsdxb/"><FaFacebook /></a>
+                                                <a href="https://www.instagram.com/qsportsdxb?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><RiInstagramFill /></a>
+                                                <a href="https://www.youtube.com/@qsports4073"><FaYoutube /></a>
+                                                <a href="https://x.com/Qsports7"><FaXTwitter /></a>
+                                                <a href="https://www.tiktok.com/@qsportsdxb?is_from_webapp=1&sender_device=pc"><FaTiktok /></a>
+                                            </div>
                                         </div>
+                                        <div className="register-login">
+                                            <div><a href="/club-register"><p className="club-register">Register a new <span>Club</span></p></a></div>
+                                            <div className="contact-us"><a href="/contact-us">Contact Us</a></div>
+                                            {/* <li>Language: <span>EN</span></li> */}
+                                        </div>
+                                        <div className="call-us">Call Us : <span>971 012345678</span></div>
                                     </div>
-                                    <div className="register-login">
-                                        <div><a href="/club-register"><p className="club-register">Register a new <span>Club</span></p></a></div>
-                                        <div className="contact-us"><a href="/contact-us">Contact Us</a></div>
-                                        {/* <li>Language: <span>EN</span></li> */}
-                                    </div>
-                                    <div className="call-us">Call Us : <span>971 012345678</span></div>
-                                </div>
-                            </div>
-                        )}
+                                {/* </div> */}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
                     <div className="logo">
                         <a href="/"><h1><span>Q</span>SPORTS</h1></a>
@@ -600,7 +614,7 @@ export default function Header() {
                                 onChange={(e) => handleCityChange(e)}
                             />
                             <span class="custom-radio"></span>
-                            <select id="location-select" value={searchFilterValues.city} onChange={(e) => handleCityChange(e)}>
+                            <select id="location-select" value={searchFilterValues.city} onChange={handleCityChange}>
                                 <option value="">Select Emirates</option>
                                 {dubaiCities.map((city, index) => (
                                     <option key={index} value={city}>

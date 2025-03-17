@@ -29,6 +29,7 @@ import { startGetAllQuotes } from "./Actions/quotesAction";
 import AdminAccountPage from "./Pages/AdminAccountPage";
 import { startGetAllUsers } from "./Actions/usersAction";
 import PageNotFound from "./Components/Common/PageNotFound/PageNotFound";
+import { startGetApprovalClubList } from "./Actions/clubApprovalActions";
 
 export default function App() {
     const {user, handleLogin, searchFilters, searchNearByFilters} = useAuth()
@@ -45,6 +46,7 @@ export default function App() {
             handleLogin(JSON.parse(localStorage.getItem("user")))
             if(user?.userType === "SuperAdmin") {
                 dispatch(startGetAllUsers())
+                dispatch(startGetApprovalClubList())
             }
         }
         if(searchNearByFilters) {

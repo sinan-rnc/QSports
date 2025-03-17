@@ -10,6 +10,7 @@ import AdminBarDashboard from "../AdminDashboardMenu/AdminBarDashboard/AdminBarD
 import AdminUserDashboard from "../AdminDashboardMenu/AdminUserDashboard/AdminUserDashboard"
 import Password from "../../Password/Password"
 import AdminQuotesDashboard from "../AdminDashboardMenu/AdminQuotesDashboard/AdminQuotesDashboard"
+import AdminClubBarApprovalDashboard from "../AdminDashboardMenu/AdminClubBarApprovalDashboard/AdminClubBarApprovalDashboard"
 
 export default function AdminDashboardHome() {
     const navigate = useNavigate()
@@ -21,6 +22,7 @@ export default function AdminDashboardHome() {
         { key: "users", label: "users", component: <AdminUserDashboard userRole=""/>,},
         { key: "clubAdminUsers", label: "users", component: <AdminUserDashboard userRole="ClubAdmin"/>,},
         { key: "memberUser", label: "users", component: <AdminUserDashboard userRole="MemberUser"/>,},
+        { key: "clubBarApproval", label: "clubBarApproval", component: <AdminClubBarApprovalDashboard/>,},
         { key: "bars", label: "bars", component: <AdminBarDashboard/> },
         { key: "clubs", label: "clubs", component: <AdminClubDashboard/> },
         { key: "events", label: "events", component: <AdminEventDashboard/> },
@@ -42,6 +44,7 @@ export default function AdminDashboardHome() {
                         <li className={`menubar-li ${selectedAdminDashboard == "users" ? "active" : ""}`} onClick={() => {setSelectedAdminDashboard("users")}}>All Users</li>
                         <li className={`menubar-li ${selectedAdminDashboard == "clubAdminUsers" ? "active" : ""}`} onClick={() => {setSelectedAdminDashboard("clubAdminUsers")}}>Club Admin Users</li>
                         <li className={`menubar-li ${selectedAdminDashboard == "memberUser" ? "active" : ""}`} onClick={() => {setSelectedAdminDashboard("memberUser")}}>Member Users</li>
+                        <li className={`menubar-li ${selectedAdminDashboard == "clubBarApproval" ? "active" : ""}`} onClick={() => {setSelectedAdminDashboard("clubBarApproval")}}>Club Bar Approval</li>
                         <li className={`menubar-li ${selectedAdminDashboard == "bars" ? "active" : ""}`} onClick={() => {setSelectedAdminDashboard("bars")}}>Bars</li>
                         <li className={`menubar-li ${selectedAdminDashboard == "clubs" ? "active" : ""}`} onClick={() => {setSelectedAdminDashboard("clubs")}}>Clubs</li>
                         <li className={`menubar-li ${selectedAdminDashboard == "events" ? "active" : ""}`} onClick={() => {setSelectedAdminDashboard("events")}}>Events</li>

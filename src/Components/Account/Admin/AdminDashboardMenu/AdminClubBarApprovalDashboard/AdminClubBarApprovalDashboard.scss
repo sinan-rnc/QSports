@@ -1,0 +1,114 @@
+.admin-club-dashboard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    .admin-club-dashboard {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        padding: 30px;
+        background: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        overflow-x: scroll;
+
+        // .dashborad-heading {
+        //     // padding: 30px;
+        // }
+
+        .recent-orders {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        
+            &__title {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+        
+            &__table {
+                width: 100%;
+                border-collapse: collapse;
+                text-align: left;
+        
+                th {
+                    font-size: 16px;
+                    color: #555;
+                    text-transform: uppercase;
+                    border-bottom: 1px solid #e0e0e0;
+                    padding: 12px 8px;
+                }
+            
+                td {
+                    font-size: 14px;
+                    padding: 12px 8px;
+                    color: #333;
+
+                    .action-div {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 5px;
+                    }
+
+                    .edit-profile {
+                        display: block;
+                        // justify-content: flex-end;
+                        height: auto;
+                        width: 120px;
+                        padding: 10px 5px 10px;
+                        background: #fe6b00;
+                        color: white;
+                        border: none;
+                        font-weight: 700;
+                        font-size: 15px;
+                        cursor: pointer;
+                        border-radius: 5px;
+                        // margin-left: auto;
+                        // bottom: 0px;
+                        // right: 0px;
+                        // margin-right: auto;
+                    }
+        
+                    .edit-profile:hover {
+                        background: #ddcc92;
+                        color: black;
+                    }
+
+                    .edit-profile.approved {
+                        background: #ddcc92;
+                        color: black;
+                    }
+                }
+        
+            //   tr {
+            //     &:nth-child(even) {
+            //       background-color: #f9f9f9; // Alternate row color
+            //     }
+            //   }
+            }
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .admin-club-dashboard-container .edit-club-section .form-table .same-line {
+        flex-direction: column;
+    }
+
+    .admin-club-dashboard-container .edit-club-section .form-table .same-line.mobile {
+        flex-direction: row;
+        
+    }
+
+    .admin-club-dashboard-container .edit-club-section .form-table .same-line-openclose {
+        .form-label {
+            width: 100% !important;
+        }
+
+        .form-control {
+            width: 100% !important;
+        }
+    }
+}

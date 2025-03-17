@@ -70,7 +70,7 @@ export default function RecentBars() {
                         pagination={false}
                         spaceBetween={20}
                         slidesPerView={screenWidth >= 2000 ? 4 : screenWidth >= 1200 ? 3 : screenWidth >= 800 ? 2 : 1}
-                        loopFillGroupWithBlank= {true}
+                        // loopFillGroupWithBlank= {true}
                         loop={true}
                         speed={1000}
                         effect={'coverflow'}
