@@ -44,7 +44,7 @@ export default function ClubBarDetailPage() {
             .filter(ele => ele.ClubID == clubData?._id)
     })
 
-    // console.log(clubEvents)
+    console.log(clubEvents)
 
     const images = clubData?.pictureGallery;
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -165,6 +165,11 @@ export default function ClubBarDetailPage() {
         setCurrentIndex(index);
     };
 
+    const handleOpenGoogleMap = () => {
+        const url = `https://www.google.com/maps?q=${clubData?.geoLocation?.coordinates[1]},${clubData?.geoLocation?.coordinates[0]}`;
+        window.open(url, "_blank");
+    };
+
     return (
         <Fragment>
             <section>
@@ -198,7 +203,7 @@ export default function ClubBarDetailPage() {
                         <motion.div variants={childVariants} className="place-time">
                             <div className="place">
                                 <MdOutlinePlace />
-                                <div>
+                                <div onClick={handleOpenGoogleMap}>
                                     <h1>{clubData?.city}</h1>
                                     <h2>Dubai, UAE</h2>
                                 </div>
@@ -310,7 +315,7 @@ export default function ClubBarDetailPage() {
                                 <>
                                     <div className="events">
                                         <div className="img-div">
-                                            <img src={ele.EventImage} alt=""/>
+                                            <img src={ele.EventImage ? ele.EventImage : addImage} alt="event-image" />
                                         </div>
                                         <div className="event-info">
                                             <div className="left">

@@ -253,10 +253,11 @@
                 align-items: center;
                 gap: 5px;
                 cursor: pointer;
+            }
 
-                .close-icon {
-                    font-size: 20px;
-                }
+            .close-icon {
+                font-size: 15px;
+                cursor: pointer;
             }
         }
     }

@@ -181,7 +181,7 @@ export default function Header() {
         if (alertMessage) {
           const timer = setTimeout(() => {
             setAlertMessage("");
-          }, 3000);
+          }, 5000);
           return () => clearTimeout(timer); // Cleanup timer on unmount
         }
     }, [alertMessage, setAlertMessage]);

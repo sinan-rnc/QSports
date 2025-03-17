@@ -33,9 +33,9 @@ export default function ClubBarRegister() {
         if(form.lastName.trim().length === 0) {
             errors.lastName = "Last name is required"
         }
-        if(form.userName.trim().length === 0){
-            errors.userName = "Username is Required"
-        }
+        // if(form.userName.trim().length === 0){
+        //     errors.userName = "Username is Required"
+        // }
         if(form.email.trim().length === 0){
             errors.email = "Email is Required"
         }
@@ -60,7 +60,7 @@ export default function ClubBarRegister() {
         const formData = {
             firstName : form.firstName,
             lastName : form.lastName,
-            userName : form.userName,
+            userName : `${form.firstName}_${form.lastName}`,
             email : form.email,
             password : form.password,
             role: "67989e1d52f17c150584bf1e",
@@ -130,18 +130,18 @@ export default function ClubBarRegister() {
                             </div>
                         )}
                         <div className="same-line">
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <label className="form-label" htmlFor="userName">Username</label>
                                 <input type="text" className="form-control" id="userName" name="userName" value={form.userName} onChange={handleChange} placeholder="Enter the Username"/>
-                            </div>
+                            </div> */}
                             <div className="form-group">
                                 <label className="form-label" htmlFor="email">Email</label>
                                 <input type="text" className="form-control" id="email" name="email" value={form.email} onChange={handleChange} placeholder="Enter the Email Address"/>
                             </div>
                         </div>
-                        {(formErrors.userName || formErrors.email) && (
+                        {(formErrors.email) && (
                             <div className="same-line">
-                                {formErrors.userName && <div className="alert alert-danger">{formErrors.userName}</div>}
+                                {/* {formErrors.userName && <div className="alert alert-danger">{formErrors.userName}</div>} */}
                                 {formErrors.email && <div className="alert alert-danger">{formErrors.email}</div>}
                             </div>
                         )}

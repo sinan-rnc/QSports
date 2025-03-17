@@ -37,6 +37,13 @@ export default function ClubBarProfile() {
         return state.clubsAndBars.data.find(ele =>!ele?.isDeleted && ele?.createdBy === user?._id)
     });
 
+    const clubAndBarApprove = useSelector((state) => {
+        return state.clubApprovalList.data
+            .find(ele =>!ele?.isDeleted && ele?.createdBy === user?._id)
+    });
+
+    console.log(clubAndBar)
+
     useEffect(() => {
         if(clubAndBar) {
             setIsPolicyChecked(true)
@@ -179,6 +186,9 @@ export default function ClubBarProfile() {
         if(!form?.longitude || !form?.latitude){
             errors.location = "Latitude and Longitude is Required"
         }
+        if(form.experience && typeof form.experience !== "Number"){
+            errors.experience = "Open Since Must be Number"
+        }
     }
     validateErrors()
 
@@ -191,7 +201,7 @@ export default function ClubBarProfile() {
         "Pool & Billiard Products",
         "Table models & sizes",
         "Pool Competitions & Events",
-        "Billiard Balls and Club Size",
+        "Billiard Balls and Cloth Size",
     ]);
 
     const [availableFoodServices, setAvailableFoodServices] = useState([
@@ -253,7 +263,7 @@ export default function ClubBarProfile() {
         "Pool & Billiard Products": "<GiPoolTriangle />",
         "Table models & sizes": "<FaMoneyBill />",
         "Pool Competitions & Events": "<MdEmojiEvents />",
-        "Billiard Balls and Club Size": "<RiBilliardsFill />",
+        "Billiard Balls and Cloth Size": "<RiBilliardsFill />",
         "Food": "<IoFastFood />",
         "Drinks": "<BiSolidDrink />",
         "Coffees": "<RiDrinksFill />",
@@ -581,12 +591,6 @@ export default function ClubBarProfile() {
                                     handleServiceDescriptionChange(service, e.target.value)
                                 }
                                 id="agesAllowed" placeholder="Number" />
-                            <input type="text" className="form-control"
-                                value={ form.services.find(ele => ele.name === service)?.descriptionWord || "" } 
-                                onChange={(e) =>
-                                    handleServiceDescriptionWordChange(service, e.target.value)
-                                }
-                                id="agesAllowed" placeholder="In Words" />
                         </div>
                         <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
                     </div>
@@ -604,12 +608,6 @@ export default function ClubBarProfile() {
                                     handleServiceDescriptionChange(service, e.target.value)
                                 }
                                 id="agesAllowed" placeholder="Number" />
-                            <input type="text" className="form-control"
-                                value={ form.services.find(ele => ele.name === service)?.descriptionWord || "" } 
-                                onChange={(e) =>
-                                    handleServiceDescriptionWordChange(service, e.target.value)
-                                }
-                                id="agesAllowed" placeholder="In Words" />
                         </div>
                         <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
                     </div>
@@ -675,17 +673,17 @@ export default function ClubBarProfile() {
                         </div>
                 </div>
                 );
-            case "Billiard Balls and Club Size":
+            case "Billiard Balls and Cloth Size":
                 return (
                 <div className="same-line mobile" key={service}>
-                    <label className="form-label" htmlFor="billiardBalls">Billiard Balls and Club Size</label>
+                    <label className="form-label" htmlFor="billiardBalls">Billiard Balls and Cloth Size</label>
                     <div className="service-div">
                     <input type="text" className="form-control"
                         value={ form.services.find(ele => ele.name === service)?.description || "" }
                         onChange={(e) =>
                             handleServiceDescriptionChange(service, e.target.value)
                         }
-                        id="billiardBalls" placeholder="Billiard Balls and Club Size" />
+                        id="billiardBalls" placeholder="Billiard Balls and Cloth Size" />
                     <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
                         </div>
                 </div>
@@ -806,7 +804,7 @@ export default function ClubBarProfile() {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        console.log(form);
+        console.log(form.pictureGallery);
             const formData = new FormData();
     
             for (let key in form) {
@@ -835,6 +833,7 @@ export default function ClubBarProfile() {
                 form.pictureGallery.forEach((file) => {
                     if (file instanceof File) {
                         formData.append("pictureGallery", file);
+                        console.log(file)
                     }
                 });
             }
@@ -1339,7 +1338,7 @@ export default function ClubBarProfile() {
                                 <div key={index} className="gallery-item">
                                     {/* <img src={URL.createObjectURL(image)} alt={image.name} /> */}
                                     <p>{image.title ? image.title : image.name}</p>
-                                    <MdRemoveCircle  onClick={() => handleRemoveGalleryImage(image.name)} />
+                                    <MdRemoveCircle className="close-icon"  onClick={() => handleRemoveGalleryImage(image.name)} />
                                 </div>
                             ))}
                         </div>
