@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react"
+import React, { Fragment, useEffect, useState } from "react"
 import { motion } from "framer-motion"
 // import Lightbox from 'react-image-lightbox';
 // import 'react-image-lightbox/style.css';
@@ -7,6 +7,14 @@ import ReactPlayer from "react-player"
 import { MdOutlinePlace } from "react-icons/md"
 import { LuClock9, LuMoveRight } from "react-icons/lu"
 import { RiArrowLeftWideLine, RiArrowRightWideLine } from "react-icons/ri"
+import { GiPoolTableCorner, GiAges, GiTeacher, GiPoolTriangle } from 'react-icons/gi';
+import { PiSeatFill } from 'react-icons/pi';
+import { FaMoneyBill } from 'react-icons/fa';
+import { MdEmojiEvents } from 'react-icons/md';
+import { RiBilliardsFill, RiDrinksFill } from 'react-icons/ri';
+import { IoFastFood } from 'react-icons/io5';
+import { BiSolidDrink } from 'react-icons/bi';
+import { LuDessert } from 'react-icons/lu';
 import "./ClubBarDetailPage.scss"
 import addImage from "../../../../Assets/Common/add-image.jpg"
 
@@ -23,6 +31,7 @@ import { barsAndClubs } from "../../../../DataSet/barsAndClubs"
 import { tournaments } from "../../../../DataSet/tournaments"
 import { IoIosArrowRoundForward } from "react-icons/io"
 import { useSelector } from "react-redux"
+import { CgWebsite } from "react-icons/cg"
 
 export default function ClubBarDetailPage() {
     const navigate = useNavigate()
@@ -37,6 +46,43 @@ export default function ClubBarDetailPage() {
     })
     // const clubData = barsAndClubs.find(ele => ele.name === clubNameNew)
     console.log(clubData)
+
+    const iconsMap = {
+        "No. of Pool Tables": <GiPoolTableCorner />,
+        "No. of Snooker Tables": <GiPoolTableCorner />,
+        "Ages allowed in the club": <GiAges />,
+        "Clubs space and seating space": <PiSeatFill />,
+        "Pool Coaching": <GiTeacher />,
+        "Pool & Billiard Products": <GiPoolTriangle />,
+        "Table models & sizes": <FaMoneyBill />,
+        "Pool Competitions & Events": <MdEmojiEvents />,
+        "Billiard Balls and Cloth Size": <RiBilliardsFill />,
+        "Food": <IoFastFood />,
+        "Drinks": <BiSolidDrink />,
+        "Coffees": <RiDrinksFill />,
+        "Desserts": <LuDessert />,
+    };
+
+    function convertTo12HourFormat(time24h) {
+        if (!time24h) return ""; // Handle empty or undefined values
+    
+        let [hours, minutes] = time24h.split(":").map(Number);
+        const modifier = hours >= 12 ? "PM" : "AM";
+    
+        // Convert hours to 12-hour format
+        hours = hours % 12 || 12;
+    
+        return `${hours}:${String(minutes).padStart(2, '0')} ${modifier}`;
+    }
+
+    // Separate the arrays based on name property
+    const foodServices = clubData?.services?.filter(service =>
+        ['Food', 'Drinks', 'Coffees', 'Desserts'].includes(service.name)
+    );
+
+    const otherServices = clubData?.services?.filter(service =>
+        !['Food', 'Drinks', 'Coffees', 'Desserts'].includes(service.name)
+    );
 
     const clubEvents = useSelector((state) => {
         return state.events.data
@@ -182,7 +228,7 @@ export default function ClubBarDetailPage() {
                         initial="enter"
                         animate="center"
                         >
-                        {images.length >= 1 ? <img src={images[currentIndex]?.path} alt="Club Banner" className="banner" /> : <img src={addImage} alt="Club Banner" className="banner" /> }
+                        {images?.length >= 1 ? <img src={images[currentIndex]?.path} alt="Club Banner" className="banner" /> : <img src={addImage} alt="Club Banner" className="banner" /> }
                     </motion.div>
                     <div className="overlay"></div>
                     <RiArrowLeftWideLine className="arrow-left" onClick={handlePrev}/>
@@ -204,14 +250,28 @@ export default function ClubBarDetailPage() {
                             <div className="place">
                                 <MdOutlinePlace />
                                 <div onClick={handleOpenGoogleMap}>
-                                    <h1>{clubData?.city}</h1>
-                                    <h2>Dubai, UAE</h2>
+                                    <h1>{clubData?.address},</h1>
+                                    <h2>{clubData?.city}</h2>
                                 </div>
                             </div>
                             <div className="time">
-                                <LuClock9 /> 9:00 PM to 3:00 AM
+                                <LuClock9 /> {convertTo12HourFormat(clubData?.openTime)} to {convertTo12HourFormat(clubData?.closeTime)}
+                            </div>
+                            <div className="time">
+                                <span>AED:</span> {clubData?.normalHrRates}
                             </div>
                         </motion.div>
+                        <div className="happy-hour">
+                            <h2>Happy Hours</h2>
+                            <div className="time-price">
+                                <div className="time">
+                                    <LuClock9 /> {convertTo12HourFormat(clubData?.openTime)} to {convertTo12HourFormat(clubData?.closeTime)}
+                                </div>
+                                <div className="time">
+                                    <span>AED:</span> {clubData?.normalHrRates}
+                                </div>
+                            </div>
+                        </div>
                     </motion.div>
                     <div className="pagination-dots">
                         {images?.map((_, index) => (
@@ -255,41 +315,104 @@ export default function ClubBarDetailPage() {
                             <ReactPlayer url={clubData?.youtubevideo} className="video" playing={false} muted={true} controls/>
                         </div>
                     )}
-                    {clubData.description && (
                     <motion.div 
                         variants={textVariants}
                         initial="initial"
                         whileInView="animate"
                         viewport={{ once: false, amount: 0.25 }}
                         className="why-club-text">
-                        
+                        {clubData?.description && (
                             <div className="why-club-top">
                                 <motion.h1 variants={childVariants} className="why-club-title">Why Choose {clubData?.name}?</motion.h1>
                                 <motion.p variants={childVariants} className="why-club-desc">{clubData?.description}  
                                 </motion.p>
                             </div>
-                    {clubData.socialMedialinks.length > 1 && (
-                        <div className="why-club-bottom">
-                            <motion.h1 variants={childVariants} className="social-link-head">Social Links</motion.h1>
-                            <motion.p variants={childVariants}>Get featured in out instagram by tagging us @{clubData?.name.replace(/\s+/g, "").toLowerCase()}.</motion.p>
-                            <motion.div variants={childVariants} className="social-links">
-                                <a href={clubData?.socialMedialinks[0]?.link}><div className="social facebook">
-                                    <FaFacebookF style={{marginTop:"10px"}}/>
-                                    <p>Facebook</p>
-                                </div></a>
-                                <a href={clubData?.socialMedialinks[1]?.link}><div className="social instagram">
-                                    <FaInstagram />
-                                    <p>Instagram</p>
-                                </div></a>
-                                <a href={clubData?.socialMedialinks[1]?.link}><div className="social tiktok">
-                                    <FaTiktok />
-                                    <p>Tiktok</p>
-                                </div></a>
-                            </motion.div>
-                        </div>
-                    )}
+                        )}
+                        {((clubData?.socialMedialinks?.length > 1) || (clubData?.website)) && (
+                            <div className="why-club-bottom">
+                                <motion.h1 variants={childVariants} className="social-link-head">Social Links</motion.h1>
+                                <motion.p variants={childVariants}>Get featured in out social media by tagging us at below platforms</motion.p>
+                                <motion.div variants={childVariants} className="social-links">
+                                    <a href={clubData?.socialMedialinks[0]?.link}><div className="social facebook">
+                                        <FaFacebookF style={{marginTop:"10px"}}/>
+                                        <p>Facebook</p>
+                                    </div></a>
+                                    <a href={clubData?.socialMedialinks[1]?.link}><div className="social instagram">
+                                        <FaInstagram />
+                                        <p>Instagram</p>
+                                    </div></a>
+                                    <a href={clubData?.socialMedialinks[1]?.link}><div className="social tiktok">
+                                        <FaTiktok />
+                                        <p>Tiktok</p>
+                                    </div></a>
+                                    <a href={clubData?.website}><div className="social website">
+                                        <CgWebsite />
+                                        <p>Website</p>
+                                    </div></a>
+                                </motion.div>
+                            </div>
+                        )}
+                        {/* {clubData?.contactPerson && ( */}
+                            <div className="contact-details-div">
+                                <motion.h1 variants={childVariants} className="contact-us-head">Contact Us</motion.h1>
+                                <motion.div variants={childVariants} className="contact-us">
+                                    {clubData?.contactPerson && <p><span>Contact Person: </span>{clubData?.contactPerson}</p>}
+                                    <p><span>Phone: </span><a href={`tel:${clubData?.phoneNo}`}>{clubData?.phoneNo}</a></p>
+                                    {clubData?.landLineNo && <p><span>LandLine: </span><a href={`tel:${clubData?.landLineNo}`}>{clubData?.landLineNo}</a></p>}
+                                    <p><span>Email: </span><a href={`mailto:${clubData?.emailAddress}`}>{clubData?.emailAddress}</a></p>
+                                </motion.div>
+                            </div>
+                        {/* )} */}
                     </motion.div>
-                    )}
+                    
+                </div>
+            </section>
+            <section>
+                <div className="club-services container-section">
+                    <div className="food-services-section">
+                        <div className="food-services-head">
+                            <h1>Club Services</h1>
+                        </div>
+                        <div className="food-services">
+                            {otherServices?.map((ele) => {
+                                return (
+                                    <div key={ele.id} className="food-service">
+                                        <div className="food-service-icon">
+                                            {iconsMap[ele.name]}
+                                        </div>
+                                        <div className="food-service-name">
+                                            {ele.name}
+                                        </div>
+                                        <div className="food-service-description">
+                                            {ele.description}
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
+                    <div className="food-services-section">
+                        <div className="food-services-head">
+                            <h1>Food Services</h1>
+                        </div>
+                        <div className="food-services">
+                            {foodServices?.map((ele) => {
+                                return (
+                                    <div key={ele.id} className="food-service">
+                                        <div className="food-service-icon">
+                                            {iconsMap[ele.name]}
+                                        </div>
+                                        <div className="food-service-name">
+                                            {ele.name}
+                                        </div>
+                                        <div className="food-service-description">
+                                            {ele.description}
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
                 </div>
             </section>
             <section id="upcoming-events">
@@ -350,7 +473,7 @@ export default function ClubBarDetailPage() {
                         whileInView="animate"
                         viewport={{ once: false, amount: 0.25 }}
                         className="history">
-                        <motion.h2 variants={childVariants} className="history-title">History of the Club</motion.h2>
+                        <motion.h2 variants={childVariants} className="history-title">History of the Club {clubData?.experience && - clubData?.experience}</motion.h2>
                         <motion.p variants={childVariants}>{clubData?.history}</motion.p>
                         <motion.div 
                             variants={textVariants}

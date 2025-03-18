@@ -42,7 +42,7 @@ export default function ClubBarProfile() {
             .find(ele =>!ele?.isDeleted && ele?.createdBy === user?._id)
     });
 
-    console.log(clubAndBar)
+    // console.log(clubAndBar)
 
     useEffect(() => {
         if(clubAndBar) {
@@ -132,7 +132,7 @@ export default function ClubBarProfile() {
     });
     
 
-    // console.log(form)
+    console.log(form)
 
     const [locationType, setlocationType] = useState()
 
@@ -186,9 +186,9 @@ export default function ClubBarProfile() {
         if(!form?.longitude || !form?.latitude){
             errors.location = "Latitude and Longitude is Required"
         }
-        if(form.experience && typeof form.experience !== "Number"){
-            errors.experience = "Open Since Must be Number"
-        }
+        // if (form.experience && typeof form.experience !== "number") {
+        //     errors.experience = "Open Since Must be a Number";
+        // }        
     }
     validateErrors()
 
@@ -407,12 +407,21 @@ export default function ClubBarProfile() {
     //     // console.log(form.pictureGallery)
     // };
 
-    const handleRemoveGalleryImage = (imageName) => {
+    // const handleRemoveGalleryImage = (imageName) => {
+    //     setForm((prevForm) => ({
+    //         ...prevForm,
+    //         pictureGallery: prevForm.pictureGallery.filter(image => image.name !== imageName),
+    //     }));
+    // };    
+
+    const handleRemoveGalleryImage = (imageIdentifier) => {
         setForm((prevForm) => ({
             ...prevForm,
-            pictureGallery: prevForm.pictureGallery.filter(image => image.name !== imageName),
+            pictureGallery: prevForm.pictureGallery.filter((image) =>
+                image.name ? image.name !== imageIdentifier : image._id !== imageIdentifier
+            ),
         }));
-    };    
+    };
     
 
     const handleGeoLocationChange = () => {
@@ -474,16 +483,16 @@ export default function ClubBarProfile() {
             ),
         }));
     };
-    const handleServiceDescriptionWordChange = (serviceName, value) => {
-        setForm((prevForm) => ({
-            ...prevForm,
-            services: prevForm.services.map((service) =>
-                service.name === serviceName
-                    ? { ...service, descriptionWord: value }
-                    : service
-            ),
-        }));
-    };
+    // const handleServiceDescriptionWordChange = (serviceName, value) => {
+    //     setForm((prevForm) => ({
+    //         ...prevForm,
+    //         services: prevForm.services.map((service) =>
+    //             service.name === serviceName
+    //                 ? { ...service, descriptionWord: value }
+    //                 : service
+    //         ),
+    //     }));
+    // };
 
     const handleSelectFoodServiceChange = (e) => {
         const selectedValue = e.target.value;
@@ -1332,17 +1341,33 @@ export default function ClubBarProfile() {
                         />
                     </div>
 
-                    {form.pictureGallery.length > 0 && (
+                    {/* {form.pictureGallery.length > 0 && (
                         <div className="upload-gallery">
                             {form.pictureGallery.map((image, index) => (
                                 <div key={index} className="gallery-item">
-                                    {/* <img src={URL.createObjectURL(image)} alt={image.name} /> */}
+                                    <img src={URL.createObjectURL(image)} alt={image.name} />
                                     <p>{image.title ? image.title : image.name}</p>
                                     <MdRemoveCircle className="close-icon"  onClick={() => handleRemoveGalleryImage(image.name)} />
                                 </div>
                             ))}
                         </div>
-                    )}
+                    )} */}
+
+{form.pictureGallery.length > 0 && (
+    <div className="upload-gallery">
+        {form.pictureGallery.map((image, index) => (
+            <div key={index} className="gallery-item">
+                {/* Display title if available, otherwise use image name */}
+                <p>{image.title ? image.title : image.name}</p>
+                {/* Remove image based on its identifier (name for file images, _id for backend images) */}
+                <MdRemoveCircle
+                    className="close-icon"
+                    onClick={() => handleRemoveGalleryImage(image.name || image._id)}
+                />
+            </div>
+        ))}
+    </div>
+)}
 
                     {formErrors.pictureGallery && (
                         <div className="same-line">

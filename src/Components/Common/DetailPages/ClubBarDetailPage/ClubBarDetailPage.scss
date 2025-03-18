@@ -149,7 +149,7 @@
         .place-time {
             display: flex;
             flex-direction: row;
-            align-items: flex-start;
+            align-items: center;
             gap: 20px;
             margin-top: 30px;
             padding-left: 50px;
@@ -162,6 +162,11 @@
                 font-size: 16px;
                 font-weight: 500;
                 text-transform: uppercase;
+                cursor: pointer;
+
+                span {
+                    font-weight: 600;
+                }
 
                 h1, h2 {
                     font-size: 16px;
@@ -169,6 +174,50 @@
 
                 svg {
                     font-size: 30px;
+                }
+            }
+        }
+
+        .happy-hour {
+            display: flex;
+            flex-direction: column;
+            // align-items: center;
+            gap: 20px;
+            margin-top: 30px;
+            padding-left: 50px;
+
+            h2 {
+                text-transform: uppercase;
+                font-size: 18px;
+            }
+
+            .time-price {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 20px;
+
+                .place, .time {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 10px;
+                    font-size: 16px;
+                    font-weight: 500;
+                    text-transform: uppercase;
+                    cursor: pointer;
+    
+                    span {
+                        font-weight: 600;
+                    }
+    
+                    h1, h2 {
+                        font-size: 16px;
+                    }
+    
+                    svg {
+                        font-size: 30px;
+                    }
                 }
             }
         }
@@ -303,7 +352,10 @@
         .gallery {
             margin-top: 30px;
             display: grid;
+            justify-content: center;
+            align-items: center;
             grid-template-columns: repeat(3, 1fr);
+            // grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
 
             .gallery-item {
@@ -373,6 +425,7 @@
                 letter-spacing: 2px;
                 font-weight: 800;
                 color: gray;
+                padding: 0px 30px 0px;
             }
         
             .why-club-desc {
@@ -462,6 +515,102 @@
                         color: white;
                         transition: .5s;
                     }
+                }
+
+                .website:hover {
+                    background: green;
+                    transition: .5s;
+
+                    svg {
+                        color: white;
+                        transition: .5s;
+                    }
+                }
+            }
+        }
+
+        .contact-details-div {
+            .contact-us-head {
+                font-size: 30px;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                font-weight: 800;
+                color: gray;
+            }
+
+            .contact-us {
+                margin-top: 20px;
+                display: flex;
+                gap: 10px;
+
+                span {
+                    font-weight: 600;
+                }
+
+                a:hover {
+                    color: #fe6b00;
+                    cursor: pointer;
+                    transition: .3s;
+                }
+            }
+        }
+    }
+}
+
+.club-services {
+    margin-top: 100px;
+    padding-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+
+    .food-services-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .food-services-head {
+            font-size: 25px;
+            color: gray;
+            text-transform: uppercase;
+        }
+
+        .food-services {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
+            height: 100%;
+
+            .food-service {
+                padding: 30px;
+                background: #fe6b00;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                width: 100%;
+                height: 100%;
+                border-radius: 5px;
+
+                .food-service-icon {
+                    font-size: 40px;
+                    color: white;
+                }
+
+                .food-service-name {
+                    font-size: 18px;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    color: #333;
+                }
+
+                .food-service-description {
+                    color: white;
                 }
             }
         }
