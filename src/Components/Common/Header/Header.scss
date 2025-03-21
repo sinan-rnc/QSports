@@ -900,6 +900,11 @@
         right: 50px;
         top: 70px;
     }
+
+    .navbar .navbar_middle .acc_details .user-dashboard {
+        right: 50px;
+        top: 70px;
+    }
 }
 
 @media (max-width: 900px) {
@@ -1150,9 +1155,25 @@
     }
 }
 
+@media (max-width: 400px) {
+    .navbar .navbar_middle .acc_details .login-dashboard {
+        right: 30px;
+        top: 70px;
+    }
+
+    .navbar .navbar_middle .acc_details .user-dashboard {
+        right: 30px;
+        top: 70px;
+    }
+}
+
 @media (max-width: 380px) {
     .navbar .navbar_middle .menu-icon {
         margin-left: -20px;
+    }
+
+    .navbar .menubar .close-btn {
+        margin-left: -30px;
     }
 
     .navbar .navbar_middle .logo {

@@ -381,7 +381,7 @@ export default function Header() {
                 </div>
                 <div className="navbar_middle">
                     <div>
-                        <RiMenu2Line className={mobileMenu ? "menu-icon-close" : "menu-icon"} onClick={toggleMenu}/>
+                        {!mobileMenu && <RiMenu2Line className={mobileMenu ? "menu-icon-close" : "menu-icon"} onClick={toggleMenu}/>}
                         <ul className={`menubar ${mobileMenu ? "" : "hide-menubar"}`}>
                             {mobileMenu && <IoClose onClick={toggleMenu} className="close-btn"/>}
                             {/* <hr className="menu-hr"/> */}
@@ -410,7 +410,7 @@ export default function Header() {
                                         className={`mobile-menu ${mobileMenu ? "" : "hide-mobile-menu"}`}
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
-                                        transition={{ duration: 2, ease: "easeInOut" }}
+                                        transition={{ duration: 1.5, ease: "easeInOut" }}
                                     >
                                 {/* <div className={`mobile-menu ${mobileMenu ? "" : "hide-mobile-menu"}`}> */}
                                     {/* <div className="serach_game">
@@ -510,6 +510,7 @@ export default function Header() {
                                                         className={selectedDashboard === ele.section ? "active" : ""}
                                                         onClick={() => {
                                                             setSelectedDashboard(ele.section)
+                                                            handleOpenUserDashboard()
                                                             navigate("/account")
                                                         }}
                                                     >{ele.title}</li>

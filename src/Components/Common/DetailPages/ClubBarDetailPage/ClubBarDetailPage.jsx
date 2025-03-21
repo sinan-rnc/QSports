@@ -4,12 +4,12 @@ import { motion } from "framer-motion"
 // import 'react-image-lightbox/style.css';
 import ReactPlayer from "react-player"
 
-import { MdOutlinePlace } from "react-icons/md"
+import { MdEmail, MdOutlinePlace, MdPhone } from "react-icons/md"
 import { LuClock9, LuMoveRight } from "react-icons/lu"
 import { RiArrowLeftWideLine, RiArrowRightWideLine } from "react-icons/ri"
 import { GiPoolTableCorner, GiAges, GiTeacher, GiPoolTriangle } from 'react-icons/gi';
 import { PiSeatFill } from 'react-icons/pi';
-import { FaMoneyBill } from 'react-icons/fa';
+import { FaMoneyBill, FaYoutube } from 'react-icons/fa';
 import { MdEmojiEvents } from 'react-icons/md';
 import { RiBilliardsFill, RiDrinksFill } from 'react-icons/ri';
 import { IoFastFood } from 'react-icons/io5';
@@ -32,6 +32,7 @@ import { tournaments } from "../../../../DataSet/tournaments"
 import { IoIosArrowRoundForward } from "react-icons/io"
 import { useSelector } from "react-redux"
 import { CgWebsite } from "react-icons/cg"
+import { TbDeviceLandlinePhone } from "react-icons/tb"
 
 export default function ClubBarDetailPage() {
     const navigate = useNavigate()
@@ -98,6 +99,27 @@ export default function ClubBarDetailPage() {
     const [currentIndex1, setCurrentIndex1] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
 
+    const lightThemeColors = [
+        "#FFEFD5", // PapayaWhip
+        "#E0FFFF", // LightCyan
+        "#FAFAD2", // LightGoldenRodYellow
+        "#F0FFF0", // HoneyDew
+        "#FFFACD", // LemonChiffon
+        "#D8BFD8", // Thistle
+        "#F5DEB3", // Wheat
+        "#E6E6FA", // Lavender
+        "#FFDAB9", // PeachPuff
+        "#F0E68C", // Khaki
+    ];
+
+    const lightThemeColors2 = [
+        "#FFB6C1", // LightPink
+        "#98FB98", // PaleGreen
+        "#AFEEEE", // PaleTurquoise
+        "#FFDEAD", // NavajoWhite
+    ];
+    
+    
     // console.log(tournament)
 
     // console.log("Year:", year);
@@ -218,10 +240,10 @@ export default function ClubBarDetailPage() {
 
     return (
         <Fragment>
-            <section>
+            {/* <section>
                 <div className="club-detailPage">
                     <motion.div
-                        // key={currentIndex}
+                        key={currentIndex}
                         className="banner-wrapper"
                         custom={direction}
                         variants={variants}
@@ -243,9 +265,15 @@ export default function ClubBarDetailPage() {
                         <motion.h1 variants={childVariants} className="clubName">{clubData?.name}</motion.h1>
                         <motion.div variants={childVariants} className="book-button-div">
                             <h3 className="clubSlogan">Book Your Games at {clubData?.name}</h3>
-                            <button className="book-button"><a href={`tel:${clubData?.phoneNo}`}>Call Now</a></button>
+                            <div className="button-div">
+                                <button className="book-button price">AED {clubData?.normalHrRates}</button>
+                                <button className="book-button"><a href={`tel:${clubData?.phoneNo}`}>Call Now</a></button>
+                            </div>
                         </motion.div>
-                        <motion.h4 variants={childVariants} className="clubSlogan2">{clubData?.slogan}</motion.h4>
+                        <motion.div variants={childVariants} className="slogan-price-div">
+                            <h4 className="clubSlogan2">{clubData?.slogan}</h4>
+                            <button className="book-button2">AED {clubData?.normalHrRates}</button>
+                        </motion.div>
                         <motion.div variants={childVariants} className="place-time">
                             <div className="place">
                                 <MdOutlinePlace />
@@ -261,17 +289,17 @@ export default function ClubBarDetailPage() {
                                 <span>AED:</span> {clubData?.normalHrRates}
                             </div>
                         </motion.div>
-                        <div className="happy-hour">
+                        <motion.div variants={childVariants} className="happy-hour">
                             <h2>Happy Hours</h2>
                             <div className="time-price">
                                 <div className="time">
                                     <LuClock9 /> {convertTo12HourFormat(clubData?.openTime)} to {convertTo12HourFormat(clubData?.closeTime)}
                                 </div>
                                 <div className="time">
-                                    <span>AED:</span> {clubData?.normalHrRates}
+                                    <span>AED:</span> {clubData?.happyHrRates}
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     </motion.div>
                     <div className="pagination-dots">
                         {images?.map((_, index) => (
@@ -281,6 +309,158 @@ export default function ClubBarDetailPage() {
                                 onClick={() => handleDotClick(index)}
                             ></div>
                         ))}
+                    </div>
+                </div>
+            </section> */}
+            <section>
+                <div className="club-detail-hero container-section">
+                    <div className="hero-section">
+                        <div className="club-details">
+                            <h1 className="club-name">{clubData?.name}</h1>
+                            {clubData?.slogan && <h2 className="club-slogan">{clubData?.slogan}</h2>}
+                            <div className="club-location">
+                                <MdOutlinePlace />
+                                <div onClick={handleOpenGoogleMap}>
+                                    {clubData?.address && <p>{clubData?.address},</p>}
+                                    <p>{clubData?.city}</p>
+                                </div>
+                            </div>
+                            <h1 className="contact-info-head">Call for Bookings:</h1>
+                            <div className="contact-info">
+                                {clubData?.phoneNo && <div className="contact"><MdPhone /> <p>{clubData?.phoneNo}</p></div>}
+                                {clubData?.landLineNo && <div className="contact"><TbDeviceLandlinePhone /> <p>{clubData?.landLineNo}</p></div>}
+                                {clubData?.emailAddress &&<div className="contact"><MdEmail /> <p>{clubData?.emailAddress}</p></div>}
+                                {clubData?.webSite && <div className="contact"><CgWebsite /> <p>{clubData?.webSite}</p></div>}
+                            </div>
+                        </div>
+                        <div className="club-image">
+                            <img src={clubData?.pictureGallery[0]?.path} alt="" />
+                        </div>
+                    </div>
+                    <div className="hero-section reverse">
+                        {(clubData?.introductionObjtv || (clubData?.normalHrRates || (clubData?.openTime && clubData?.closeTime)) ||  (clubData?.happyHrRates || (clubData?.startTime && clubData?.endTime))) && (
+                            <div className="club-details">
+                                {clubData?.introductionObjtv && <div className="club-intro">
+                                    <h1>Club Introduction and Objective</h1>
+                                    <p>{clubData?.introductionObjtv}</p>
+                                </div>}
+                                <div className="club-hours">
+                                    {(clubData?.normalHrRates || (clubData?.openTime && clubData?.closeTime)) && <div className="working-hours">
+                                        <h1>Working Hours</h1>
+                                        {(clubData?.openTime && clubData?.closeTime) && <div className="time"><LuClock9 /> {convertTo12HourFormat(clubData?.openTime)} to {convertTo12HourFormat(clubData?.closeTime)}</div>}
+                                        {clubData?.normalHrRates && <div className="btn-style">AED <span className="price-value">{clubData?.normalHrRates}</span></div>}
+                                    </div>}
+                                    {(clubData?.happyHrRates || (clubData?.startTime && clubData?.endTime)) && <div className="working-hours">
+                                        <h1>Happy Hours</h1>
+                                        {(clubData?.startTime && clubData?.endTime) && <div className="time"><LuClock9 /> {convertTo12HourFormat(clubData?.startTime)} to {convertTo12HourFormat(clubData?.endTime)}</div>}
+                                        {clubData?.happyHrRates && <div className="btn-style">AED <span className="price-value">{clubData?.happyHrRates}</span></div>}
+                                    </div>}
+                                </div>
+                                {clubData?.introductionObjtv && <div className="btn-style">
+                                    Book Now
+                                </div>}
+                            </div>
+                        )}
+                        <div className="club-image">
+                            <img src={clubData?.pictureGallery[1]?.path} alt="" />
+                        </div>
+                    </div>
+                    {(foodServices?.length > 0 || otherServices?.length > 0) && (
+                        <div className="club-services">
+                            {otherServices.length > 0 &&<div className="food-services-section">
+                                <div className="food-services-head">
+                                    <h1>Club Services</h1>
+                                </div>
+                                <div className="food-services">
+                                    {otherServices?.map((ele, index) => {
+                                        const bgColor = lightThemeColors[index % lightThemeColors.length];
+                                        return (
+                                            <div key={ele.id}
+                                            className="food-service"
+                                            style={{ backgroundColor: bgColor }}>
+                                                <div className="food-service-icon">
+                                                    {iconsMap[ele.name]}
+                                                </div>
+                                                <div className="food-service-name">
+                                                    {ele.name}
+                                                </div>
+                                                <div className="food-service-description">
+                                                    {ele.description}
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div>}
+                            {foodServices.length> 0 && <div className="food-services-section">
+                                <div className="food-services-head">
+                                    <h1>Food Services</h1>
+                                </div>
+                                <div className="food-services">
+                                    {foodServices?.map((ele, index) => {
+                                        const bgColor = lightThemeColors2[index % lightThemeColors2.length];
+                                        return (
+                                            <div key={ele.id} 
+                                            className="food-service"
+                                            style={{ backgroundColor: bgColor }}>
+                                                <div className="food-service-icon">
+                                                    {iconsMap[ele.name]}
+                                                </div>
+                                                <div className="food-service-name">
+                                                    {ele.name}
+                                                </div>
+                                                <div className="food-service-description">
+                                                    {ele.description}
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div>}
+                        </div>
+                    )}
+                    <div className="hero-section">
+                        {(clubData?.description || clubData?.history || (clubData?.socialMedialinks.length > 0 || clubData?.youtubevideo || clubData?.webSite)) && (
+                            <div className="club-details">
+                                {clubData?.description && <div className="club-intro">
+                                    <h1>Why “your Club name here” </h1>
+                                    <p>{clubData?.description}</p>
+                                </div>}
+                                {clubData?.history && <div className="club-intro">
+                                    <h1>History of the Club</h1>
+                                    <p>{clubData?.history}</p>
+                                </div>}
+                                {(clubData?.socialMedialinks.length > 0 || clubData?.youtubevideo || clubData?.webSite) && <div className="social-media-links">
+                                    <h1 variants={childVariants} className="social-link-head">Social Links</h1>
+                                    <p variants={childVariants}>Get featured in out social media by tagging us at below platforms</p>
+                                    <div variants={childVariants} className="social-links">
+                                        <a href={clubData?.socialMedialinks[0]?.link}><div className="social facebook">
+                                            <FaFacebookF style={{marginTop:"10px"}}/>
+                                            <p>Facebook</p>
+                                        </div></a>
+                                        <a href={clubData?.socialMedialinks[1]?.link}><div className="social instagram">
+                                            <FaInstagram />
+                                            <p>Instagram</p>
+                                        </div></a>
+                                        <a href={clubData?.socialMedialinks[1]?.link}><div className="social tiktok">
+                                            <FaTiktok />
+                                            <p>Tiktok</p>
+                                        </div></a>
+                                        <a href={clubData?.website}><div className="social website">
+                                            <CgWebsite />
+                                            <p>Website</p>
+                                        </div></a>
+                                        <a href={clubData?.youtubevideo}><div className="social youtube">
+                                            <FaYoutube />
+                                            <p>Website</p>
+                                        </div></a>
+                                    </div>
+                                </div>}
+                            </div>
+                        )}
+                        <div className="club-image">
+                            <img src={clubData?.pictureGallery[2]?.path} alt="" />
+                        </div>
                     </div>
                 </div>
             </section>
@@ -308,7 +488,7 @@ export default function ClubBarDetailPage() {
                     </motion.div>
                 </div>
             </section>
-            <section>
+            {/* <section>
                 <div className="why-club">
                     {clubData?.youtubevideo && (
                         <div className="video-player">
@@ -352,7 +532,7 @@ export default function ClubBarDetailPage() {
                                 </motion.div>
                             </div>
                         )}
-                        {/* {clubData?.contactPerson && ( */}
+                        {clubData?.contactPerson && (
                             <div className="contact-details-div">
                                 <motion.h1 variants={childVariants} className="contact-us-head">Contact Us</motion.h1>
                                 <motion.div variants={childVariants} className="contact-us">
@@ -362,12 +542,12 @@ export default function ClubBarDetailPage() {
                                     <p><span>Email: </span><a href={`mailto:${clubData?.emailAddress}`}>{clubData?.emailAddress}</a></p>
                                 </motion.div>
                             </div>
-                        {/* )} */}
+                        )}
                     </motion.div>
                     
                 </div>
-            </section>
-            <section>
+            </section> */}
+            {/* <section>
                 <div className="club-services container-section">
                     <div className="food-services-section">
                         <div className="food-services-head">
@@ -414,8 +594,8 @@ export default function ClubBarDetailPage() {
                         </div>
                     </div>
                 </div>
-            </section>
-            <section id="upcoming-events">
+            </section> */}
+            {/* <section id="upcoming-events">
                 <div className="upcoming-events container-section">
                     <div className="heading">
                         <h1 className='main-heading'>Upcoming Events</h1>
@@ -464,7 +644,7 @@ export default function ClubBarDetailPage() {
                         </div>
                     )}
                 </div>
-            </section>
+            </section> */}
             <section>
                 <div className="about-us container-section">
                     <motion.div 
@@ -473,8 +653,8 @@ export default function ClubBarDetailPage() {
                         whileInView="animate"
                         viewport={{ once: false, amount: 0.25 }}
                         className="history">
-                        <motion.h2 variants={childVariants} className="history-title">History of the Club {clubData?.experience && - clubData?.experience}</motion.h2>
-                        <motion.p variants={childVariants}>{clubData?.history}</motion.p>
+                        <motion.h2 variants={childVariants} className="history-title">Club Gallery</motion.h2>
+                        {/* <motion.p variants={childVariants}>{clubData?.history}</motion.p> */}
                         <motion.div 
                             variants={textVariants}
                             initial="initial"

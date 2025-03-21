@@ -14,6 +14,7 @@ import axios from "axios";
 import { backendApi } from "../../../../Apis/api";
 import { useAuth } from "../../../../Context/AuthContext";
 import addImage from "../../../../Assets/Common/add-image.jpg"
+import { HiBuildingOffice } from "react-icons/hi2";
 
 const variants = {
     enter: (direction) => ({
@@ -93,8 +94,8 @@ export default function EventDetailPage() {
         return state?.clubsAndBars?.data
             .find(ele => !ele?.isDeleted && ele?._id === eventData?.ClubID)
     })
-
-    // console.log(eventClub)
+    console.log(eventData)
+    console.log(eventClub)
 
     const images = eventClub?.pictureGallery;
     // console.log(images)
@@ -154,9 +155,9 @@ export default function EventDetailPage() {
                 setAlertMessageColor("red")
             } else {
                 const formData = {
-                    EventID: eventData._id,
+                    EventID: eventData?._id,
                     UserID: user._id,
-                    Fee: eventData.EnrollmentFee,
+                    Fee: eventData?.EnrollmentFee,
                     FeePaid: true
                 }
                 try {
@@ -213,16 +214,21 @@ export default function EventDetailPage() {
                         </motion.div>
                         <motion.h4 variants={childVariants} className="clubSlogan2">Unleash the Champion in You – The Premier Tournament Awaits!</motion.h4>
                         <motion.div variants={childVariants} className="place-time">
-                            {eventClub?.name || eventClub?.city && (
+                            {(eventClub?.name) && (
+                                <div className="place">
+                                    <HiBuildingOffice />
+                                    <div>
+                                        <h1>{eventClub?.name},</h1>
+                                    </div>
+                                </div>
+                            )}
+                            {(eventClub?.city) && (
                             <div className="place">
                                 <MdOutlinePlace />
                                 <div>
-                                    <h1>{eventClub?.name},</h1>
-                                    <h1>
-                                        {eventClub?.city},<br/>
-                                        {/* {eventClub?.address} */}
-                                        </h1>
-                                    <h2></h2>
+                                    <h1>{eventClub?.city},<br/>
+                                        {eventClub?.address}
+                                    </h1>
                                 </div>
                             </div>
                             )}
@@ -304,7 +310,7 @@ export default function EventDetailPage() {
                         <div className="event-details">
                             <div className="left">
                                 {/* <img src={eventData?.EventImage} alt="" /> */}
-                                {eventData.EventImage ? <img src={eventData.EventImage} alt=""/> : <img src={addImage} alt=""/>}
+                                {eventData?.EventImage ? <img src={eventData?.EventImage} alt=""/> : <img src={addImage} alt=""/>}
                             </div>
                             <div className="right">
                                 <h1 className="event-name">{eventData?.EventName}</h1>

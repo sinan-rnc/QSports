@@ -186,6 +186,9 @@ export default function ClubBarProfile() {
         if(!form?.longitude || !form?.latitude){
             errors.location = "Latitude and Longitude is Required"
         }
+        if(form.pictureGallery.length > 5) {
+            errors.pictureGallery = "You can upload only 5 images"
+        }
         // if (form.experience && typeof form.experience !== "number") {
         //     errors.experience = "Open Since Must be a Number";
         // }        
@@ -329,77 +332,35 @@ export default function ClubBarProfile() {
     //     }
     // };
     
-    // const handleGalleryChange = (e) => {
-    //     const files = Array.from(e.target.files);
-    
-    //     setForm((prevForm) => {
-    //         // Get existing images from previous state and concatenate new ones
-    //         const updatedGallery = [...prevForm.pictureGallery, ...files];
-    
-    //         return {
-    //             ...prevForm,
-    //             pictureGallery: updatedGallery.filter(
-    //                 (file, index, self) => self.findIndex(img => img.name === file.name) === index
-    //             ), // Remove duplicates
-    //         };
-    //     });
-    //     // form.updatedGallery
-    
-    //     e.target.value = ""; // Reset input
-    // };
-
-    // const handleGalleryChange = (e) => {
-    //     const files = Array.from(e.target.files); // Get the selected files
-    
-    //     if (files.length > 0) {
-    //         setForm((prevForm) => {
-    //             // Combine existing images with new ones, while ensuring no duplicates
-    //             const updatedGallery = [
-    //                 ...prevForm.pictureGallery,
-    //                 ...files.filter(file => 
-    //                     !prevForm.pictureGallery.some(existingFile => existingFile.name === file.name)
-    //                 ),
-    //             ];
-    
-    //             // Ensure the gallery doesn't exceed 5 images
-    //             const limitedGallery = updatedGallery.slice(0, 5);
-    
-    //             return {
-    //                 ...prevForm,
-    //                 pictureGallery: limitedGallery,
-    //             };
-    //         });
-    //     }
-    
-    //     e.target.value = ""; // Reset input
-    // };
-    
-    
     const handleGalleryChange = (e) => {
-        const files = Array.from(e.target.files); // Get the selected files
+        const files = Array.from(e.target.files);
+        
+        setForm((prevForm) => {
+            const existingGallery = prevForm.pictureGallery;
     
-        if (files.length > 0) {
-            setForm((prevForm) => {
-                // Combine existing images with new ones, while ensuring no duplicates
-                const updatedGallery = [
-                    ...prevForm.pictureGallery,
-                    ...files.filter(file => 
-                        !prevForm.pictureGallery.some(existingFile => existingFile.name === file.name)
-                    ),
-                ];
-    
-                // Ensure the gallery doesn't exceed 5 images
-                const limitedGallery = updatedGallery.slice(0, 5);
-    
-                return {
-                    ...prevForm,
-                    pictureGallery: limitedGallery,
-                };
+            // Filter out files that already exist in the gallery based on name
+            const nonDuplicateFiles = files.filter(file => {
+                return !existingGallery.some(existingImage => {
+                    if (existingImage instanceof File) {
+                        return existingImage.name === file.name; // Compare with existing File objects
+                    } else {
+                        return existingImage.title === file.name; // Compare with backend images by title
+                    }
+                });
             });
-        }
+    
+            // Update the gallery with non-duplicate files
+            const updatedGallery = [...existingGallery, ...nonDuplicateFiles];
+            
+            return {
+                ...prevForm,
+                pictureGallery: updatedGallery
+            };
+        });
     
         e.target.value = ""; // Reset input
-    };
+    };    
+    
     
 
     // const handleRemoveGalleryImage = () => {
@@ -814,86 +775,141 @@ export default function ClubBarProfile() {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         console.log(form.pictureGallery);
-            const formData = new FormData();
+        const formData = new FormData();
+
+        for (let key in form) {
+            const value = form[key];
     
-            for (let key in form) {
-                const value = form[key];
-        
-                if (
-                    !["image", "pictureGallery", "socialMedialinks", "services"].includes(key) &&
-                    value !== undefined &&
-                    value !== "" // Skip keys with empty string or undefined
-                ) {
-                    if (typeof value === "string") {
-                        formData.append(key, value);
-                    } else {
-                        formData.append(key, JSON.stringify(value));
-                    }
-                }
-            }
-        
-            // Append image file if it exists
-            if (form.image instanceof File) {
-                formData.append("image", form.image);
-            }
-        
-            // Append pictureGallery files if the array is not empty
-            if (Array.isArray(form.pictureGallery) && form.pictureGallery.length > 0) {
-                form.pictureGallery.forEach((file) => {
-                    if (file instanceof File) {
-                        formData.append("pictureGallery", file);
-                        console.log(file)
-                    }
-                });
-            }
-        
-            // Append socialMedialinks if the array is not empty
-            if (Array.isArray(form.socialMedialinks) && form.socialMedialinks.length > 0) {
-                form.socialMedialinks.forEach((item, index) => {
-                    if (item.link) { // Only append if there's a valid link
-                        formData.append(`socialMedialinks[${index}][name]`, item.name || "");
-                        formData.append(`socialMedialinks[${index}][icon]`, item.icon || "");
-                        formData.append(`socialMedialinks[${index}][link]`, item.link || "");
-                    }
-                });
-            }
-        
-            // Append services if the array is not empty
-            if (Array.isArray(form.services) && form.services.length > 0) {
-                form.services.forEach((item, index) => {
-                    if (item.name || item.icon || item.description || item.descriptionWord) { // Only append if any of the fields are present
-                        formData.append(`services[${index}][name]`, item.name || "");
-                        formData.append(`services[${index}][icon]`, item.icon || "");
-                        formData.append(`services[${index}][description]`, item.description || "");
-                        // formData.append(`services[${index}][descriptionWord]`, item.descriptionWord || "");
-                    }
-                });
-            }
-        
-            // Check appended data
-            // for (let [key, value] of formData.entries()) {
-            //     console.log(`${key}: ${value}`);
-            // }
-        
-            if (Object.keys(errors).length === 0) {
-                if(isPolicyChecked) {
-                    if (clubAndBar) {
-                        formData.append("_id", clubAndBar._id);
-                        console.log("for update, formData", formData);
-                        dispatch(startUpdateClub(formData, setAlertMessage, setAlertMessageColor, setSelectedDashboard));
-                    } else {
-                        console.log("for create, formData", formData);
-                        dispatch(startCreateClub(formData, setAlertMessage, setAlertMessageColor, setSelectedDashboard));
-                    }
-                    setFormErrors("");
+            if (
+                !["image", "pictureGallery", "socialMedialinks", "services"].includes(key) &&
+                value !== undefined &&
+                value !== "" // Skip keys with empty string or undefined
+            ) {
+                if (typeof value === "string") {
+                    formData.append(key, value);
                 } else {
-                    setAlertMessage("Please Check and terms and conditions");
-                    setAlertMessageColor("red");
+                    formData.append(key, JSON.stringify(value));
                 }
+            }
+        }
+    
+        // Append image file if it exists
+        if (form.image instanceof File) {
+            formData.append("image", form.image);
+        }
+    
+        // // Append pictureGallery files if the array is not empty
+        // if (Array.isArray(form.pictureGallery) && form.pictureGallery.length > 0) {
+        //     form.pictureGallery.forEach((file) => {
+        //         if (file instanceof File) {
+        //             formData.append("pictureGallery", file);
+        //             console.log(file)
+        //         }
+        //     });
+        // }
+
+
+        if (Array.isArray(form.pictureGallery) && form.pictureGallery.length > 0) {
+            const fileNames = new Set(); // Track file names being added to FormData
+        
+            form.pictureGallery.forEach((file) => {
+                if (file instanceof File) {
+                    if (!fileNames.has(file.name)) {
+                        console.log("Appending New File:", {
+                            name: file.name,
+                            size: file.size,
+                            type: file.type,
+                        });
+        
+                        formData.append("pictureGallery", file);
+                        fileNames.add(file.name);
+                    } else {
+                        console.log(`Skipping duplicate file: ${file.name}`);
+                    }
+                } else {
+                    console.log("Appending Existing Image:", {
+                        title: file.title,
+                        path: file.path,
+                        _id: file._id,
+                    });
+        
+                    formData.append("existingGallery[]", JSON.stringify(file));
+                }
+            });
+        
+            // Check the final FormData entries
+            console.log("Final FormData Entries:");
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}: ${value}`);
+            }
+        }
+        
+
+        // For adding new Images(If above code is not wokring properly)
+
+        // Append pictureGallery files if the array is not empty
+        // if (Array.isArray(form.pictureGallery) && form.pictureGallery.length > 0) {
+        //     form.pictureGallery.forEach((file) => {
+        //         if (file instanceof File) {
+        //             // Append new files directly
+        //             formData.append("pictureGallery", file);
+        //             console.log("New File:", file);
+        //         } else {
+        //             // Append existing images as JSON strings
+        //             formData.append("existingGallery[]", JSON.stringify(file));
+        //             console.log("Existing Image:", file);
+        //         }
+        //     });
+        // }
+
+    
+        // Append socialMedialinks if the array is not empty
+        if (Array.isArray(form.socialMedialinks) && form.socialMedialinks.length > 0) {
+            form.socialMedialinks.forEach((item, index) => {
+                if (item.link) { // Only append if there's a valid link
+                    formData.append(`socialMedialinks[${index}][name]`, item.name || "");
+                    formData.append(`socialMedialinks[${index}][icon]`, item.icon || "");
+                    formData.append(`socialMedialinks[${index}][link]`, item.link || "");
+                }
+            });
+        }
+    
+        // Append services if the array is not empty
+        if (Array.isArray(form.services) && form.services.length > 0) {
+            form.services.forEach((item, index) => {
+                if (item.name || item.icon || item.description || item.descriptionWord) { // Only append if any of the fields are present
+                    formData.append(`services[${index}][name]`, item.name || "");
+                    formData.append(`services[${index}][icon]`, item.icon || "");
+                    formData.append(`services[${index}][description]`, item.description || "");
+                    // formData.append(`services[${index}][descriptionWord]`, item.descriptionWord || "");
+                }
+            });
+        }
+    
+        // Check appended data
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+    
+        if (Object.keys(errors).length === 0) {
+            if(isPolicyChecked) {
+                if (clubAndBar) {
+                    formData.append("_id", clubAndBar._id);
+                    console.log("for update, formData", formData);
+                    dispatch(startUpdateClub(formData, setAlertMessage, setAlertMessageColor, setSelectedDashboard));
+                } else {
+                    console.log("for create, formData", formData);
+                    dispatch(startCreateClub(formData, setAlertMessage, setAlertMessageColor, setSelectedDashboard));
+                }
+                setFormErrors("");
             } else {
-                setAlertMessage("Fill the required Field");
+                setAlertMessage("Please Check and terms and conditions");
                 setAlertMessageColor("red");
-                setFormErrors(errors);
+            }
+        } else {
+            setAlertMessage("Check the Form Validations");
+            setAlertMessageColor("red");
+            setFormErrors(errors);
         }
     };
     
@@ -1353,21 +1369,21 @@ export default function ClubBarProfile() {
                         </div>
                     )} */}
 
-{form.pictureGallery.length > 0 && (
-    <div className="upload-gallery">
-        {form.pictureGallery.map((image, index) => (
-            <div key={index} className="gallery-item">
-                {/* Display title if available, otherwise use image name */}
-                <p>{image.title ? image.title : image.name}</p>
-                {/* Remove image based on its identifier (name for file images, _id for backend images) */}
-                <MdRemoveCircle
-                    className="close-icon"
-                    onClick={() => handleRemoveGalleryImage(image.name || image._id)}
-                />
-            </div>
-        ))}
-    </div>
-)}
+                    {form.pictureGallery.length > 0 && (
+                        <div className="upload-gallery">
+                            {form.pictureGallery.map((image, index) => (
+                                <div key={index} className="gallery-item">
+                                    {/* Display title if available, otherwise use image name */}
+                                    <p>{image.title ? image.title : image.name}</p>
+                                    {/* Remove image based on its identifier (name for file images, _id for backend images) */}
+                                    <MdRemoveCircle
+                                        className="close-icon"
+                                        onClick={() => handleRemoveGalleryImage(image.name || image._id)}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    )}
 
                     {formErrors.pictureGallery && (
                         <div className="same-line">

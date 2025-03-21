@@ -1,15 +1,21 @@
 import { useState } from "react"
 import "./ContactUs.scss"
+import PhoneInput from "react-phone-input-2"
+import { useAuth } from "../../../Context/AuthContext"
+// const access_key = "f65ef0eb-57aa-45ba-91f7-aaf00dfe46ee" Testing(Sinan)
+const access_key = "8c3419f9-7126-43fe-8ce2-bda8f8e0e373" // Qsports
 
 export default function ContactUs() {
-    const [formErrors, setFormErrors] = useState("")
-    const [form, setForm] = useState({
+    const { setAlertMessage, setAlertMessageColor} = useAuth()
+    const [ formErrors, setFormErrors ] = useState("")
+    const [ phone, setPhone ] = useState("")
+    const [ form, setForm ] = useState({
         name : "",
         email : "",
-        phoneNo: "",
-        subject : "",
+        // subject : "",
         description : "",
     })
+    const [ loading, setLoading ] = useState(false)
 
     const errors = {}
 
@@ -20,15 +26,12 @@ export default function ContactUs() {
         if(form.email.trim().length === 0) {
             errors.email = "Email is required"
         }
-        if(form.phoneNo.trim().length === 0){
-            errors.phoneNo = "Phone No is Required"
+        if(phone.trim().length === 0){
+            errors.phone = "Phone No is Required"
         }
-        if(form.subject.trim().length === 0){
-            errors.subject = "Subject is Required"
-        }
-        if(form.description.trim().length === 0){
-            errors.description = "Description is Required"
-        }
+        // if(form.description.trim().length === 0){
+        //     errors.description = "Description is Required"
+        // }
     }
     validateErrors()
 
@@ -41,37 +44,52 @@ export default function ContactUs() {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         validateErrors();
+        const formData = new FormData(e.target);
+        formData.append("access_key", access_key);
+        formData.append("phone", phone);
+        // formData.append("subject", form.subject);
+        console.log(form)
+        console.log(phone)
     
         if (Object.keys(errors).length === 0) {
+            setLoading(true);
+
             try {
-                const response = await fetch("http://localhost:5000/send", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(form)
+                const response = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                body: formData,
                 });
-    
-                const result = await response.json();
-                if (response.ok) {
-                    alert(result.message);
+        
+                const data = await response.json();
+        
+                if (data.success) {
+                    setAlertMessage("Form Submitted Successfully")
+                    setAlertMessageColor("green")
+                    e.target.reset();
+                    setFormErrors("")
                     setForm({
-                        name: "",
-                        email: "",
-                        phoneNo: "",
-                        subject: "",
-                        description: "",
-                    });
+                        name : "",
+                        email : "",
+                        // subject : "",
+                        description : "",
+                    })
+                    setPhone("")
                 } else {
-                    alert(result.message);
+                    console.error("Error", data);
+                    setAlertMessage(data.message);
+                    setAlertMessageColor("red");
                 }
-            } catch (err) {
-                alert("Something went wrong. Please try again later.");
-                console.error(err);
+            } catch (error) {
+                console.error("Error submitting the form:", error);
+                setAlertMessage("An error occurred. Please try again later.")
+                setAlertMessageColor("red")
+            } finally {
+                setLoading(false); // Stop loading in all cases
             }
         } else {
             setFormErrors(errors);
         }
     };
-    
 
     return (
         <section>
@@ -123,36 +141,53 @@ export default function ContactUs() {
                                     <input type="text" className="form-control" id="email" name="email" value={form.email} onChange={handleChange} placeholder="Enter the Email Email"/>
                                 </div>
                                 <div className="form-group">
-                                    <label className="form-label" htmlFor="phoneNo">Phone No</label>
-                                    <input type="text" className="form-control" id="phoneNo" name="phoneNo" value={form.phoneNo} onChange={handleChange} placeholder="Enter the Phone No"/>
+                                    <label className="form-label" htmlFor="phone">Phone No</label>
+                                    <PhoneInput
+                                        inputStyle={{ 
+                                            width: "100%", 
+                                            padding: "8px 30px 8px 40px", 
+                                            outline: "none", 
+                                            border: "none", 
+                                            background: "#eaeaea", 
+                                            fontSize: 14 
+                                        }}
+                                        containerStyle={{ 
+                                            width: "100%", 
+                                            border: "2px solid #eaeaea", 
+                                            background: "#eaeaea", 
+                                            display: "flex", 
+                                            alignItems: "center" 
+                                        }}
+                                        buttonStyle={{ 
+                                            border: "none", 
+                                            background: "transparent", 
+                                            marginRight: "10px" 
+                                        }}
+                                        className="phone-input"
+                                        placeholder="Enter Your Mobile"
+                                        name="phone"
+                                        id="phone"
+                                        country={"ae"}
+                                        value={phone}
+                                        onChange={(value) => { setPhone(value) }}
+                                    />
                                 </div>
                             </div>
-                            {(formErrors.email || formErrors.phoneNo) && (
+                            {(formErrors.email || formErrors.phone) && (
                                 <div className="same-line">
                                     {formErrors.email && <div className="alert alert-danger">{formErrors.email}</div>}
-                                    {formErrors.phoneNo && <div className="alert alert-danger">{formErrors.phoneNo}</div>}  
+                                    {formErrors.phone && <div className="alert alert-danger">{formErrors.phone}</div>}  
                                 </div>
                             )}
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <label className="form-label" htmlFor="subject">Subject</label>
                                 <input type="text" className="form-control" id="subject" name="subject" value={form.subject} onChange={handleChange} placeholder="Enter the Subject"/>
-                            </div>
-                            {/* {formErrors?.subject (
-                                <div className="same-line">
-                                    {formErrors?.subject && <div className="alert alert-danger">{formErrors?.subject}</div>}
-                                </div>
-                            )} */}
+                            </div> */}
                             <div className="form-group">
                                 <label className="form-label" htmlFor="description">Description</label>
                                 <textarea type="text" className="form-control" id="description" name="description" value={form.description} onChange={handleChange} placeholder="Enter the Description"/>
                             </div>
-                            {/* {formErrors.description (
-                                <div className="same-line">
-                                    {formErrors.description && <div className="alert alert-danger">{formErrors.description}</div>}
-                                </div>
-                            )} */}
-                            {/* {serverErrors && <p className="alert alert-danger">{serverErrors}</p>} */}
-                            <button className="register-btn">Submit</button>
+                            <button className="register-btn">{loading ? "Sending" : "Submit"}</button>
                         </form>
                     </div>
                 </div>

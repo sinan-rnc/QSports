@@ -172,6 +172,8 @@ a {
 
 .btn-style {
   display: block;
+  display: flex;
+  justify-content: center;
   width: 150px;
   padding: 15px 5px 15px;
   background: #fe6b00;
