@@ -6,9 +6,12 @@ import { MdRemoveRedEye } from "react-icons/md"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { backendApi } from "../../../../Apis/api"
+import { startCreateUser } from "../../../../Actions/usersAction"
+import { useDispatch } from "react-redux"
 
 export default function ClubBarRegister() {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const {handleLogin, setAlertMessage, setAlertMessageColor} = useAuth()
 
     const [formErrors, setFormErrors] = useState("")
@@ -71,9 +74,10 @@ export default function ClubBarRegister() {
         if(Object.keys(errors).length === 0) {
             try {
                 const response = await axios.post(`${backendApi}/users/create-user`, formData)
-                console.log(response.data)
+                // console.log(response.data)
                 // const token = response.data.tokens.access
-                // const user = response.data.data
+                const user = response.data.data
+                dispatch(startCreateUser(user))
                 // localStorage.setItem("token", token)
                 // handleLogin(user)
                 setFormErrors("")
@@ -85,14 +89,14 @@ export default function ClubBarRegister() {
                 // alert("Club Registered Successfully")
                 setAlertMessage("Club Registered Successfully")
                 setAlertMessageColor("green")
-                navigate("/")
+                // navigate("/")
                 // console.log(response)
             } catch(err) {
                 console.log(err)
                 // alert(err.response.data.message)
                 // setServerErrors(err.response.data.message)
                 setFormErrors("")
-                setAlertMessage("Failed to Register Club")
+                setAlertMessage(err.response.data.message)
                 // setAlertMessage(err.response.data.message)
                 setAlertMessageColor("red")
             }
@@ -107,7 +111,7 @@ export default function ClubBarRegister() {
             <div className="club-register-component container-section">
                 <div className="form-component">
                     <div className="heading">
-                        <h1 className='main-heading'>Club Register</h1>
+                        <h1 className='main-heading'>Club/Bar Register</h1>
                         <hr className="hr-1"/><hr className="hr-2"/>
                         <h3 className="second-heading">Create an Club account here</h3>
                     </div>

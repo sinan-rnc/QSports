@@ -174,6 +174,9 @@ export default function ClubBarProfile() {
         if(form?.clubType?.trim()?.length === 0){
             errors.clubType = "clubType is Required"
         }
+        if(!form?.image){
+            errors.image = "Club Image is Required"
+        }
         if(form?.emailAddress?.trim()?.length === 0){
             errors.emailAddress = "Email Address is Required"
         }
@@ -186,9 +189,26 @@ export default function ClubBarProfile() {
         if(!form?.longitude || !form?.latitude){
             errors.location = "Latitude and Longitude is Required"
         }
-        if(form.pictureGallery.length > 5) {
-            errors.pictureGallery = "You can upload only 5 images"
+        if(form.pictureGallery.length < 3) {
+            errors.pictureGallery = "Upload atleast 3 images"
         }
+        if(form.introductionObjtv.length > 1000) {
+            errors.introductionObjtv = "Introduction should not be more than 1000 characters"
+        }
+        if(form.introductionObjtv.length > 1000) {
+            errors.introductionObjtv = "Club Introduction and Objective should not be more than 1000 characters"
+        }
+        if(form.description.length > 700) {
+            errors.description = "Club Description should not be more than 700 characters"
+        }
+        if(form.history.length > 700) {
+            errors.history = "Club History should not be more than 700 characters"
+        }
+        form?.services?.forEach((service, index) => {
+            if (service?.description?.length > 70) {
+                errors.services = `Service ${service.name}: Description should not exceed 70 characters.`;
+            }
+        });
         // if (form.experience && typeof form.experience !== "number") {
         //     errors.experience = "Open Since Must be a Number";
         // }        
@@ -199,12 +219,14 @@ export default function ClubBarProfile() {
         "No. of Pool Tables",
         "No. of Snooker Tables",
         "Ages allowed in the club",
-        "Clubs space and seating space",
+        "Club Seating Space",
         "Pool Coaching",
         "Pool & Billiard Products",
         "Table models & sizes",
         "Pool Competitions & Events",
-        "Billiard Balls and Cloth Size",
+        "Billiard Balls and Cloth Type",
+        "Smoking",
+        "Other Services"
     ]);
 
     const [availableFoodServices, setAvailableFoodServices] = useState([
@@ -261,12 +283,14 @@ export default function ClubBarProfile() {
         "No. of Pool Tables": "<GiPoolTableCorner />",
         "No. of Snooker Tables": "<GiPoolTableCorner />",
         "Ages allowed in the club": "<GiAges />",
-        "Clubs space and seating space": "<PiSeatFill />",
+        "Club Seating Space": "<PiSeatFill />",
         "Pool Coaching": "<GiTeacher />",
         "Pool & Billiard Products": "<GiPoolTriangle />",
         "Table models & sizes": "<FaMoneyBill />",
         "Pool Competitions & Events": "<MdEmojiEvents />",
-        "Billiard Balls and Cloth Size": "<RiBilliardsFill />",
+        "Billiard Balls and Cloth Type": "<RiBilliardsFill />",
+        "Smoking": "<MdOutlineSmokingRooms />",
+        "Other Services": "<GrServices />",
         "Food": "<IoFastFood />",
         "Drinks": "<BiSolidDrink />",
         "Coffees": "<RiDrinksFill />",
@@ -566,10 +590,10 @@ export default function ClubBarProfile() {
                     </div>
                 </div>
                 );
-            case "Clubs space and seating space":
+            case "Club Seating Space":
                 return (
                 <div className="same-line mobile" key={service}>
-                    <label className="form-label" htmlFor="clubSpace">Club space and seating space</label>
+                    <label className="form-label" htmlFor="clubSpace">Club Seating Space</label>
                     <div className="service-div">
                         <div className="same-line">
                             <input type="text" className="form-control"
@@ -643,22 +667,52 @@ export default function ClubBarProfile() {
                         </div>
                 </div>
                 );
-            case "Billiard Balls and Cloth Size":
+            case "Billiard Balls and Cloth Type":
                 return (
                 <div className="same-line mobile" key={service}>
-                    <label className="form-label" htmlFor="billiardBalls">Billiard Balls and Cloth Size</label>
+                    <label className="form-label" htmlFor="billiardBalls">Billiard Balls and Cloth Type</label>
                     <div className="service-div">
                     <input type="text" className="form-control"
                         value={ form.services.find(ele => ele.name === service)?.description || "" }
                         onChange={(e) =>
                             handleServiceDescriptionChange(service, e.target.value)
                         }
-                        id="billiardBalls" placeholder="Billiard Balls and Cloth Size" />
+                        id="billiardBalls" placeholder="Billiard Balls and Cloth Type" />
                     <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
                         </div>
                 </div>
                 );
-            default:
+                case "Smoking":
+                return (
+                    <div className="same-line mobile" key={service}>
+                        <label className="form-label" htmlFor="billiardBalls">Smoking</label>
+                        <div className="service-div">
+                        <input type="text" className="form-control"
+                            value={ form.services.find(ele => ele.name === service)?.description || "" }
+                            onChange={(e) =>
+                                handleServiceDescriptionChange(service, e.target.value)
+                            }
+                            id="billiardBalls" placeholder="Smoking" />
+                        <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
+                            </div>
+                    </div>
+                    );
+            case "Other Services":
+                return (
+                <div className="same-line mobile" key={service}>
+                    <label className="form-label" htmlFor="otherService">Other Services</label>
+                    <div className="service-div">
+                    <input type="text" className="form-control"
+                        value={ form.services.find(ele => ele.name === service)?.description || "" }
+                        onChange={(e) =>
+                            handleServiceDescriptionChange(service, e.target.value)
+                        }
+                        id="otherService" placeholder="Other Services" />
+                    <IoClose className="close-icon" onClick={() => handleRemoveService(service)} />
+                        </div>
+                </div>
+            );
+        default:
                 return null;
         }
     };
@@ -1344,7 +1398,7 @@ export default function ClubBarProfile() {
                     </div> */}
                     <div className="form-group">
                         <label className="form-label" htmlFor="clubBarGallery">
-                            {form.clubType ? form.clubType : "Club/Bar"} Gallery (Upload at least 3 images)
+                            {form.clubType ? form.clubType : "Club/Bar"} Gallery (Upload at least 3 Images, Max 10)
                         </label>
                         <input 
                             type="file"

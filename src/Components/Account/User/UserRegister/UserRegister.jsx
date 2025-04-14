@@ -6,9 +6,12 @@ import { MdRemoveRedEye } from "react-icons/md"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { backendApi } from "../../../../Apis/api"
+import { startCreateUser } from "../../../../Actions/usersAction"
+import { useDispatch } from "react-redux"
 
 export default function UserRegister() {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const {handleLogin, setAlertMessage, setAlertMessageColor} = useAuth()
 
     const [formErrors, setFormErrors] = useState("")
@@ -73,6 +76,7 @@ export default function UserRegister() {
                 const response = await axios.post(`${backendApi}/users/create-user`, formData)
                 // const token = response.data.tokens.access
                 const user = response.data.data
+                dispatch(startCreateUser(user))
                 // localStorage.setItem("token", token)
                 // handleLogin(user)
                 setFormErrors("")

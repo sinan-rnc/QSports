@@ -267,7 +267,7 @@ export default function ClubEventDashboard() {
                                                 <option value="">Select the Event Type</option>
                                                 <option value="Tournament">Tournament</option>
                                                 <option value="League">League</option>
-                                                <option value="Match">Match</option>
+                                                {/* <option value="Match">Match</option> */}
                                         </select>
                                     </div>
                                 </div>

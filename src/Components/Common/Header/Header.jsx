@@ -580,7 +580,7 @@ export default function Header() {
                             </div>
                             <hr className="hr-left"/>
                         </div>
-                        <input type="text" placeholder="Search For Clubs" value={searchFilterValues.name} onChange={(e) => setSearchFiltersValues({...searchFilterValues, name: e.target.value})} />
+                        <input type="text" placeholder="Search Nearby Bars/Clubs For You" value={searchFilterValues.name} onChange={(e) => setSearchFiltersValues({...searchFilterValues, name: e.target.value})} />
                         <div className="icon-div">
                             <hr className="hr-right"/>
                             <div className="icon-right" onClick={handleSearchSubmit}>

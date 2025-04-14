@@ -25,6 +25,20 @@ const setAllUsers = (allUsers) => {
     }
 }
 
+export const startCreateUser = (userData) => {
+    return async (dispatch) => {
+        dispatch(createUser(userData))
+        console.log(userData)
+    }
+}
+
+const createUser = (user) => {
+    return {
+        type : "CREATE_USER",
+        payload : user
+    }
+}
+
 export const startUpdateUser = (formData, setAlertMessage, setAlertMessageColor) => {
     return async (dispatch) => {
         try {

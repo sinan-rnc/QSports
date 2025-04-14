@@ -142,7 +142,7 @@ export default function AdminQuotesDashboard() {
             <div id="quotes-dashboard" className="admin-quotes-dashboard">
                 <div className="dashborad-heading-div">
                     <div className="dashborad-heading">
-                        <h1 className='dashborad-main-heading'>All Users</h1>
+                        <h1 className='dashborad-main-heading'>All Quotes</h1>
                         <hr className="dashborad-hr-1"/><hr className="dashborad-hr-2"/>
                         
                         {/* <h3 className="dashborad-second-heading">{clubAndBar?.name}</h3> */}

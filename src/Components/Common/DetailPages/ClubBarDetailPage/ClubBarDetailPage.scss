@@ -335,6 +335,7 @@
                 display: flex;
                 flex-direction: row;
                 gap: 10px;
+                cursor: pointer;
 
                 svg {
                     font-size: 30px;
@@ -388,6 +389,7 @@
                 display: flex;
                 flex-direction: row;
                 justify-content: space-between;
+                gap: 20px;
                 width: 100%;
 
                 .working-hours {
@@ -427,14 +429,13 @@
                 }
             }
 
-            .btn-style {
+            .book-btn {
                 margin-top: 30px;
                 margin-left: auto;
                 margin-right: auto;
             }
 
             
-
             .social-media-links {
                 .social-link-head {
                     font-size: 25px;
@@ -457,82 +458,87 @@
                     // justify-content: center;
                     margin-top: 20px;
                     gap: 10px;
-    
-                    .social {
-                        position: relative;
-                        width: 80px;
-                        height: 50px;
-                        background: #989898;
-                        overflow: hidden;
+
+                    a {
                         display: flex;
-                        align-items: flex-start;
-                        justify-content: flex-start;
-                        transition: .5s;
-    
-                        svg {
-                            margin-top: 10px;
-                            font-size: 80px;
-                            color: #cccccc;
+                        flex-direction: column;
+                        align-items: center;
+
+                        .social {
+                            position: relative;
+                            width: 80px;
+                            height: 50px;
+                            background: #989898;
+                            overflow: hidden;
+                            display: flex;
+                            align-items: flex-start;
+                            justify-content: flex-start;
                             transition: .5s;
+        
+                            svg {
+                                margin-top: 10px;
+                                font-size: 80px;
+                                color: #cccccc;
+                                transition: .5s;
+                            }
                         }
-    
+
                         p {
-                            position: absolute;
-                            bottom: 0;
-                            right: 10px;
-                            color: white;
+                            color: black;
                             text-transform: uppercase;
-                            font-size: 10px;
+                            font-size: 12px;
                             font-weight: 600;
+                            margin-top: 5px;
                         }
-                    }
-    
-                    .instagram:hover {
-                        background: #cd486b;
-                        transition: .5s;
-    
-                        svg {
-                            color: white;
+        
+                        .instagram:hover {
+                            background: #cd486b;
                             transition: .5s;
+        
+                            svg {
+                                color: white;
+                                transition: .5s;
+                            }
                         }
-                    }
-    
-                    .facebook:hover {
-                        background: #4267B2;
-                        transition: .5s;
-    
-                        svg {
-                            color: white;
+        
+                        .facebook:hover {
+                            background: #4267B2;
                             transition: .5s;
+        
+                            svg {
+                                color: white;
+                                transition: .5s;
+                            }
                         }
-                    }
-    
-                    .tiktok:hover {
-                        background: black;
-                        transition: .5s;
-    
-                        svg {
-                            color: white;
+        
+                        .tiktok:hover {
+                            background: black;
                             transition: .5s;
+        
+                            svg {
+                                color: white;
+                                transition: .5s;
+                            }
                         }
-                    }
-    
-                    .website:hover {
-                        background: green;
-                        transition: .5s;
-    
-                        svg {
-                            color: white;
+        
+                        .website:hover {
+                            background: green;
                             transition: .5s;
+        
+                            svg {
+                                color: white;
+                                transition: .5s;
+                            }
                         }
-                    }
-                    .youtube:hover {
-                        background: red;
-                        transition: .5s;
-    
-                        svg {
-                            color: white;
+
+                        .youtube:hover {
+                            background: red;
                             transition: .5s;
+        
+                            svg {
+                                color: white;
+                                transition: .5s;
+                            }
                         }
                     }
                 }
@@ -596,11 +602,18 @@
                     .food-service-name {
                         font-size: 16px;
                         font-weight: 700;
-                        text-transform: uppercase;
                         color: #ffffff;
                         background: #333;
                         padding: 10px 10px;
                         width: 250px;
+
+                        .name {
+                            text-transform: uppercase;
+                        }
+
+                        p {
+                            font-size: 14px;
+                        }
                     }
     
                     .food-service-description {
@@ -625,8 +638,10 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 50px;
-  
+    width: 100%;
+
     .callout-text {
       margin-bottom: 20px;
   
@@ -634,6 +649,7 @@
         font-size: 1.5rem;
         font-weight: 400;
         margin: 0 0 10px;
+        text-transform: uppercase;
 
         span {
             font-weight: 600;
@@ -644,6 +660,7 @@
         font-size: 1rem;
         margin: 0;
         max-width: 700px;
+
       }
     }
   
@@ -719,7 +736,7 @@
             display: grid;
             justify-content: center;
             align-items: center;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             // grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
 
@@ -1324,6 +1341,139 @@
     }
 }
 
+// Club Detail Hero 
+
+@media (max-width: 1300px){
+    .club-detail-hero {
+        .hero-section {
+            .club-image img {
+                height: 100%;
+                width: 100%;
+            }
+
+            .club-details {
+                .club-hours {
+                    flex-direction: column;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1100px){
+    .club-detail-hero {
+        .hero-section {
+            flex-direction: column;
+
+            .club-details {
+                .club-hours {
+                    flex-direction: row;
+                }
+            }
+        }
+
+        .hero-section.reverse {
+            flex-direction: column;
+        }
+    }
+}
+
+// @media (max-width: 900px){
+//     .club-detail-hero {
+//         .club-services {
+//             .food-services-section {
+//                 .food-services {
+//                     .food-service {
+//                         width: 200px;
+//                         height: 200px;
+
+//                         .food-service-name {
+//                             width: 200px;
+//                             font-size: 14px;
+//                         }
+
+//                         .food-service-description {
+//                             font-size: 16px;
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
+@media (max-width: 700px){
+    .club-detail-hero {
+        gap: 50px;
+
+        .hero-section {
+            gap: 30px;
+        }
+    }
+}
+
+@media (max-width: 550px){
+    .club-detail-hero .hero-section {
+        .club-details {
+            position: relative;
+
+            .social-media-links {
+                .social-links {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+            }
+        }
+
+            .club-hours {
+                flex-direction: column;
+            }
+
+            .book-btn {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                margin-bottom: 30px;
+            }
+
+            .club-intro {
+                margin-top: 60px;
+            }
+        }
+    }
+}
+
+// @media (max-width: 900px){
+//     .club-detail-hero {
+//         .club-services {
+//             .food-services-section {
+//                 .food-services {
+//                     .food-service {
+//                         width: 150px;
+//                         height: 150px;
+
+//                         .food-service-icon {
+//                             font-size: 30px;
+//                             color: #fe6b00;
+//                         }
+
+//                         .food-service-name {
+//                             width: 150px;
+//                             font-size: 13px;
+//                         }
+
+//                         .food-service-description {
+//                             font-size: 14px;
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
 
 // callout-box
 

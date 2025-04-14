@@ -4,7 +4,7 @@ import { backendApi } from "../Apis/api";
 export const startGetApprovalClubList = () => {
     return async (dispatch) => {
         try {
-            const response = await axios.post(`${backendApi}/club/getclub-forapproval`, { limit: 100 } ,{
+            const response = await axios.post(`${backendApi}/club/getclub-forapproval`, { limit: 100, isDeleted: false } ,{
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
                 }

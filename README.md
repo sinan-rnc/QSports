@@ -1,71 +1,267 @@
-# Getting Started with Create React App
+# Q-Sports
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Q-Sports** is a responsive, full-featured sports management platform built with React. It offers seamless event and club management for players, club admins, and super admins — with booking, approval flows, and smart UI/UX integrations.
 
-## Available Scripts
+## 🔧 Tech Stack
 
-In the project directory, you can run:
+- **React** (v18+)
+- **React Redux** & **Redux Thunk**
+- **React Router DOM**
+- **Framer Motion**
+- **Swiper JS**
+- **React Player**, **React Image Lightbox**
+- **Reactstrap** for UI components
+- **Axios** for API requests
+- **SCSS** for styling
+- **Remix Icons**, **React Icons**
 
-### `npm start`
+## 🌐 API Proxy
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The project uses a proxy for backend API requests:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+https://api.rncmediahub.com
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Features
 
-### `npm run build`
+Club & player registration and login
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Role-based dashboards (Super Admin, Club Admin, Player)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Event listing, creation, booking & approval workflows
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Mobile responsive UI
 
-### `npm run eject`
+Video content via ReactPlayer
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Lightbox gallery for images
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Dynamic filtering, sorting, and search
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+SEO-ready component architecture
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## Installation & Setup
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Install dependencies
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+npm install
 
-### Code Splitting
+2. Start the development server
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+npm start
 
-### Analyzing the Bundle Size
+This runs the app on http://localhost:3011.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+## Folder Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+q-sports-react-website/
+├── public/            # Static assets
+├── src/               # App logic, components, pages, redux, styles
+│   └── Actions/
+│       └── clubApprovalActions.js
+│       └── clubsAndBarsActions.js
+│       └── eventsActions.js
+│       └── profileActions.js
+│       └── quotesAction.js
+│       └── usersAction.js
+│   └── Apis/
+│       └── api.js
+│   └── Assets/
+│       └── Banner/
+│       └── Common/
+│       └── Highlights/
+│       └── Logo/
+│   └── Components/
+│       └── AboutUs/
+│           └── AboutUsHero/
+│               └── AboutUsHero.jsx
+│               └── AboutUsHero.scss
+│           └── Testimonials/
+│               └── Testimonials.jsx
+│               └── Testimonials.scss
+│       └── Account/
+│           └── Admin/
+│               └── AdminDashboardHome/
+│                   └── AdminDashboardHome.jsx
+│                   └── AdminDashboardHome.scss
+│               └── AdminDashboardMenu/
+│                   └── AdminBarDashboard/
+│                       └── AdminBarDashboard.jsx
+│                       └── AdminBarDashboard.scss
+│                   └── AdminClubBarApprovalDashboard/
+│                       └── AdminClubBarApprovalDashboard.jsx
+│                       └── AdminClubBarApprovalDashboard.scss
+│                   └── AdminClubDashboard/
+│                       └── AdminClubDashboard.jsx
+│                       └── AdminClubDashboard.scss
+│                   └── AdminEventDashboard/
+│                       └── AdminEventDashboard.jsx
+│                       └── AdminEventDashboard.scss
+│                   └── AdminQuotesDashboard/
+│                       └── AdminQuotesDashboard.jsx
+│                       └── AdminQuotesDashboard.scss
+│                   └── AdminUserDashboard/
+│                       └── AdminUserDashboard.jsx
+│                       └── AdminUserDashboard.scss
+│           └── ClubBar/
+│               └── ClubBarDashboard/
+│                   └── ClubBarDashboard.jsx
+│                   └── ClubBarDashboard.scss
+│               └── ClubBarProfile/
+│                   └── ClubBarProfile.jsx
+│                   └── ClubBarProfile.scss
+│               └── ClubBarRegsiter/
+│                   └── ClubBarRegsiter.jsx
+│                   └── ClubBarRegsiter.scss
+│               └── ClubEventDashboard/
+│                   └── ClubEventDashboard.jsx
+│                   └── ClubEventDashboard.scss
+│           └── DashboardHome/
+│               └── DashboardHome.jsx
+│               └── DashboardHome.scss
+│           └── Login/
+│               └── Login.jsx
+│               └── Login.scss
+│           └── Password/
+│               └── Password.jsx
+│               └── Password.scss
+│           └── User/
+│               └── UserDashboard/
+│                   └── UserDashboard.jsx
+│                   └── UserDashboard.scss
+│               └── UserEventDashboard/
+│                   └── UserEventDashboard.jsx
+│                   └── UserEventDashboard.scss
+│               └── UserProfile/
+│                   └── UserProfile.jsx
+│                   └── UserProfile.scss
+│               └── UserRegsiter/
+│                   └── UserRegsiter.jsx
+│                   └── UserRegsiter.scss
+│       └── Common/
+│           └── Bars/
+│               └── Bars.jsx
+│               └── Bars.scss
+│           └── Clubs/
+│               └── Clubs.jsx
+│               └── Clubs.scss
+│           └── ContactUs/
+│               └── ContactUs.jsx
+│               └── ContactUs.scss
+│           └── DailyQuotes/
+│               └── DailyQuotes.jsx
+│               └── DailyQuotes.scss
+│           └── DetailPages/
+│               └── ClubBarDetailPage/
+│                   └── ClubBarDetailPage.jsx
+│                   └── ClubBarDetailPage.scss
+│               └── EventDetailPage/
+│                   └── EventDetailPage.jsx
+│                   └── EventDetailPage.scss
+│           └── Event/
+│               └── Event.jsx
+│               └── Event.scss
+│           └── FeaturedClubsBars/
+│               └── FeaturedClubsBars.jsx
+│               └── FeaturedClubsBars.scss
+│           └── FeaturedEvents/
+│               └── FeaturedEvents.jsx
+│               └── FeaturedEvents.scss
+│           └── Footer/
+│               └── Footer.jsx
+│               └── Footer.scss
+│           └── Header/
+│               └── Header.jsx
+│               └── Header.scss
+│           └── Helmet/
+│               └── Helmet.jsx
+│               └── Helmet.scss
+│           └── Highlights/
+│               └── Highlights.jsx
+│               └── Highlights.scss
+│           └── PageNotFound/
+│               └── PageNotFound.jsx
+│               └── PageNotFound.scss
+│           └── RecentBars/
+│               └── RecentBars.jsx
+│               └── RecentBars.scss
+│           └── RecentClubs/
+│               └── RecentClubs.jsx
+│               └── RecentClubs.scss
+│           └── Stats/
+│               └── Stats.jsx
+│               └── Stats.scss
+│           └── UnAuthorized/
+│               └── UnAuthorized.jsx
+│               └── UnAuthorized.scss
+│           └── UpcomingEvents/
+│               └── UpcomingEvents.jsx
+│               └── UpcomingEvents.scss
+│       └── Home/
+│           └── About/
+│               └── About.jsx
+│               └── About.scss
+│           └── HomeHero/
+│               └── HomeHero.jsx
+│               └── HomeHero.scss
+│   └── Context/
+│       └── AuthContext.js
+│   └── DataSet/
+│       └── barClubTournaments.js
+│       └── barsAndClubs.js
+│       └── dubaiCities.js
+│       └── tournaments.js
+│   └── General/
+│       └── PrivateRoutes.js
+│   └── Pages/
+│       └── AboutUsPage.jsx
+│       └── AccountPage.jsx
+│       └── AdminAccountPage.jsx
+│       └── BarsPage.jsx
+│       └── ClubsPage.jsx
+│       └── ContactUsPage.jsx
+│       └── EventsPage.jsx
+│       └── HomePage.jsx
+│   └── Reducers/
+│       └── clubApprovalListReducers.js
+│       └── clubsAndBarsReducers.js
+│       └── eventReducers.js
+│       └── profileReducers.js
+│       └── quotesReducers.js
+│       └── userReducers.js
+│   └── Store/
+│       └── configureStore.js
+│   └── App.js
+│   └── index.js
+│   └── index.scss
+├── .gitignore
+├── package-lock.json
+├── package.json
+├── README.md
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Scripts
 
-### Deployment
+Script             Description
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+npm start	       Start the development server
+npm run build	   Create optimized production build
+npm test	       Run test suite
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# QSports
+## Responsive
+
+Fully responsive across all modern devices — built with mobile-first principles and optimized SCSS layouting.
+
+
+## Contact
+For inquiries or collaboration:
+
+Rabbit and Carrot LLC
+info@rabbitandcarrot.com
++971 542226464
+
+
+Built with ❤️ by Mohamed Sinan | Rabbit and Carrot LLC

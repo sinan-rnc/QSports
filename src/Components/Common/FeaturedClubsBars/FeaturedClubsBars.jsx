@@ -40,9 +40,9 @@ export default function FeaturedClubsBars() {
                                             {ele.image ? <img src={ele.image} alt=""/> : <img src={addImage} alt=""/>}
                                         </div>
                                         <div className="featuredClubsBars-details">
-                                            <a href="/bars"><button className="btn-style">
-                                                View All
-                                            </button></a>
+                                            <button onClick={() => {navigate(`/clubs/${ele?.name.replace(/\s+/g, '-').toLowerCase()}`)}} className="btn-style">
+                                                View Details
+                                            </button>
                                             <div className="details">
                                                 <h1>{ele?.name}</h1>
                                                 {/* <p>{ele?.introductionObjtv}</p> */}
@@ -52,7 +52,6 @@ export default function FeaturedClubsBars() {
                                     </div>
                                 )
                             })}
-                        
                         <div className={`right ${featuredClubsBars.length <= 2 ? "none" : ""}`}>
                             <div className="featuredClubsBars-content1" onClick={() => {navigate(`/clubs/${featuredClubsBars[1]?.name.replace(/\s+/g, '-').toLowerCase()}`)}}>
                                 <div className="featuredClubsBars-image">
