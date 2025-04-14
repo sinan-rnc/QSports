@@ -43,20 +43,25 @@ SEO-ready component architecture
 
 ## Installation & Setup
 
-1. Install dependencies
+1. Clone the Repository
+
+https://github.com/sinan-rnc/QSports
+cd q-sports
+
+2. Install dependencies
 
 npm install
 
-2. Start the development server
+3. Start the development server
 
 npm start
 
 This runs the app on http://localhost:3011.
 
-
+zip -r Q-Sports-React-Website.zip Q-Sports-React-Website
 ## Folder Structure
 
-q-sports-react-website/
+Q-Sports-React-Website/
 ├── public/            # Static assets
 ├── src/               # App logic, components, pages, redux, styles
 │   └── Actions/
