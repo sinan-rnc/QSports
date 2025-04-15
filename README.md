@@ -58,7 +58,6 @@ npm start
 
 This runs the app on http://localhost:3011.
 
-zip -r Q-Sports-React-Website.zip Q-Sports-React-Website
 ## Folder Structure
 
 Q-Sports-React-Website/
